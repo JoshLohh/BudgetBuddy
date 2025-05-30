@@ -1,9 +1,15 @@
 import { ThemedViewProps } from './ThemedView';
 import { Colors } from '@/constants/Colors'
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { Pressable , StyleSheet} from 'react-native';
+import { Pressable , StyleSheet, PressableProps} from 'react-native';
 
-export function ThemedButton({ style, lightColor, darkColor, ...otherprops }: ThemedViewProps) {
+type ThemedButtonProps = PressableProps & {
+    lightColor?: string;
+    darkColor?: string;
+    style?: any;
+  };
+
+export function ThemedButton({ style, lightColor, darkColor, ...otherprops }: ThemedButtonProps) {
 
     return (
         <Pressable
