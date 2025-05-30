@@ -1,10 +1,13 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, View, Text, DimensionValue } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Link } from 'expo-router'
+import Spacer from '../../components/Spacer';
+
 
 export default function HomeScreen() {
   return (
@@ -49,6 +52,24 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
+          
+          <Spacer />
+          <Link href = "/login" style = {styles.link}>
+            <ThemedText type = "link"> Login Page</ThemedText>
+          </Link>
+
+         <Spacer height = {10} />
+          <Link href = "/register" style = {styles.link}>
+            <ThemedText type = "link"> Sign up bro.</ThemedText>
+          </Link>
+
+          <Spacer height = {10} />
+          <Link href = "/profile" style = {styles.link}>
+            <ThemedText type = "link"> Profile page</ThemedText>
+          </Link>
+
+
+          
         </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
@@ -71,5 +92,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+  link: {
+    marginVertical:10,
+    borderBottomWidth: 1,
   },
 });
