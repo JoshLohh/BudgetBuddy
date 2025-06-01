@@ -1,50 +1,59 @@
-# Welcome to your Expo app 👋
+# BudgetBuddy
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 🧠 Why We Made This App
+We created **BudgetBuddy** to help people better manage shared expenses with friends, family, or roommates. Tracking who paid for what and who owes whom can be confusing and time-consuming. We saw a need for a simple, efficient solution that automates expense tracking and payment splitting in a way that is accessible, transparent, and fair.
 
-## Get started
+## 🎯 What It Is For
+BudgetBuddy is designed for:
+- 🏠 Students sharing rent and bills  
+- 🧳 Friends planning trips or events  
+- 👨‍👩‍👧‍👦 Families managing household spending  
+- 👥 Teams coordinating shared costs  
 
-1. Install dependencies
+The app helps reduce misunderstandings and time spent on manual calculations, and provides a central place to track, manage, and settle expenses.
 
-   ```bash
-   npm install
-   ```
+## ✨ Features
+- **User Registration and Authentication**: Sign up, log in, and manage profile securely.
+- **Group Creation and Management**: Create groups, invite members, manage group settings.
+- **Expense Tracking and Split Calculation**: Add expenses, split them equally or by custom percentages.
+- **Debt Settling**: Mark debts as paid and automatically update balances.
+- **Real-Time Updates**: Instant updates using WebSockets (Appwrite Realtime).
+- **Balance Overview and Reports**: Dashboards, summaries, and exportable reports.
+- **Notifications**: Alerts for new expenses, payments, and balance changes.
 
-2. Start the app
+## 🛠️ Tech Stack
+- **Frontend**: React Native (via [Expo](https://expo.dev/))
+- **Backend**: [Appwrite](https://appwrite.io/) (Authentication, Database, Functions)
+- **Real-Time Features**: Appwrite’s Realtime API
 
-   ```bash
-   npx expo start
-   ```
+## 🧪 Backend Routes
 
-In the output, you'll find options to open the app in a
+| Endpoint                     | Method | Description                            |
+|-----------------------------|--------|----------------------------------------|
+| `/register`                 | POST   | Create a new user account              |
+| `/login`                    | POST   | Authenticate and return session token  |
+| `/groups`                   | GET    | Fetch all groups user is a part of     |
+| `/groups`                   | POST   | Create a new group                     |
+| `/groups/:id/expenses`      | POST   | Add a new expense to a group           |
+| `/groups/:id/expenses`      | GET    | Get all expenses for a group           |
+| `/groups/:id/settle`        | POST   | Mark a debt as settled                 |
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+> Authentication and session management are handled via Appwrite's built-in services. Business logic is managed using Appwrite Functions.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## ⚙️ How It Works
+1. Users sign up and log in using Appwrite Authentication.
+2. Users can create groups and invite others to join.
+3. Expenses are added with either equal or custom splits.
+4. The app calculates and updates everyone's balance.
+5. Users mark debts as paid and receive real-time updates and notifications.
 
-## Get a fresh project
+## 🚀 Running the App
 
-When you're ready, run:
-
+### 1. Install Expo CLI
 ```bash
-npm run reset-project
-```
+npm install -g expo-cli
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 2. Clone the repository
+```bash
+git clone https://github.com/your-username/budgetbuddy.git
+cd budgetbuddy
