@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput } from 'react-native'
+import { Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback } from 'react-native'
 import { Link } from 'expo-router'
 import React, { useState } from 'react'
 
@@ -11,56 +11,66 @@ import { ThemedButton } from '../../components/ThemedButton';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import Spacer from '@/components/Spacer';
 import ThemedTextInput from '@/components/ThemedTextInput';
+import { useUser } from '@/hooks/useUser';
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleSubmit = () => {
-        console.log('login form submitted', email, password)
+    const { login } = useUser()
+
+    const handleSubmit = async () => {
+        try {
+            await login(email,password)
+        } catch (error) {
+
+        }
     }
+    
   return (
-    <ThemedView style={styles.container}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ThemedView style={styles.container}>
 
-        <ThemedText type="subtitle">Login To Your Account</ThemedText>
-        <Spacer />
-        <ThemedTextInput
-            style={{ width: '80%', marginBottom: 20 }}
-            placeholder = "Email" 
-            keyboardType="email-address"
-            onChangeText={setEmail}
-            value={email}
-        /> 
+            <ThemedText type="subtitle">Login To Your Account</ThemedText>
+            <Spacer />
+            <ThemedTextInput
+                style={{ width: '80%', marginBottom: 20 }}
+                placeholder = "Email" 
+                keyboardType="email-address"
+                onChangeText={setEmail}
+                value={email}
+            /> 
 
-        <ThemedTextInput
-            style={{ width: '80%', marginBottom: 20 }}
-            placeholder = "Password" 
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry
-        /> 
-        
+            <ThemedTextInput
+                style={{ width: '80%', marginBottom: 20 }}
+                placeholder = "Password" 
+                onChangeText={setPassword}
+                value={password}
+                secureTextEntry
+            /> 
+            
 
 
-        <Spacer/> 
+            <Spacer/> 
 
-        <ThemedButton onPress={handleSubmit}>
-            <ThemedText style={styles.login}> Login </ThemedText>
-        </ThemedButton>
+            <ThemedButton onPress={handleSubmit}>
+                <ThemedText style={styles.login}> Login </ThemedText>
+            </ThemedButton>
 
-        <Spacer height={100} />
+            <Spacer height={100} />
 
-        <ThemedText type='defaultSemiBold'>
-                    Dont have an account?
-        </ThemedText>
+            <ThemedText type='defaultSemiBold'>
+                        Dont have an account?
+            </ThemedText>
 
-            <Link href='/register'>
-                <ThemedText type='linkBold'>
-                     Register here
-                </ThemedText>
-            </Link>
+                <Link href='/register'>
+                    <ThemedText type='linkBold'>
+                        Register here
+                    </ThemedText>
+                </Link>
 
-    </ThemedView>
+        </ThemedView>
+    </TouchableWithoutFeedback>
   )
 }
 

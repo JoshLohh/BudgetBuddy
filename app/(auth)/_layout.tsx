@@ -5,8 +5,13 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useUser } from '@/hooks/useUser';
 
 export default function AuthLayout() {
+
+    const { user } = useUser()
+
+    console.log(user)
     const colorScheme = useColorScheme();
     
     return (
