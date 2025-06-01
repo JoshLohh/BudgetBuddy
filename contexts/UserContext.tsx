@@ -1,13 +1,14 @@
-import React, { createContext, ReactNode, useState } from 'react'
+import React, { createContext, ReactNode, useEffect, useState } from 'react'
 import { account } from "../lib/appwrite"
 import { ID } from "react-native-appwrite"
 import { Models } from 'react-native-appwrite';
 
 type UserContextType = {
-    user: any; // Replace 'any' with your user type if you have one
+    user: any; // Replace 'any' with user type if have 
     login: (email: string, password: string) => Promise<void>;
     register: (email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
+    authChecked: boolean;
   };
 
 export const UserContext = createContext<UserContextType | undefined>(undefined)
@@ -19,6 +20,7 @@ type UserProviderProps = {
 
 export function UserProvider({ children } : UserProviderProps) {
     const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null)
+    const [ authChecked, setAuthChecked] = useState(false) //used as a flag
 
     async function login(email: string, password: string) {
       try{
@@ -26,7 +28,7 @@ export function UserProvider({ children } : UserProviderProps) {
         const response = await account.get()
         setUser(response)
       } catch (error) {
-        console.log((error as Error).message)
+        throw Error((error as Error).message)
       }
     }
 
@@ -35,16 +37,33 @@ export function UserProvider({ children } : UserProviderProps) {
           await account.create(ID.unique(), email, password)
           await login(email, password)
         } catch (error) {
-          console.log((error as Error).message)
+          throw Error((error as Error).message)
         }
     }
 
     async function logout() {
-        
+        await account.deleteSession("current")
+        setUser(null)
     }
 
+    async function getInitialUserValue() {
+      try {
+        const response = await account.get()
+        setUser(response)
+      } catch(error) {
+        setUser(null)
+      } finally {
+        setAuthChecked(true)
+      }
+      
+    }
+
+    useEffect(() => {
+      getInitialUserValue()
+    }, [])
+
     return (
-        <UserContext.Provider value={{ user, login, register, logout }}>
+        <UserContext.Provider value={{ user, login, register, logout, authChecked }}>
             {children}
         </UserContext.Provider>
     )

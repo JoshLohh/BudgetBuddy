@@ -1,5 +1,10 @@
 # BudgetBuddy
 
+TeamID: 7553
+Team Name: BudgetBuddies
+Rayner
+Josh
+
 ## 🧠 Why We Made This App
 We created **BudgetBuddy** to help people better manage shared expenses with friends, family, or roommates. Tracking who paid for what and who owes whom can be confusing and time-consuming. We saw a need for a simple, efficient solution that automates expense tracking and payment splitting in a way that is accessible, transparent, and fair.
 
