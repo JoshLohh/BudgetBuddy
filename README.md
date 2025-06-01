@@ -47,13 +47,41 @@ The app helps reduce misunderstandings and time spent on manual calculations, an
 4. The app calculates and updates everyone's balance.
 5. Users mark debts as paid and receive real-time updates and notifications.
 
-## 🚀 Running the App
+## 🚀 How to Run the App Locally
 
-### 1. Install Expo CLI
+### Step 1: Install Expo CLI
 ```bash
 npm install -g expo-cli
+```
 
-### 2. Clone the repository
+### Step 2: Clone the Repository
 ```bash
 git clone https://github.com/your-username/budgetbuddy.git
 cd budgetbuddy
+```
+
+### Step 3: Install Dependencies
+```bash
+npm install
+```
+
+### Step 4: Set Up Environment Variables
+
+Create a `.env` file in the root directory and add:
+```env
+APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
+APPWRITE_PROJECT_ID=your-project-id
+APPWRITE_DATABASE_ID=your-database-id
+APPWRITE_COLLECTION_ID=your-collection-id
+```
+
+### Step 5: Start the Development Server
+```bash
+expo start
+```
+
+## Conclusion
+BudgetBuddy simplifies the often stressful process of managing shared finances. Whether it’s a group of friends on a trip or roommates splitting rent, our app brings clarity, fairness, and ease to expense tracking.
+
+Built with React Native and Appwrite, this project demonstrates full-stack integration with real-time updates, authentication, and cross-platform support.
+### This project is still in development, and we plan to roll out more features in upcoming phases. Stay tuned!
