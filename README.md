@@ -67,7 +67,7 @@ cd budgetbuddy
 
 ### Step 3: Install Dependencies
 ```bash
-npm install
+npx expo install react-native-appwrite react-native-url-polyfill
 ```
 
 ### Step 4: Set Up Environment Variables
@@ -82,7 +82,7 @@ APPWRITE_COLLECTION_ID=your-collection-id
 
 ### Step 5: Start the Development Server
 ```bash
-expo start
+npx expo start
 ```
 
 ## Conclusion
