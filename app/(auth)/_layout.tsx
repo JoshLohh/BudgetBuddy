@@ -6,6 +6,8 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useUser } from '@/hooks/useUser';
+import GuestOnly from '@/components/auth/GuestOnly';
+
 
 export default function AuthLayout() {
 
@@ -15,13 +17,15 @@ export default function AuthLayout() {
     const colorScheme = useColorScheme();
     
     return (
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-                <Stack
-                  screenOptions={{
-                  headerShown: false,
-                  animation: 'none',
-      }}  />
-              <StatusBar style="auto" />
-        </ThemeProvider>
+        <GuestOnly>
+            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+                    <Stack
+                    screenOptions={{
+                    headerShown: false,
+                    animation: 'none',
+                    }}  />
+                <StatusBar style="auto" />
+            </ThemeProvider>
+        </GuestOnly>
     )
 }

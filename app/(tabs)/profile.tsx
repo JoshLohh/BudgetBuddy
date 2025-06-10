@@ -30,7 +30,7 @@ const { logout, user } = useUser()
 
       <ThemedView style={styles.container}>
         <ThemedText type="title">
-          {user.email}
+          {user?.email}
           </ThemedText>
         
         <Spacer height = {10}/>
