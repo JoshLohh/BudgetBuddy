@@ -61,7 +61,7 @@ npm install -g expo-cli
 
 ### Step 2: Clone the Repository
 ```bash
-git clone https://github.com/your-username/budgetbuddy.git
+git clone https://github.com/<repo-owner-username>/budgetbuddy.git or git clone <repo-url>
 cd budgetbuddy
 ```
 
