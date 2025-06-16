@@ -59,27 +59,36 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
         try {
             if (!user) throw new Error("User not authenticated");
 
-            const newGroup: Group = {
-                id: ID.unique(),
+            const docId = ID.unique(); // ✅ use this as documentId
+
+            const groupData = {
                 title: data.title,
                 description: data.description ?? "",
                 createdBy: user.$id,
                 members: [user.$id],
             };
 
-            await databases.createDocument(
+            const res = await databases.createDocument(
                 DATABASE_ID,
                 COLLECTION_ID,
-                newGroup.id,
-                newGroup,
-                // {...data, userId: user.$id},
+                docId,
+                groupData,
                 [
                     Permission.read(Role.user(user.$id)),
                     Permission.update(Role.user(user.$id)),
                     Permission.delete(Role.user(user.$id)),
                 ]
 
-        );
+            );
+
+            // Add returned group to state, with explicit `id` from `res`
+            const newGroup: Group = {
+                id: res.$id,
+                title: res.title,
+                description: res.description,
+                createdBy: res.createdBy,
+                members: res.members,
+            };
 
         } catch(error) {
             throw Error((error as Error).message)  
