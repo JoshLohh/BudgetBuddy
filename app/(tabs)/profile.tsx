@@ -21,60 +21,32 @@ import Spacer from '@/components/Spacer';
 const AVATAR_SIZE = 72;
 
 export default function Profile() {
-  const { user, profile, updateProfile, logout, authChecked } = useUser();
-  const [editing, setEditing] = useState(false);
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [bio, setBio] = useState('');
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+const { logout, user } = useUser()
 
-  // Sync form fields with profile when loaded
-  useEffect(() => {
-    if (profile) {
-      setUsername(profile.username || '');
-      setEmail(profile.email || user?.email || '');
-      setBio(profile.bio || '');
-    }
-  }, [profile, user]);
 
-  // Placeholder stats, replace with real data as needed
-  const groups = profile?.groups ?? 0;
-  const totalExpenses = profile?.totalExpenses ?? 0;
-  const numExpenses = profile?.numExpenses ?? 0;
+  return (
+    <ParallaxScrollView
+      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
+      headerImage={
+        <IconSymbol
+          size={310}
+          color="#808080"
+          name="chevron.left.forwardslash.chevron.right"
+          style={styles.headerImage}
+        />
+      }>
 
-  const avatarSource = profile?.avatar
-    ? { uri: profile.avatar }
-    : require('../../assets/images/default-avatar.png'); // Adjust path as needed
 
-  const handleSave = async () => {
-    setSaving(true);
-    setError(null);
-    try {
-      await updateProfile({ username, email, bio });
-      setEditing(false);
-    } catch (err: any) {
-      setError(err.message || 'Failed to update profile');
-    } finally {
-      setSaving(false);
-    }
-  };
+      <ThemedView style={styles.container}>
+        <ThemedText type="title">
+          {user?.email}
+          </ThemedText>
+        
+        <Spacer height = {10}/>
 
-  if (!authChecked) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#1e88e5" />
-      </View>
-    );
-  }
+        <ThemedText>Enjoy the app!</ThemedText>
 
-  if (!profile) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text style={{ color: 'red' }}>
-          No profile loaded. Please try logging out and back in, or contact support.
-        </Text>
-        <ThemedButton onPress={logout}>
+        <ThemedButton onPress={ logout }>
           <Text style={{ color: '#f2f2f2' }}> Logout </Text>
         </ThemedButton>
       </View>
