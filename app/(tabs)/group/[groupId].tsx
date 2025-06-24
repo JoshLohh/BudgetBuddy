@@ -30,14 +30,20 @@ const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTIO
 
 export default function GroupDetailScreen() {
   const { groupId } = useLocalSearchParams();
-  const [group, setGroup] = useState(null);
+  const [group, setGroup] = useState<{
+    id: string;
+    title: string;
+    description: string;
+    members: string[];
+    createdBy: string;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [membersExpanded, setMembersExpanded] = useState(false);
-  const [memberProfiles, setMemberProfiles] = useState([]);
+  const [memberProfiles, setMemberProfiles] = useState<{ userId: string; username: string }[]>([]);
   const [searchModalVisible, setSearchModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<{ $id: string; username?: string }[]>([]);
   const [searching, setSearching] = useState(false);
   const [expenses, setExpenses] = useState<any[]>([]);
   const [expensesLoading, setExpensesLoading] = useState(false);
@@ -138,7 +144,7 @@ export default function GroupDetailScreen() {
   };
 
   // Add member to group
-  const handleAddMember = async userId => {
+  const handleAddMember = async (userId: string) => {
     if (!group) return;
     if (group.members.includes(userId)) return;
     const updatedMembers = [...group.members, userId];
@@ -155,7 +161,7 @@ export default function GroupDetailScreen() {
   };
 
   // Remove member from group
-  const handleRemoveMember = async userId => {
+  const handleRemoveMember = async (userId: string) => {
     if (!group) return;
     const updatedMembers = group.members.filter(id => id !== userId);
     await databases.updateDocument(
