@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet, Text, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 
 import { useGroups } from '@/hooks/useGroups';
 import { useRouter } from 'expo-router';
@@ -27,7 +27,10 @@ const Create = () => {
     const { user } = useUser()
 
     const handleSubmit = async () => {
-        if (!title.trim()) return;
+        if (!title.trim()) {
+            Alert.alert('Validation', 'Group title is required.');
+            return;
+        }
 
         setLoading(true);
 
@@ -105,6 +108,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignSelf: 'stretch' ,
     marginHorizontal: 40,
+    marginVertical: 8,
     minHeight: 100,
   }
 });

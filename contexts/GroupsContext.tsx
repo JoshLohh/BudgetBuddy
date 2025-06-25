@@ -1,6 +1,6 @@
 import { databases } from "@/lib/appwrite";
-import React, { createContext, useState, ReactNode } from "react";
-import { ID, Permission, Role } from "react-native-appwrite";
+import React, { createContext, useState, ReactNode, useEffect } from "react";
+import { ID, Permission, Query, Role } from "react-native-appwrite";
 import { useUser } from "@/hooks/useUser";
 
 const DATABASE_ID = '684bd404003542c8a2ac'
@@ -41,7 +41,23 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
 
     async function fetchGroups() {
         try {
+            const res = await databases.listDocuments(
+                DATABASE_ID,
+                COLLECTION_ID,
+                [
+                    Query.contains('members', [user.$id])
+                ]
+            );
 
+            const parsedGroups: Group[] = res.documents.map((doc) => ({
+                id: doc.$id,
+                title: doc.title,
+                description: doc.description,
+                members: doc.members,
+                createdBy: doc.createdBy,
+                }));
+
+            setGroups(parsedGroups)
         } catch(error) {
             throw Error((error as Error).message)  
         }
@@ -90,6 +106,9 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
                 members: res.members,
             };
 
+            // Add new group to state
+            setGroups((prev) => [...prev, newGroup]);
+
         } catch(error) {
             throw Error((error as Error).message)  
         }
@@ -102,6 +121,16 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
             throw Error((error as Error).message)        
         }
     }
+
+    useEffect(() => {
+
+        if (user) {
+            fetchGroups()
+        } else {
+            setGroups([])
+        }
+
+    }, [user])
 
     return (
         <GroupsContext.Provider
