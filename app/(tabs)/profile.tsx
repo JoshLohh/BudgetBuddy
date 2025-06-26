@@ -118,6 +118,18 @@ export default function Profile() {
 
           <Spacer height={16} />
 
+          {/* Show bio beneath Top (avatar + username) */}
+          {!editing ? (
+            profile.bio ? (
+              <>
+                <Spacer height={4} />
+                <ThemedText style={styles.bio}>{profile.bio}</ThemedText>
+              </>
+            ) : null
+          ) : null}
+
+          <Spacer height={16} />
+
           {/* Statistics */}
           <View style={styles.statsCard}>
             <View style={styles.statBox}>
@@ -216,6 +228,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 18,
+  },
+  bio: {
+    fontSize: 15,
+    color: '#666',
+    marginLeft: 2,
+    marginBottom: 6,
   },
   avatar: {
     width: AVATAR_SIZE,
