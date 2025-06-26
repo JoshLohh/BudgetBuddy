@@ -43,11 +43,14 @@ export default function GroupsScreen() {
       <ThemedText type="title">My Groups</ThemedText>
 
       <FlatList
+        scrollEnabled = {false}
         data={groups}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
-          <Pressable>
+          <Pressable
+            onPress = {() => router.push(`/group/${item.id}`)}
+            >
             <ThemedCard style={styles.card}>
               <ThemedText type="subtitle">{item.title}</ThemedText>
               <ThemedText>{item.description}</ThemedText>
@@ -56,7 +59,9 @@ export default function GroupsScreen() {
         )}
         ListEmptyComponent={<ThemedText>No groups found. Create one!</ThemedText>}
       />
-      <ThemedButton onPress={() => router.push('/create')}>Create Group</ThemedButton>
+      <ThemedButton onPress={() => router.push('/create')}>
+        <ThemedText>Create Group</ThemedText>
+      </ThemedButton>
     </ThemedView>
  
     </ParallaxScrollView>
