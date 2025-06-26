@@ -2,13 +2,10 @@ import { Keyboard, StyleSheet, TouchableWithoutFeedback, Text } from 'react-nati
 import { Link } from 'expo-router'
 import React, { useState } from 'react'
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedButton } from '../../components/ThemedButton';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import Spacer from '@/components/Spacer';
 import ThemedTextInput from '@/components/ThemedTextInput';
 import { useUser } from '@/hooks/useUser';
@@ -26,6 +23,7 @@ const Login = () => {
 
         try {
             await login(email,password)
+            // Optionally navigate to home/profile
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message)

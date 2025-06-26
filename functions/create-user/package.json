@@ -1,0 +1,19 @@
+{
+  "name": "starter-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.ts",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "appwrite": "^18.1.1",
+    "node-appwrite": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.17",
+    "bun-types": "^1.2.17",
+    "prettier": "^3.0.0"
+  }
+}

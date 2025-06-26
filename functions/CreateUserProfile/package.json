@@ -1,0 +1,8 @@
+{
+  "name": "create-user-profile",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "node-appwrite": "^10.0.0"
+  }
+}

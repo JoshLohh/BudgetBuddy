@@ -2,13 +2,9 @@ import { Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback, Text} from '
 import { Link } from 'expo-router'
 import React, { useState } from 'react'
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedButton } from '../../components/ThemedButton';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import Spacer from '@/components/Spacer';
 import ThemedTextInput from '@/components/ThemedTextInput';
 import { useUser } from '@/hooks/useUser';
@@ -16,19 +12,19 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 const Register = () => {        
-
+    const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState<string | null>(null)
     
-
     const { register } = useUser()
 
     const handleSubmit = async () => {
         setError(null)
 
         try {
-            await register(email, password)
+            await register(username, email, password)
+            // Optionally navigate to home/profile
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message)
@@ -43,6 +39,14 @@ const Register = () => {
 
             <ThemedText type="subtitle"> Register For An Account </ThemedText>
             <Spacer/>
+            <ThemedTextInput
+                style={{ width: '80%', marginBottom: 20 }}
+                placeholder = "Username" 
+                onChangeText={setUsername}
+                value={username}
+                autoCapitalize='none'
+            />
+
             <ThemedTextInput
                 style={{ width: '80%', marginBottom: 20 }}
                 placeholder = "Email" 
