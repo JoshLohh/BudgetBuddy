@@ -56,6 +56,51 @@ export default function TabLayout() {
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
           }}
         />
+
+        <Tabs.Screen
+          name="group/addExpense"
+          options={{ href: null }}
+        />
+
+        <Tabs.Screen
+          name="group/[groupId]"
+          options={{ href: null }}
+        />
+
+        <Tabs.Screen
+          name="group/expenseList"
+          options={{ href: null }}
+        />
+
+        <Tabs.Screen
+          name="group/[groupId]/addExpense"
+          options={{ href: null }}
+        />
+
+        <Tabs.Screen
+          name="group/membersDropdown"
+          options={{ href: null }}
+        />
+
+        <Tabs.Screen
+          name="group/settlementList"
+          options={{ href: null }}
+        />
+
+        <Tabs.Screen
+          name="groups"
+          options={{ href: null }}
+        />
+
+        <Tabs.Screen
+          name="welcome"
+          options={{ href: null }}
+        />
+
+        <Tabs.Screen
+          name="explore"
+          options={{ href: null }}
+        />
       </Tabs>
     </UserOnly>  
   );
