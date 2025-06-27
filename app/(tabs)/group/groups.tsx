@@ -3,7 +3,7 @@ import { useGroups } from '@/hooks/useGroups';
 import { useUser } from '@/hooks/useUser';
 import { useState } from 'react';
 import { ThemedButton } from '@/components/ThemedButton';
-import { ActivityIndicator, FlatList, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
+import { ActivityIndicator, FlatList, TouchableOpacity, StyleSheet, Pressable, View } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -59,9 +59,14 @@ export default function GroupsScreen() {
         )}
         ListEmptyComponent={<ThemedText>No groups found. Create one!</ThemedText>}
       />
-      <ThemedButton onPress={() => router.push('/group/create')}>
-        <ThemedText>Create Group</ThemedText>
+      <View style={{ alignItems: 'center'}}>
+      <ThemedButton 
+        onPress={() => router.push('/group/create')} 
+        style={styles.createBtn}
+      >
+        <ThemedText style={{ color: '#f2f2f2' , textAlign: 'center'}}>Create Group</ThemedText>
       </ThemedButton>
+      </View>
     </ThemedView>
  
     </ParallaxScrollView>
@@ -81,6 +86,12 @@ const styles = StyleSheet.create({
   },
   list: {
     marginTop: 40
+  },
+  createBtn: {
+    borderRadius: 8,
+    paddingVertical: 12,
+    marginHorizontal: 16,
+    width:'50%',
   },
   card: {
     width: "90%",

@@ -8,10 +8,6 @@
     "scheme": "budgetbuddy",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "extra": {
-      "APPWRITE_DATABASE_ID": "684bd404003542c8a2ac",
-      "APPWRITE_USERS_COLLECTION_ID": "685cf12e003976d23b39"
-    },
     "ios": {
       "supportsTablet": true
     },

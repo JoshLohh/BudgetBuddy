@@ -17,6 +17,7 @@ export function ThemedButton({ style, lightColor, darkColor, ...otherprops }: Th
         style]}
         {...otherprops}
         />
+
     )
 }
 

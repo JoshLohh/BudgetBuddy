@@ -52,12 +52,11 @@ export function UserProvider({ children }: UserProviderProps) {
   }
 
   async function logout() {
-    await account.deleteSession("current");
-    setUser(null);
-    setProfile(null);
-    setAuthChecked(false);
-    // Optionally: navigate to login page here if needed
-  }
+  await account.deleteSession("current");
+  setUser(null);
+  setProfile(null);
+  setAuthChecked(true); // <-- set to true so login screen can render
+}
 
   async function updateProfile(updates: { username?: string; email?: string; avatar?: string; bio?: string }) {
     if (!profile) throw new Error('No profile loaded');
