@@ -28,7 +28,7 @@ export default function Profile() {
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Sync form fields with profile when loaded
   useEffect(() => {
@@ -52,7 +52,9 @@ export default function Profile() {
       await updateProfile({ username, email, bio });
       setEditing(false);
     } catch (err) {
-      setError(err.message || 'Failed to update profile');
+      setError(
+        err instanceof Error ? err.message : 'Failed to update profile'
+      );
     } finally {
       setSaving(false);
     }
