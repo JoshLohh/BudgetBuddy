@@ -59,7 +59,7 @@ export default function GroupsScreen() {
         )}
         ListEmptyComponent={<ThemedText>No groups found. Create one!</ThemedText>}
       />
-      <ThemedButton onPress={() => router.push('/create')}>
+      <ThemedButton onPress={() => router.push('/group/create')}>
         <ThemedText>Create Group</ThemedText>
       </ThemedButton>
     </ThemedView>
