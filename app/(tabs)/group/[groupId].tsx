@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Query } from 'appwrite'; 
 import {
   View,
   ActivityIndicator,
   StyleSheet,
   FlatList,
+  ScrollView,
   TouchableOpacity,
   TextInput,
   Modal,
@@ -13,7 +14,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams, useFocusEffect } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { databases } from '@/lib/appwrite';
@@ -40,7 +41,11 @@ export default function GroupDetailScreen() {
   const [searching, setSearching] = useState(false);
   const [expenses, setExpenses] = useState<any[]>([]);
   const [expensesLoading, setExpensesLoading] = useState(false);
+  const [settlements, setSettlements] = useState<any[]>([]);
   const router = useRouter();
+
+  const [showAllExpenses, setShowAllExpenses] = useState(false);
+  const EXPENSES_PREVIEW_COUNT = 2;
 
   // Fetch group info
   useEffect(() => {
@@ -162,6 +167,23 @@ export default function GroupDetailScreen() {
     setGroup({ ...group, members: updatedMembers });
   };
 
+  // To reload expenses
+  useFocusEffect(
+    useCallback(() => {
+      setExpensesLoading(true);
+      databases.listDocuments(
+        databaseId,
+        expensesCollectionId,
+        [Query.equal('groupId', groupId)]
+      ).then(res => {
+        setExpenses(res.documents);
+        setExpensesLoading(false);
+      }).catch(() => setExpensesLoading(false));
+    }, [groupId])
+  );
+  const expensesToShow = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
+  const hasMoreExpenses = expenses.length > EXPENSES_PREVIEW_COUNT;
+
   if (loading) {
     return (
       <ThemedView style={styles.centered}>
@@ -187,182 +209,213 @@ export default function GroupDetailScreen() {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <ThemedView style={styles.container}>
-          <Spacer height={70}/>
-          {/* Group Title and Description */}
-          <View style={styles.headerRow}>
-            <View style={{ flex: 1 }}>
-              <ThemedText type="title" style={styles.groupName}>{group.title}</ThemedText>
-              {group.description ? (
-                <ThemedText style={styles.description}>{group.description}</ThemedText>
-              ) : null}
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <FlatList
+        data={expensesToShow}
+        keyExtractor={item => item.$id}
+        renderItem={({ item }) => (
+          <ThemedView style={styles.expenseCard}>
+            <ThemedText style={styles.expenseDesc}>{item.description}</ThemedText>
+            <View style={styles.expenseMetaRow}>
+              <ThemedText style={styles.expenseMeta}>
+                Paid by: <ThemedText style={styles.expenseMetaBold}>{getUsername(item.paidBy)}</ThemedText>
+              </ThemedText>
+              <ThemedText style={styles.expenseAmount}>
+                ${parseFloat(item.amount).toFixed(2)}
+              </ThemedText>
             </View>
-            <ThemedView style={styles.totalCard}>
-              <ThemedText style={styles.totalLabel}>Total</ThemedText>
-              <ThemedText style={styles.totalAmount}>${totalExpenses.toFixed(2)}</ThemedText>
-            </ThemedView>
-          </View>
+          </ThemedView>
+        )}
+        ListHeaderComponent={
+          <>
+            <Spacer height={70} />
+            {/* Group Title, Description, Total */}
+              <View style={styles.headerRow}>
+                <View style={{ flex: 1 }}>
+                  <ThemedText type="title" style={styles.groupName}>{group.title}</ThemedText>
+                  <Spacer height={10}/>
+                  {group.description ? (
+                    <ThemedText style={styles.description}>{group.description}</ThemedText>
+                  ) : null}
+                </View>
+                <ThemedView style={styles.totalCard}>
+                  <ThemedText style={styles.totalLabel}>Total</ThemedText>
+                  <ThemedText style={styles.totalAmount}>${totalExpenses.toFixed(2)}</ThemedText>
+                </ThemedView>
+              </View>
 
+              {/* Group Meta: Member Count */}
+              <View style={styles.metaRow}>
+                <Ionicons name="people-outline" size={18} color={Colors.primary} />
+                <ThemedText style={styles.metaText}>
+                  {group.members.length} member{group.members.length !== 1 ? 's' : ''}
+                </ThemedText>
+              </View>
 
-
-          {/* Group Meta: Member Count */}
-          <View style={styles.metaRow}>
-            <Ionicons name="people-outline" size={18} color={Colors.primary} />
-            <ThemedText style={styles.metaText}>
-              {group.members.length} member{group.members.length !== 1 ? 's' : ''}
-            </ThemedText>
-          </View>
-
-          {/* Members Dropdown (compact, scrollable) */}
-          <TouchableOpacity
-            style={styles.dropdownHeader}
-            onPress={() => setMembersExpanded(prev => !prev)}
-            activeOpacity={0.7}
-          >
-            <ThemedText style={styles.membersTitle}>Group Members</ThemedText>
-            <Ionicons
-              name={membersExpanded ? 'chevron-up' : 'chevron-down'}
-              size={18}
-              color={Colors.primary}
-            />
-          </TouchableOpacity>
-          {membersExpanded && (
-            <View style={styles.membersDropdown}>
-              <FlatList
-                data={memberProfiles}
-                keyExtractor={item => item.userId}
-                renderItem={({ item }) => (
-                  <View style={styles.memberRow}>
-                    <ThemedText style={styles.memberText}>{item.username}</ThemedText>
-                    <TouchableOpacity
-                      onPress={() => handleRemoveMember(item.userId)}
-                      style={styles.removeBtn}
-                    >
-                      <Ionicons name="close-circle" size={18} color="#e57373" />
-                    </TouchableOpacity>
-                  </View>
-                )}
-                style={styles.membersList}
-                contentContainerStyle={{ paddingBottom: 4 }}
-                showsVerticalScrollIndicator={false}
-                nestedScrollEnabled
-                ListEmptyComponent={<ThemedText style={{ color: '#aaa' }}>No members.</ThemedText>}
-              />
-              <Spacer height={8} />
-              {/* Add member search */}
+              {/* Members Dropdown */}
               <TouchableOpacity
-                style={styles.addMemberBtn}
-                onPress={() => setSearchModalVisible(true)}
+                style={styles.dropdownHeader}
+                onPress={() => setMembersExpanded(prev => !prev)}
+                activeOpacity={0.7}
               >
-                <Ionicons name="person-add" size={18} color="#fff" />
-                <ThemedText style={{ color: '#fff', marginLeft: 6 }}>Add Member</ThemedText>
-              </TouchableOpacity>
-            </View>
-          )}
-
-          <ThemedButton
-            // style={{ alignSelf: 'flex-center', marginBottom: 12 }}
-            onPress={() => router.push(`/group/${group.id}/addExpense`)}
-          >
-            <ThemedText style={{ color: '#fff' , textAlign: 'center' }}>Add Expense</ThemedText>
-          </ThemedButton>
-
-          {/* Expenses and Settlements Sections */}
-          <View style={styles.section}>
-            <ThemedText style={styles.sectionTitle}>Expenses</ThemedText>
-              {expensesLoading ? (
-                <ActivityIndicator />
-              ) : expenses.length === 0 ? (
-                <ThemedText style={styles.placeholder}>No expenses yet.</ThemedText>
-              ) : (
-                <FlatList
-                  data={expenses}
-                  keyExtractor={item => item.$id}
-                  renderItem={({ item }) => (
-                    <ThemedView style={styles.expenseCard}>
-                      <ThemedText style={styles.expenseDesc}>{item.description}</ThemedText>
-                      <View style={styles.expenseMetaRow}>
-                        <ThemedText style={styles.expenseMeta}>
-                          Paid by: <ThemedText style={styles.expenseMetaBold}>{getUsername(item.paidBy)}</ThemedText>
-                        </ThemedText>
-                        <ThemedText style={styles.expenseAmount}>
-                          ${parseFloat(item.amount).toFixed(2)}
-                        </ThemedText>
-                      </View>
-                    </ThemedView>
-                  )}
-                  style={{ marginTop: 8 }}
-                  contentContainerStyle={{ paddingBottom: 12 }}
+                <ThemedText style={styles.membersTitle}>Group Members</ThemedText>
+                <Ionicons
+                  name={membersExpanded ? 'chevron-up' : 'chevron-down'}
+                  size={18}
+                  color={Colors.primary}
                 />
-              )}
-          </View>
-          <View style={styles.section}>
-            <ThemedText style={styles.sectionTitle}>Settlements</ThemedText>
-            <ThemedText style={styles.placeholder}>No settlements yet.</ThemedText>
-          </View>
-
-          {/* Add Member Modal */}
-          <Modal
-            visible={searchModalVisible}
-            animationType="slide"
-            transparent
-            onRequestClose={() => setSearchModalVisible(false)}
-          >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View style={styles.modalOverlay}>
-                <View style={styles.modalContent}>
-                  <ThemedText style={styles.modalTitle}>Add Member</ThemedText>
-                  <TextInput
-                    style={styles.searchInput}
-                    placeholder="Search username..."
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                    onSubmitEditing={handleSearch}
-                    returnKeyType="search"
-                    autoFocus
+              </TouchableOpacity>
+              {membersExpanded && (
+                <View style={styles.membersDropdown}>
+                  <FlatList
+                    data={memberProfiles}
+                    keyExtractor={item => item.userId}
+                    renderItem={({ item }) => (
+                      <View style={styles.memberRow}>
+                        <ThemedText style={styles.memberText}>{item.username}</ThemedText>
+                        <TouchableOpacity
+                          onPress={() => handleRemoveMember(item.userId)}
+                          style={styles.removeBtn}
+                        >
+                          <Ionicons name="close-circle" size={18} color="#e57373" />
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                    style={styles.membersList}
+                    contentContainerStyle={{ paddingBottom: 4 }}
+                    showsVerticalScrollIndicator={false}
+                    nestedScrollEnabled
+                    ListEmptyComponent={<ThemedText style={{ color: '#aaa' }}>No members.</ThemedText>}
                   />
                   <Spacer height={8} />
-                  {searching ? (
-                    <ActivityIndicator />
-                  ) : (
-                    <FlatList
-                      data={searchResults}
-                      keyExtractor={item => item.$id}
-                      renderItem={({ item }) => (
-                        <TouchableOpacity
-                          style={styles.searchResultRow}
-                          onPress={() => handleAddMember(item.$id)}
-                        >
-                          <ThemedText style={styles.searchResultText}>{item.username}</ThemedText>
-                        </TouchableOpacity>
-                      )}
-                      ListEmptyComponent={
-                        <ThemedText style={{ color: '#aaa', textAlign: 'center' }}>
-                          {searchQuery ? 'No users found.' : 'Enter a username to search.'}
-                        </ThemedText>
-                      }
-                      keyboardShouldPersistTaps="handled"
-                    />
-                  )}
-                  <Spacer height={8} />
+                  {/* Add member search */}
                   <TouchableOpacity
-                    style={styles.closeModalBtn}
-                    onPress={() => setSearchModalVisible(false)}
+                    style={styles.addMemberBtn}
+                    onPress={() => setSearchModalVisible(true)}
                   >
-                    <ThemedText style={{ color: '#fff' }}>Close</ThemedText>
+                    <Ionicons name="person-add" size={18} color="#fff" />
+                    <ThemedText style={{ color: '#fff', marginLeft: 6 }}>Add Member</ThemedText>
                   </TouchableOpacity>
                 </View>
-              </View>
-            </TouchableWithoutFeedback>
-          </Modal>
-        </ThemedView>
-      </TouchableWithoutFeedback>
+              )}
+
+              {/* Add Expense Button */}
+              <ThemedButton
+                onPress={() => router.push(`/group/${group.id}/addExpense`)}
+              >
+                <ThemedText style={{ color: '#fff', textAlign: 'center' }}>Add Expense</ThemedText>
+              </ThemedButton>
+              
+            {/* Settlements Section (mapped, NOT FlatList) */}
+            <View style={styles.section}>
+              <ThemedText style={styles.sectionTitle}>Settlements</ThemedText>
+              {settlements.length === 0 ? (
+                <ThemedText style={styles.placeholder}>No settlements yet.</ThemedText>
+              ) : (
+                settlements.map(settlement => (
+                  <ThemedView style={styles.settlementCard}>
+                    <ThemedText style={styles.settlementTitle}>Suggested Settlements</ThemedText>
+                    {settlements.length === 0 ? (
+                      <ThemedText>No settlements yet.</ThemedText>
+                    ) : (
+                      settlements.map(({ from, to, amount }) => (
+                        <View key={from + to} style={styles.settlementRow}>
+                          <ThemedText>{getUsername(from)} → {getUsername(to)}</ThemedText>
+                          <ThemedText style={{ color: 'red' }}>${amount.toFixed(2)}</ThemedText>
+                        </View>
+                      ))
+                    )}
+                  </ThemedView>
+                ))
+              )}
+            </View>
+            <Spacer height={8}/>
+            {/* Expenses Section Title and See Less button */}
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+              <ThemedText style={styles.sectionTitle}>Expenses</ThemedText>
+              {showAllExpenses && hasMoreExpenses && (
+                <TouchableOpacity onPress={() => setShowAllExpenses(false)}>
+                  <ThemedText style={{ color: Colors.primary, fontWeight: 'bold' }}>See Less</ThemedText>
+                </TouchableOpacity>
+              )}
+            </View>
+          </>
+        }
+        ListFooterComponent={
+          <>
+            {!showAllExpenses && hasMoreExpenses && (
+              <ThemedButton onPress={() => setShowAllExpenses(true)} style={{ marginTop: 8 , backgroundColor: 'grey'}}>
+                <ThemedText style={{ color: '#fff' }}>See More</ThemedText>
+              </ThemedButton>
+            )}
+            <Spacer height={24} />
+          </>
+        }
+        contentContainerStyle={{ padding: 20, paddingBottom: 24 }}
+        ListEmptyComponent={
+          expensesLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <ThemedText style={styles.placeholder}>No expenses yet.</ThemedText>
+          )
+        }
+      />
+      {/* Add Member Modal */}
+      <Modal
+        visible={searchModalVisible}
+        animationType="slide"
+        transparent
+        onRequestClose={() => setSearchModalVisible(false)}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <ThemedText style={styles.modalTitle}>Add Member</ThemedText>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search username..."
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                onSubmitEditing={handleSearch}
+                returnKeyType="search"
+                autoFocus
+              />
+              <Spacer height={8} />
+              {searching ? (
+                <ActivityIndicator />
+              ) : (
+                <FlatList
+                  data={searchResults}
+                  keyExtractor={item => item.$id}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={styles.searchResultRow}
+                      onPress={() => handleAddMember(item.$id)}
+                    >
+                      <ThemedText style={styles.searchResultText}>{item.username}</ThemedText>
+                    </TouchableOpacity>
+                  )}
+                  ListEmptyComponent={
+                    <ThemedText style={{ color: '#aaa', textAlign: 'center' }}>
+                      {searchQuery ? 'No users found.' : 'Enter a username to search.'}
+                    </ThemedText>
+                  }
+                  keyboardShouldPersistTaps="handled"
+                />
+              )}
+              <Spacer height={8} />
+              <TouchableOpacity
+                style={styles.closeModalBtn}
+                onPress={() => setSearchModalVisible(false)}
+              >
+                <ThemedText style={{ color: '#fff' }}>Close</ThemedText>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </KeyboardAvoidingView>
+
   );
 }
 
@@ -376,7 +429,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10,
   },
   groupName: {
     flex: 1,
