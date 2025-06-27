@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Query } from 'appwrite'; 
 import {
   View,
   ActivityIndicator,
@@ -12,17 +13,19 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { databases } from '@/lib/appwrite';
 import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import Spacer from '@/components/Spacer';
+import { ThemedButton } from '@/components/ThemedButton';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
 const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?? '';
+const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
 
 export default function GroupDetailScreen() {
   const { groupId } = useLocalSearchParams();
@@ -35,6 +38,9 @@ export default function GroupDetailScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [expenses, setExpenses] = useState<any[]>([]);
+  const [expensesLoading, setExpensesLoading] = useState(false);
+  const router = useRouter();
 
   // Fetch group info
   useEffect(() => {
@@ -60,6 +66,27 @@ export default function GroupDetailScreen() {
       });
   }, [groupId]);
 
+  // Fetch group expenses
+  useEffect(() => {
+  if (!groupId) return;
+  setExpensesLoading(true);
+  databases
+    .listDocuments(
+      databaseId,
+      expensesCollectionId,
+      [Query.equal('groupId', groupId)]
+    )
+    .then(res => {
+      setExpenses(res.documents);
+      setExpensesLoading(false);
+    })
+    .catch(() => setExpensesLoading(false));
+}, [groupId]);
+
+  // calculate the groups total expenses
+  const totalExpenses = expenses.reduce((sum, exp) => sum + (parseFloat(exp.amount) || 0), 0);
+
+
   // Fetch member profiles when group changes or members change
   useEffect(() => {
     if (!group || !group.members.length) {
@@ -79,6 +106,12 @@ export default function GroupDetailScreen() {
       setLoading(false);
     });
   }, [group]);
+
+  // Helper to get username from userId
+  const getUsername = (userId: string) => {
+    const profile = memberProfiles.find(p => p.userId === userId);
+    return profile ? profile.username : userId;
+  };
 
   // Search for users by username
   const handleSearch = async () => {
@@ -160,12 +193,22 @@ export default function GroupDetailScreen() {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <ThemedView style={styles.container}>
-          <Spacer/>
+          <Spacer height={70}/>
           {/* Group Title and Description */}
-          <ThemedText type="title" style={styles.title}>{group.title}</ThemedText>
-          {group.description ? (
-            <ThemedText style={styles.description}>{group.description}</ThemedText>
-          ) : null}
+          <View style={styles.headerRow}>
+            <View style={{ flex: 1 }}>
+              <ThemedText type="title" style={styles.groupName}>{group.title}</ThemedText>
+              {group.description ? (
+                <ThemedText style={styles.description}>{group.description}</ThemedText>
+              ) : null}
+            </View>
+            <ThemedView style={styles.totalCard}>
+              <ThemedText style={styles.totalLabel}>Total</ThemedText>
+              <ThemedText style={styles.totalAmount}>${totalExpenses.toFixed(2)}</ThemedText>
+            </ThemedView>
+          </View>
+
+
 
           {/* Group Meta: Member Count */}
           <View style={styles.metaRow}>
@@ -222,10 +265,41 @@ export default function GroupDetailScreen() {
             </View>
           )}
 
+          <ThemedButton
+            // style={{ alignSelf: 'flex-center', marginBottom: 12 }}
+            onPress={() => router.push(`/group/${group.id}/addExpense`)}
+          >
+            <ThemedText style={{ color: '#fff' , textAlign: 'center' }}>Add Expense</ThemedText>
+          </ThemedButton>
+
           {/* Expenses and Settlements Sections */}
           <View style={styles.section}>
             <ThemedText style={styles.sectionTitle}>Expenses</ThemedText>
-            <ThemedText style={styles.placeholder}>No expenses yet.</ThemedText>
+              {expensesLoading ? (
+                <ActivityIndicator />
+              ) : expenses.length === 0 ? (
+                <ThemedText style={styles.placeholder}>No expenses yet.</ThemedText>
+              ) : (
+                <FlatList
+                  data={expenses}
+                  keyExtractor={item => item.$id}
+                  renderItem={({ item }) => (
+                    <ThemedView style={styles.expenseCard}>
+                      <ThemedText style={styles.expenseDesc}>{item.description}</ThemedText>
+                      <View style={styles.expenseMetaRow}>
+                        <ThemedText style={styles.expenseMeta}>
+                          Paid by: <ThemedText style={styles.expenseMetaBold}>{getUsername(item.paidBy)}</ThemedText>
+                        </ThemedText>
+                        <ThemedText style={styles.expenseAmount}>
+                          ${parseFloat(item.amount).toFixed(2)}
+                        </ThemedText>
+                      </View>
+                    </ThemedView>
+                  )}
+                  style={{ marginTop: 8 }}
+                  contentContainerStyle={{ paddingBottom: 12 }}
+                />
+              )}
           </View>
           <View style={styles.section}>
             <ThemedText style={styles.sectionTitle}>Settlements</ThemedText>
@@ -295,10 +369,20 @@ export default function GroupDetailScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20 },
   centered: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  title: { marginBottom: 4 },
   description: { fontSize: 15, color: '#555', marginBottom: 8 },
   metaRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8, gap: 6 },
   metaText: { fontSize: 14, color: '#888', marginLeft: 4 },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  groupName: {
+    flex: 1,
+    fontSize: 28,
+    fontWeight: '700',
+  },
   dropdownHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -307,7 +391,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingVertical: 8,
   },
-  membersTitle: { fontSize: 16, fontWeight: '600' },
+  membersTitle: { fontSize: 18, fontWeight: '600' },
   membersDropdown: {
     maxHeight: 180,
     backgroundColor: '#f7f7f7',
@@ -339,7 +423,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   section: { marginTop: 18 },
-  sectionTitle: { fontSize: 17, fontWeight: '600', marginBottom: 4 },
+  sectionTitle: { fontSize: 18, fontWeight: '600', marginBottom: 4 },
   placeholder: { color: '#aaa', fontStyle: 'italic', marginLeft: 4 },
   modalOverlay: {
     flex: 1,
@@ -376,5 +460,55 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     marginTop: 6,
+  },
+  expenseCard: {
+    backgroundColor: '#f2f2f2',
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 10,
+  },
+  expenseDesc: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+    color: 'black',
+  },
+  expenseMetaRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  expenseMeta: {
+    fontSize: 13,
+    color: '#888',
+  },
+  expenseMetaBold: {
+    fontWeight: 'bold',
+    color: '#444',
+  },
+  expenseAmount: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1e88e5',
+  },
+  totalCard: {
+    backgroundColor: '#e3f2fd',
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 18,
+    alignItems: 'center',
+    minWidth: 90,
+    elevation: 2,
+  },
+  totalLabel: {
+    fontSize: 13,
+    color: '#1976d2',
+    fontWeight: 'bold',
+  },
+  totalAmount: {
+    fontSize: 18,
+    color: '#1976d2',
+    fontWeight: 'bold',
+    marginTop: 2,
   },
 });
