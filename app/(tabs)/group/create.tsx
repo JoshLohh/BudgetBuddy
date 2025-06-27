@@ -1,17 +1,14 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet, Text, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { StyleSheet, Text, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 
 import { useGroups } from '@/hooks/useGroups';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useUser } from "@/hooks/useUser";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import ThemedTextInput from '@/components/ThemedTextInput';
-import { ThemedButton } from '../../components/ThemedButton';
+import { ThemedButton } from '../../../components/ThemedButton';
 import Spacer from '@/components/Spacer';
 import { ID } from 'react-native-appwrite';
 
@@ -42,7 +39,7 @@ const Create = () => {
             setDescription("");
 
             //redirect
-            router.replace("/groups");
+            router.replace("/group/groups");
         } catch (error) {
             console.error("Create group failed:", error);
             alert("Failed to create group. Please try again.");

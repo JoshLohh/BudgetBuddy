@@ -3,8 +3,8 @@ import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { ID, Permission, Query, Role } from "react-native-appwrite";
 import { useUser } from "@/hooks/useUser";
 
-const DATABASE_ID = '684bd404003542c8a2ac'
-const COLLECTION_ID = '684bd42e0009b1e585e7'
+const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
+const COLLECTION_ID = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
 
 export interface Group {
     id: string;

@@ -36,14 +36,14 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="groups"
+          name="group/groups"
           options={{
             title: 'Groups',
             tabBarIcon: ({ color }) => <IconSymbol size={38} name="person.3.fill" color={color} />,
           }}
         />
         <Tabs.Screen
-          name="create"
+          name="group/create"
           options={{
             title: 'Create',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="plus.square.fill.on.square.fill" color={color} />,
