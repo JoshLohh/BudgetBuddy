@@ -82,15 +82,16 @@ export default function Profile() {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={styles.keyboardAvoid}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <Spacer/>
+    // <KeyboardAvoidingView
+    //   style={styles.keyboardAvoid}
+    //   behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    // >
+
+      // <Spacer/>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <ThemedView style={styles.container}>
           {/* Top: Avatar + Username */}
-          
+          <Spacer/>
           <View style={styles.topRow}>
             <Image
               source={avatarSource}
@@ -182,12 +183,14 @@ export default function Profile() {
               </ThemedButton>
             </>
           ) : (
+            <View style={{ alignItems: 'center'}}>
             <ThemedButton
               onPress={() => setEditing(true)}
               style={styles.editBtn}
             >
-              <Text style={{ color: '#f2f2f2' }}>Edit Profile</Text>
+              <Text style={{ color: '#f2f2f2' , textAlign: 'center'}}>Edit Profile</Text>
             </ThemedButton>
+            </View>
           )}
 
           <View style={styles.flexGrow} />
@@ -195,13 +198,14 @@ export default function Profile() {
           {/* Logout Button at Bottom */}
           <View style={styles.logoutContainer}>
             <ThemedButton onPress={logout} style={styles.logoutBtn}>
-              <Text style={{ color: '#f2f2f2' }}>Logout</Text>
+              <Text style={{ color: '#f2f2f2' , textAlign: 'center'}}>Logout</Text>
             </ThemedButton>
           </View>
+        <Spacer height={100} />
         </ThemedView>
       </TouchableWithoutFeedback>
-      <Spacer/>
-    </KeyboardAvoidingView>
+      // <Spacer/>
+    // </KeyboardAvoidingView>
   );
 }
 
@@ -282,10 +286,10 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   editBtn: {
-    backgroundColor: '#1e88e5',
     borderRadius: 8,
     paddingVertical: 12,
     marginHorizontal: 16,
+    width:'50%',
   },
   saveBtn: {
     backgroundColor: '#1e88e5',
@@ -308,10 +312,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logoutBtn: {
-    backgroundColor: '#e53935',
+    backgroundColor: '#cb4d31',
     borderRadius: 8,
     paddingVertical: 12,
-    width: '90%',
+    width: '50%',
   },
   editInput: {
     backgroundColor: '#f5f5f5',

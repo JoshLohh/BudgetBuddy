@@ -75,7 +75,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
         try {
             if (!user) throw new Error("User not authenticated");
 
-            const docId = ID.unique(); // ✅ use this as documentId
+            const docId = ID.unique(); // use this as documentId
 
             const groupData = {
                 title: data.title,
