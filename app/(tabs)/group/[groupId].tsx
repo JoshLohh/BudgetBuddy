@@ -4,7 +4,7 @@ import { ThemedButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import { ActivityIndicator, FlatList, Keyboard, KeyboardAvoidingView, Modal, Platform, TextInput, TouchableOpacity, TouchableWithoutFeedback, View , ScrollView} from 'react-native';
 import GroupHeader from '../../../components/GroupHeader';
 import { useGroupDetails } from '../../../hooks/useGroupDetails';
@@ -27,7 +27,7 @@ export default function GroupDetailScreen() {
     setSearchModalVisible,
     searchQuery,
     setSearchQuery,
-    searchResults,
+    //searchResults,
     handleSearch,
     searching,
     handleAddMember,
@@ -43,11 +43,25 @@ export default function GroupDetailScreen() {
     totalExpenses,
   } = useGroupDetails(groupId);
 
+  type Expense = {
+    $id: string;
+    description: string;
+    paidBy: string;
+    amount: number;
+  };
+
+  type UserProfile = {
+    $id: string;
+    username: string;
+  };
+
   // For see more/less
   const [showAllExpenses, setShowAllExpenses] = React.useState(false);
   const EXPENSES_PREVIEW_COUNT = 5;
-  const expensesToShow = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
+  //const expensesToShow = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
+  const expensesToShow: Expense[] = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
   const hasMoreExpenses = expenses.length > EXPENSES_PREVIEW_COUNT;
+  const [searchResults, setSearchResults] = useState<UserProfile[]>([]);
 
   if (loading) {
     return (
@@ -84,7 +98,7 @@ export default function GroupDetailScreen() {
           handleRemoveMember={handleRemoveMember}
           setSearchModalVisible={setSearchModalVisible}
         />
-        <ThemedButton onPress={() => router.push(`/group/${group.id}/addExpense`)}>
+        <ThemedButton onPress={() => router.push(`/group/${groupId}/addExpense`)}>
           <ThemedText style={{ color: '#fff', textAlign: 'center' }}>Add Expense</ThemedText>
         </ThemedButton>
         <SettlementList settlements={settlements} getUsername={getUsername} />
@@ -120,7 +134,7 @@ export default function GroupDetailScreen() {
                     Paid by: <ThemedText style={{ fontWeight: 'bold', color: '#444' }}>{getUsername(item.paidBy)}</ThemedText>
                   </ThemedText>
                   <ThemedText style={{ fontSize: 16, fontWeight: 'bold', color: '#1e88e5' }}>
-                    ${parseFloat(item.amount).toFixed(2)}
+                    ${item.amount.toFixed(2)}
                   </ThemedText>
                 </View>
               </ThemedView>

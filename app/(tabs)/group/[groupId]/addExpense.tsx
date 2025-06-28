@@ -42,7 +42,7 @@ export default function AddExpenseScreen() {
         setPaidBy(doc.members?.[0] ?? '');
         // Fetch user profiles for display
         Promise.all(
-          (doc.members ?? []).map(userId =>
+          (doc.members ?? []).map((userId: string) =>
             databases
               .getDocument(databaseId, usersCollectionId, userId)
               .then(profile => ({
