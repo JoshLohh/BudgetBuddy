@@ -31,31 +31,36 @@ export default function MembersDropdown({
           marginBottom: 6,
           elevation: 2,
         }}>
-          <FlatList
-            data={memberProfiles}
-            keyExtractor={item => item.userId}
-            renderItem={({ item }) => (
-              <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: 4,
-                paddingHorizontal: 8,
-                borderBottomWidth: 0.5,
-                borderBottomColor: '#eee',
-                justifyContent: 'space-between',
-              }}>
-                <ThemedText style={{ fontWeight: '500', color: '#333', fontSize: 15 }}>{item.username}</ThemedText>
-                <TouchableOpacity onPress={() => handleRemoveMember(item.userId)} style={{ marginLeft: 8, padding: 2 }}>
-                  <Ionicons name="close-circle" size={18} color="#e57373" />
-                </TouchableOpacity>
-              </View>
-            )}
-            style={{ maxHeight: 120 }}
-            contentContainerStyle={{ paddingBottom: 4 }}
-            showsVerticalScrollIndicator={false}
-            nestedScrollEnabled
-            ListEmptyComponent={<ThemedText style={{ color: '#aaa' }}>No members.</ThemedText>}
-          />
+            <View style={{ maxHeight: 120 }}>
+                {memberProfiles.length === 0 ? (
+                    <ThemedText style={{ color: '#aaa' }}>No members.</ThemedText>
+                ) : (
+                    memberProfiles.map(item => (
+                    <View
+                        key={item.userId}
+                        style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingVertical: 4,
+                        paddingHorizontal: 8,
+                        borderBottomWidth: 0.5,
+                        borderBottomColor: '#eee',
+                        justifyContent: 'space-between',
+                        }}
+                    >
+                        <ThemedText style={{ fontWeight: '500', color: '#333', fontSize: 15 }}>
+                        {item.username}
+                        </ThemedText>
+                        <TouchableOpacity
+                        onPress={() => handleRemoveMember(item.userId)}
+                        style={{ marginLeft: 8, padding: 2 }}
+                        >
+                        <Ionicons name="close-circle" size={18} color="#e57373" />
+                        </TouchableOpacity>
+                    </View>
+                    ))
+                )}
+            </View>
           <Spacer height={8} />
           <ThemedButton style={{
             flexDirection: 'row',

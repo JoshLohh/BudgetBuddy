@@ -143,7 +143,9 @@ export default function Profile() {
           No profile loaded. Please try logging out and back in, or contact support.
         </ThemedText>
         <Spacer height={12} />
-        <ThemedButton onPress={handleLogout}>Logout</ThemedButton>
+        <ThemedButton onPress={handleLogout}>
+          <ThemedText style={{ color: '#f2f2f2' , textAlign: 'center'}}>Logout</ThemedText>
+        </ThemedButton>
       </ThemedView>
     );
   }
@@ -236,7 +238,6 @@ export default function Profile() {
                 <ThemedText style={{ color: '#f2f2f2' }}>{saving ? 'Saving...' : 'Save Changes'}</ThemedText>
               </ThemedButton>
               <ThemedButton
-                type="secondary"
                 onPress={() => setEditing(false)}
                 style={styles.cancelBtn}
               >

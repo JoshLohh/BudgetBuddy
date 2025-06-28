@@ -1,9 +1,9 @@
-// useGroupDetails.ts
+import { useState, useEffect } from 'react';
 import { databases } from '@/lib/appwrite';
 import { Query } from 'appwrite';
 import { useFocusEffect } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
 import { calculateBalances, calculateSettlements } from './settlementUtils';
+import React from 'react';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
@@ -23,6 +23,9 @@ export function useGroupDetails(groupId) {
   const [expenses, setExpenses] = useState([]);
   const [expensesLoading, setExpensesLoading] = useState(false);
   const [showAllExpenses, setShowAllExpenses] = useState(false);
+
+  // Settled settlements for this group (in-memory, not persisted)
+  const [settledIds, setSettledIds] = useState<string[]>([]);
 
   const EXPENSES_PREVIEW_COUNT = 10;
 
@@ -69,16 +72,20 @@ export function useGroupDetails(groupId) {
 
   // Refetch expenses on focus
   useFocusEffect(
-    useCallback(() => {
+    React.useCallback(() => {
+      if (!groupId) return;
       setExpensesLoading(true);
-      databases.listDocuments(
-        databaseId,
-        expensesCollectionId,
-        [Query.equal('groupId', groupId)]
-      ).then(res => {
-        setExpenses(res.documents);
-        setExpensesLoading(false);
-      }).catch(() => setExpensesLoading(false));
+      databases
+        .listDocuments(
+          databaseId,
+          expensesCollectionId,
+          [Query.equal('groupId', groupId)]
+        )
+        .then(res => {
+          setExpenses(res.documents);
+          setExpensesLoading(false);
+        })
+        .catch(() => setExpensesLoading(false));
     }, [groupId])
   );
 
@@ -161,9 +168,27 @@ export function useGroupDetails(groupId) {
   const expensesToShow = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
   const hasMoreExpenses = expenses.length > EXPENSES_PREVIEW_COUNT;
 
-  // Settlements calculation
+  // Calculate settlements (exclude settled)
   const balances = group ? calculateBalances(group.members, expenses) : {};
-  const settlements = calculateSettlements(balances);
+  const allSettlements = calculateSettlements(balances);
+
+  // Only show settlements that have NOT been settled
+  const settlements = allSettlements.filter(
+    (s, idx) => !settledIds.includes(`${s.from}_${s.to}_${s.amount}`)
+  );
+  const settledSettlements = allSettlements.filter(
+    (s, idx) => settledIds.includes(`${s.from}_${s.to}_${s.amount}`)
+  );
+
+  // Mark a settlement as settled (in-memory)
+  const settleUp = (from: string, to: string, amount: number) => {
+    setSettledIds(prev => [...prev, `${from}_${to}_${amount}`]);
+  };
+
+  // Reset settledIds when expenses or members change (new expense = new round of settlements)
+  useEffect(() => {
+    setSettledIds([]);
+  }, [expenses.length, group?.members?.length]);
 
   // Total expenses
   const totalExpenses = expenses.reduce((sum, exp) => sum + (parseFloat(exp.amount) || 0), 0);
@@ -191,6 +216,8 @@ export function useGroupDetails(groupId) {
     showAllExpenses,
     setShowAllExpenses,
     settlements,
+    settledSettlements,
+    settleUp,
     getUsername,
     totalExpenses,
   };

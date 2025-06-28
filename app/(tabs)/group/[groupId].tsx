@@ -39,6 +39,8 @@ export default function GroupDetailScreen() {
     // showAllExpenses,
     // setShowAllExpenses,
     settlements,
+    settledSettlements,
+    settleUp,
     getUsername,
     totalExpenses,
   } = useGroupDetails(groupId);
@@ -98,10 +100,15 @@ export default function GroupDetailScreen() {
           handleRemoveMember={handleRemoveMember}
           setSearchModalVisible={setSearchModalVisible}
         />
-        <ThemedButton onPress={() => router.push(`/group/${groupId}/addExpense`)}>
+        <ThemedButton onPress={() => router.push({ pathname: '/group/[groupId]/addExpense', params: { groupId } })}>
           <ThemedText style={{ color: '#fff', textAlign: 'center' }}>Add Expense</ThemedText>
         </ThemedButton>
-        <SettlementList settlements={settlements} getUsername={getUsername} />
+        <SettlementList
+          settlements={settlements}
+          settledSettlements={settledSettlements}
+          getUsername={getUsername}
+          settleUp={settleUp}
+        />
 
         {/* Expenses Section */}
         <View style={{ marginTop: 18 }}>

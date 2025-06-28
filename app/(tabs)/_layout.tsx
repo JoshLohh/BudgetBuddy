@@ -58,11 +58,6 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
-          name="group/addExpense"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
           name="group/[groupId]"
           options={{ href: null }}
         />
@@ -89,16 +84,6 @@ export default function TabLayout() {
 
         <Tabs.Screen
           name="groups"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="welcome"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="explore"
           options={{ href: null }}
         />
       </Tabs>
