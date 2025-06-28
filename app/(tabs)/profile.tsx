@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Image } from 'expo-image';
+import { useFocusEffect } from 'expo-router';
 import { useUser } from '@/hooks/useUser';
 import { useRouter } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
@@ -16,8 +17,13 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedButton } from '@/components/ThemedButton';
 import ThemedTextInput from '@/components/ThemedTextInput';
 import Spacer from '@/components/Spacer';
+import { databases } from '@/lib/appwrite';
+import { Query } from 'appwrite';
 
 const AVATAR_SIZE = 72;
+const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
+const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
+const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
 
 export default function Profile() {
   const { user, profile, updateProfile, logout, authChecked } = useUser();
@@ -28,7 +34,62 @@ export default function Profile() {
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
+
+  // Statistics state
+  const [groupsCount, setGroupsCount] = useState(0);
+  const [userExpensesCount, setUserExpensesCount] = useState(0);
+  const [userTotalSpent, setUserTotalSpent] = useState(0);
+
+  const fetchStats = useCallback(() => {
+    if (!user) return;
+
+    databases
+      .listDocuments(
+        databaseId,
+        groupsCollectionId,
+        [Query.search('members', user.$id)]
+      )
+      .then(res => {
+        setGroupsCount(res.documents.length);
+        const groupIds = res.documents.map(doc => doc.$id);
+
+        if (groupIds.length === 0) {
+          setUserExpensesCount(0);
+          setUserTotalSpent(0);
+          return;
+        }
+
+        databases
+          .listDocuments(
+            databaseId,
+            expensesCollectionId,
+            [
+              Query.equal('paidBy', user.$id),
+              Query.equal('groupId', groupIds),
+              Query.limit(100),
+            ]
+          )
+          .then(expRes => {
+            setUserExpensesCount(expRes.documents.length);
+            const total = expRes.documents.reduce(
+              (sum, doc) => sum + (parseFloat(doc.amount) || 0),
+              0
+            );
+            setUserTotalSpent(total);
+          })
+          .catch(() => {
+            setUserExpensesCount(0);
+            setUserTotalSpent(0);
+          });
+      })
+      .catch(() => {
+        setGroupsCount(0);
+        setUserExpensesCount(0);
+        setUserTotalSpent(0);
+      });
+  }, [user]);
+
 
   // Sync form fields with profile when loaded
   useEffect(() => {
@@ -39,10 +100,17 @@ export default function Profile() {
     }
   }, [profile, user]);
 
+  useFocusEffect(
+    useCallback(() => {
+      fetchStats();
+    }, [fetchStats])
+  );
+
+
   // Handle logout and redirect to index
   const handleLogout = async () => {
     await logout();
-    router.replace('/'); // or your login/index route
+    router.replace('/');
   };
 
   const handleSave = async () => {
@@ -75,27 +143,23 @@ export default function Profile() {
           No profile loaded. Please try logging out and back in, or contact support.
         </ThemedText>
         <Spacer height={12} />
-        <ThemedButton onPress={handleLogout}>
-          <ThemedText style={{ color: '#f2f2f2' , textAlign: 'center'}}>Logout</ThemedText>
-        </ThemedButton>
+        <ThemedButton onPress={handleLogout}>Logout</ThemedButton>
       </ThemedView>
     );
   }
-
-  // Placeholder stats, replace with real data as needed
-  const groups = profile?.groups ?? 0;
-  const totalExpenses = profile?.totalExpenses ?? 0;
-  const numExpenses = profile?.numExpenses ?? 0;
 
   const avatarSource = profile?.avatar
     ? { uri: profile.avatar }
     : require('../../assets/images/default-avatar.png'); // Adjust path as needed
 
   return (
-
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <ThemedView style={styles.container}>
-          <Spacer />
+          <Spacer height={16} />
           {/* Top: Avatar + Username */}
           <View style={styles.topRow}>
             <Image
@@ -132,15 +196,17 @@ export default function Profile() {
           {/* Statistics */}
           <View style={styles.statsCard}>
             <View style={styles.statBox}>
-              <ThemedText style={styles.statValue}>{groups}</ThemedText>
+              <ThemedText style={styles.statValue}>{groupsCount}</ThemedText>
               <ThemedText style={styles.statLabel}>Groups</ThemedText>
             </View>
             <View style={styles.statBox}>
-              <ThemedText style={styles.statValue}>{totalExpenses}</ThemedText>
-              <ThemedText style={styles.statLabel}>Total Expenses</ThemedText>
+              <ThemedText style={styles.statValue}>
+                ${userTotalSpent.toFixed(2)}
+              </ThemedText>
+              <ThemedText style={styles.statLabel}>Total Spent</ThemedText>
             </View>
             <View style={styles.statBox}>
-              <ThemedText style={styles.statValue}>{numExpenses}</ThemedText>
+              <ThemedText style={styles.statValue}>{userExpensesCount}</ThemedText>
               <ThemedText style={styles.statLabel}># Expenses</ThemedText>
             </View>
           </View>
@@ -170,6 +236,7 @@ export default function Profile() {
                 <ThemedText style={{ color: '#f2f2f2' }}>{saving ? 'Saving...' : 'Save Changes'}</ThemedText>
               </ThemedButton>
               <ThemedButton
+                type="secondary"
                 onPress={() => setEditing(false)}
                 style={styles.cancelBtn}
               >
@@ -178,12 +245,12 @@ export default function Profile() {
             </>
           ) : (
             <View style={{ alignItems: 'center'}}>
-            <ThemedButton
-              onPress={() => setEditing(true)}
-              style={styles.editBtn}
-            >
-              <ThemedText style={{ color: '#f2f2f2' , textAlign: 'center'}}>Edit Profile</ThemedText>
-            </ThemedButton>
+              <ThemedButton
+                onPress={() => setEditing(true)}
+                style={styles.editBtn}
+              >
+                <ThemedText style={{ color: '#f2f2f2' , textAlign: 'center'}}>Edit Profile</ThemedText>
+              </ThemedButton>
             </View>
           )}
 
@@ -192,12 +259,13 @@ export default function Profile() {
           {/* Logout Button at Bottom */}
           <View style={styles.logoutContainer}>
             <ThemedButton onPress={handleLogout} style={styles.logoutBtn}>
-              <ThemedText style={{ color: '#f2f2f2' , textAlign: 'center'}}>Logout</ThemedText>
+              <ThemedText style={{ color: '#f2f2f2' }}>Logout</ThemedText>
             </ThemedButton>
           </View>
-          <Spacer height={100}/>
+        <Spacer height={100}/>
         </ThemedView>
       </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
