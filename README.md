@@ -120,8 +120,6 @@ To build a cross-platform mobile app that enables users to track, manage, and sp
 
 ## 4. User Flow Diagrams
 
-*(Insert user flow diagrams here. Example: Registration → Group Creation → Add Expense → Settle Up → Profile Overview)*
-
 BudgetBuddy is designed to be intuitive and user-centric, supporting multiple user journeys. Below are detailed user flow diagrams and step-by-step narratives for the app’s core functionalities.
 
 ### 4.1 Registration & Onboarding Flow
