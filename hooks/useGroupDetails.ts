@@ -119,20 +119,30 @@ export function useGroupDetails(groupId) {
   const handleSearch = async () => {
     setSearching(true);
     try {
-      const res = await databases.listDocuments(
-        databaseId,
-        usersCollectionId,
-        []
-      );
+      // const queries = searchQuery.trim()
+      //   ? [Query.search('username', searchQuery.trim())]
+      //   : [];
+      // const res = await databases.listDocuments(
+      //   databaseId,
+      //   usersCollectionId,
+      //   queries
+      // );
+      // setSearchResults(res.documents);
+      const res = await databases.listDocuments(databaseId, usersCollectionId, [Query.limit(100)]);
+      console.log('[handleSearch] Fetched users:', res.documents.map(doc => doc.username));
       const filtered = res.documents.filter(doc =>
         doc.username?.toLowerCase().includes(searchQuery.trim().toLowerCase())
       );
+      console.log('[handleSearch] Filtered users:', filtered.map(doc => doc.username));
       setSearchResults(filtered);
+
     } catch (e) {
+      console.error('[handleSearch] Error:', e);
       setSearchResults([]);
     }
     setSearching(false);
   };
+
 
   // Add member to group
   const handleAddMember = async userId => {

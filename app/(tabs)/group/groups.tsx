@@ -40,7 +40,7 @@ export default function GroupsScreen() {
         />
       }>
       <ThemedView>
-      <ThemedText type="title">My Groups</ThemedText>
+      <ThemedText type="title" >My Groups</ThemedText>
 
       <FlatList
         scrollEnabled = {false}
@@ -57,7 +57,7 @@ export default function GroupsScreen() {
             </ThemedCard>
           </Pressable>
         )}
-        ListEmptyComponent={<ThemedText>No groups found. Create one!</ThemedText>}
+        ListEmptyComponent={<ThemedText type='subtitle' style={{textAlign: 'center'}}>No groups found. Create one!</ThemedText>}
       />
       <View style={{ alignItems: 'center'}}>
       <ThemedButton 

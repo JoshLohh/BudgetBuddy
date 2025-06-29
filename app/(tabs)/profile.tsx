@@ -34,7 +34,7 @@ export default function Profile() {
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Statistics state
   const [groupsCount, setGroupsCount] = useState(0);
@@ -155,13 +155,9 @@ export default function Profile() {
     : require('../../assets/images/default-avatar.png'); // Adjust path as needed
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <ThemedView style={styles.container}>
-          <Spacer height={16} />
+          <Spacer />
           {/* Top: Avatar + Username */}
           <View style={styles.topRow}>
             <Image
@@ -260,13 +256,12 @@ export default function Profile() {
           {/* Logout Button at Bottom */}
           <View style={styles.logoutContainer}>
             <ThemedButton onPress={handleLogout} style={styles.logoutBtn}>
-              <ThemedText style={{ color: '#f2f2f2' }}>Logout</ThemedText>
+              <ThemedText style={{ color: '#f2f2f2', textAlign:'center' }}>Logout</ThemedText>
             </ThemedButton>
           </View>
         <Spacer height={100}/>
         </ThemedView>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
   );
 }
 

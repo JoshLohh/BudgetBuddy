@@ -60,7 +60,6 @@ export default function AddExpenseScreen() {
     setLoading(true);
     setError('');
     try {
-        console.log({ databaseId, expensesCollectionId });
         await databases.createDocument(
             databaseId,
             expensesCollectionId,
@@ -171,10 +170,10 @@ export default function AddExpenseScreen() {
         {/* Buttons */}
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 18 }}>
           <ThemedButton
-            style={{ marginRight: 10, minWidth: 90 }}
+            style={{ marginRight: 10, minWidth: 90 , backgroundColor: 'grey'}}
             onPress={() => router.back()}
           >
-            <ThemedText>Cancel</ThemedText>
+            <ThemedText style={{ color: '#fff' }}>Cancel</ThemedText>
           </ThemedButton>
           <ThemedButton
             onPress={handleAddExpense}

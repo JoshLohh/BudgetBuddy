@@ -27,7 +27,7 @@ export default function GroupDetailScreen() {
     setSearchModalVisible,
     searchQuery,
     setSearchQuery,
-    //searchResults,
+    searchResults,
     handleSearch,
     searching,
     handleAddMember,
@@ -63,7 +63,6 @@ export default function GroupDetailScreen() {
   //const expensesToShow = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
   const expensesToShow: Expense[] = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
   const hasMoreExpenses = expenses.length > EXPENSES_PREVIEW_COUNT;
-  const [searchResults, setSearchResults] = useState<UserProfile[]>([]);
 
   if (loading) {
     return (

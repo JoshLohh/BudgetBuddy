@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useCallback, useState } from 'react';
-import { databases } from '@/lib/appwrite'; // Adjust if your import path differs
+import { databases } from '@/lib/appwrite'; 
 import { ID, Query } from 'react-native-appwrite';
 
 type Expense = {
