@@ -1,28 +1,37 @@
 import React from 'react';
-import { Pressable, StyleSheet, PressableProps } from 'react-native';
+import { Pressable, StyleSheet, PressableProps, StyleProp, ViewStyle } from 'react-native';
 import { Colors } from '@/constants/Colors';
-import { Text } from 'react-native'; 
+import { Text } from 'react-native';
 
 type ThemedButtonProps = PressableProps & {
   lightColor?: string;
   darkColor?: string;
-  style?: any;
+  style?: StyleProp<ViewStyle>;
   children?: React.ReactNode;
+  type?: 'secondary' | 'primary'; // Add more variants as needed
 };
 
-export function ThemedButton({ style, lightColor, darkColor, children, ...otherprops }: ThemedButtonProps) {
+export function ThemedButton({
+  style,
+  lightColor,
+  darkColor,
+  children,
+  type,
+  ...otherprops
+}: ThemedButtonProps) {
   return (
     <Pressable
       style={({ pressed }) => [
         styles.btn,
+        type === 'secondary' && styles.secondary,
         pressed && styles.pressed,
-        style
+        style,
       ]}
       {...otherprops}
     >
       {/* Always wrap children in a Text component if they are strings */}
       {typeof children === 'string' ? (
-        <Text style={{ color: '#fff', textAlign: 'center' }}>{children}</Text>
+        <Text>{children}</Text>
       ) : (
         children
       )}
@@ -35,9 +44,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     padding: 18,
     borderRadius: 6,
-    marginVertical: 10
+    marginVertical: 10,
+  },
+  secondary: {
+    backgroundColor: '#eee', // Or any color for secondary
   },
   pressed: {
-    opacity: 0.6
-  }
+    opacity: 0.6,
+  },
 });
