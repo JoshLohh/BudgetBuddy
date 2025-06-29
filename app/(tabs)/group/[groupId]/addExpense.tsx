@@ -104,15 +104,14 @@ export default function AddExpenseScreen() {
         />
         {/* Amount with $ */}
         <ThemedText type='subtitle' style={{ marginBottom:2 }}>Amount*</ThemedText>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 14 }}>
-          <ThemedText style={{ fontWeight: 'bold', marginRight: 6 }}>$</ThemedText>
-          <ThemedTextInput
-            value={amount}
-            onChangeText={val => setAmount(val.replace(/[^0-9.]/g, ''))}
-            keyboardType="decimal-pad"
-            style={{ flex: 1 }}
-          />
-        </View>
+        <ThemedTextInput
+          placeholder="$ 0.00"
+          value={amount}
+          onChangeText={val => setAmount(val.replace(/[^0-9.]/g, ''))}
+          keyboardType="decimal-pad"
+          style={{ marginBottom: 14 }}
+          leftIcon={<ThemedText style={{ fontWeight: 'bold' }}>$</ThemedText>}
+        />
         {/* Paid By */}
         <ThemedText type='subtitle'>Paid By</ThemedText>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 12 }}>
