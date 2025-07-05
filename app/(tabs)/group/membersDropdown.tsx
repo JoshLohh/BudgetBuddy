@@ -16,7 +16,6 @@ export default function MembersDropdown({
   setSearchModalVisible,
 }) {
   const router = useRouter();
-
   return (
     <View>
       {/* Header Row: Group Members and Show/Hide */}
@@ -44,14 +43,13 @@ export default function MembersDropdown({
             <ThemedText style={{ color: '#aaa', marginLeft: 4 }}>No members.</ThemedText>
           ) : (
             memberProfiles.map(item => {
-              console.log('Member avatar:', item.username, item.avatar);
               return (
               <View key={item.userId} style={styles.memberRow}>
                 <TouchableOpacity
                   onPress={() =>
                     router.push({
                       pathname: '/user/[userId]',
-                      params: { userId: item.userId },
+                      params: { userId: item.userId , groupId: group.id},
                     })
                   }
                   style={styles.avatarTouchable}

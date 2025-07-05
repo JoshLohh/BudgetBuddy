@@ -16,8 +16,7 @@ const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?
 
 
 export default function UserProfileScreen() {
-  const { userId } = useLocalSearchParams();
-  const { groupId } = useLocalSearchParams();
+  const { userId, groupId } = useLocalSearchParams();
   const router = useRouter();
 
   const [profile, setProfile] = useState(null);

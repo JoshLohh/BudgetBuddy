@@ -11,6 +11,7 @@ import { useGroupDetails } from '../../../hooks/useGroupDetails';
 import ExpenseList from './expenseList';
 import MembersDropdown from './membersDropdown';
 import SettlementList from './settlementList';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function GroupDetailScreen() {
   const { groupId } = useLocalSearchParams();
@@ -75,6 +76,7 @@ export default function GroupDetailScreen() {
     );
   }
   if (error) {
+    console.log(error)
     return (
       <ThemedView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ThemedText style={{ color: 'red' }}>{error}</ThemedText>
@@ -92,7 +94,10 @@ export default function GroupDetailScreen() {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 120 }}>
-        <Spacer height={70} />
+        <Spacer height={40} />
+        <TouchableOpacity onPress={() => router.navigate('/group/groups')}>
+            <Ionicons name="arrow-back" size={24} color="#1976d2" />
+        </TouchableOpacity>
         <GroupHeader
           group={currentGroup}
           totalExpenses={totalExpenses}
