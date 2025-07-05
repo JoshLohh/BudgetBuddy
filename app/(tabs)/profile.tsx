@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, cache } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -7,8 +7,10 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import { Image } from 'expo-image';
+import * as ImagePicker from 'expo-image-picker';
 import { useFocusEffect } from 'expo-router';
 import { useUser } from '@/hooks/useUser';
 import { useRouter } from 'expo-router';
@@ -17,16 +19,18 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedButton } from '@/components/ThemedButton';
 import ThemedTextInput from '@/components/ThemedTextInput';
 import Spacer from '@/components/Spacer';
-import { databases } from '@/lib/appwrite';
-import { Query } from 'appwrite';
+import { databases, client } from '@/lib/appwrite';
+import { Query, Storage, ID } from 'appwrite';
 
-const AVATAR_SIZE = 72;
+const AVATAR_SIZE = 150;
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
+const avatarbucketId = process.env.EXPO_PUBLIC_APPWRITE_AVATAR_BUCKET_ID ?? 'avatars';
+const storage = new Storage(client);
 
 export default function Profile() {
-  const { user, profile, updateProfile, logout, authChecked } = useUser();
+  const { user, profile, updateProfile, logout, authChecked, refetchProfile } = useUser();
   const router = useRouter();
 
   const [editing, setEditing] = useState(false);
@@ -35,6 +39,8 @@ export default function Profile() {
   const [bio, setBio] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [cacheBuster, setCacheBuster] = useState(Date.now());
 
   // Statistics state
   const [groupsCount, setGroupsCount] = useState(0);
@@ -106,6 +112,76 @@ export default function Profile() {
     }, [fetchStats])
   );
 
+  const handleAvatarChange = async () => {
+    console.log("avatar pressed");
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      alert('Permission to access gallery is required!');
+      return;
+    }
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: 'images',
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.7,
+      });
+      console.log("picker result:", result);
+      if (result.canceled) {
+        setUploading(false);
+        return;
+      }
+      setUploading(true);
+      const asset = result.assets[0];
+      const uri = asset.uri;
+      const fileName = uri.split('/').pop();
+      const fileId = Math.random().toString(36).substring(2, 18);
+
+      const formData = new FormData();
+      formData.append('fileId', fileId);
+      formData.append('file', {
+        uri,
+        name: fileName,
+        type: asset.mimeType || 'image/jpeg',
+      });
+
+      const endpoint = `${process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${avatarbucketId}/files`;
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'X-Appwrite-Project': process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
+        },
+        body: formData,
+      });
+
+      let fileRes;
+      try {
+        fileRes = await response.json();
+      } catch (e) {
+        setUploading(false);
+        alert('Upload failed: invalid response from server.');
+        return;
+      }
+
+      if (!response.ok) {
+        setUploading(false);
+        alert('Upload failed: ' + (fileRes?.message || response.status));
+        return;
+      }
+
+      const viewUrl = `${process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${avatarbucketId}/files/${fileRes.$id}/view?project=${process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID}&t=${Date.now()}`;
+      await updateProfile({ avatar: viewUrl });
+      if (typeof refetchProfile === 'function') {
+        await refetchProfile();
+      }
+      setCacheBuster(Date.now());
+    } catch (e) {
+      alert("Error picking image");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   // Handle logout and redirect to index
   const handleLogout = async () => {
@@ -150,9 +226,7 @@ export default function Profile() {
     );
   }
 
-  const avatarSource = profile?.avatar
-    ? { uri: profile.avatar }
-    : require('../../assets/images/default-avatar.png'); // Adjust path as needed
+  // console.log('Rendering avatar:', profile?.avatar);
 
   return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -160,11 +234,22 @@ export default function Profile() {
           <Spacer />
           {/* Top: Avatar + Username */}
           <View style={styles.topRow}>
-            <Image
-              source={avatarSource}
-              style={styles.avatar}
-              contentFit="cover"
-            />
+            <TouchableOpacity onPress={editing ? handleAvatarChange : undefined}>
+              <Image
+                key={profile?.avatar ? profile.avatar : 'default'}
+                source={
+                  profile?.avatar
+                    ? { uri: profile.avatar + `&cb=${cacheBuster}`, cache: 'reload' }
+                    : require('../../assets/images/default-avatar.png')
+                }
+                style={styles.avatar}
+                transition={300}
+              />
+              {uploading && (
+                <ActivityIndicator style={{ position: 'absolute', left: 24, top: 24 }} />
+              )}
+            </TouchableOpacity>
+
             <View style={styles.infoCol}>
               {!editing ? (
                 <ThemedText type="title" style={styles.username}>

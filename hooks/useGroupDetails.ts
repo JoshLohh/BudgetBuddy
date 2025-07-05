@@ -95,19 +95,25 @@ export function useGroupDetails(groupId) {
       setMemberProfiles([]);
       return;
     }
+
     setLoading(true);
     Promise.all(
       group.members.map(userId =>
         databases
           .getDocument(databaseId, usersCollectionId, userId)
-          .then(profile => ({ userId, username: profile.username }))
-          .catch(() => ({ userId, username: '(unknown)' }))
+          .then(profile => ({
+            userId: profile.$id,
+            username: profile.username,
+            avatar: profile.avatar || null, // <-- include avatar
+          }))
+          .catch(() => ({ userId, username: '(unknown)', avatar: null }))
       )
     ).then(profiles => {
       setMemberProfiles(profiles);
       setLoading(false);
     });
   }, [group]);
+
 
   // Helper to get username
   const getUsername = (userId) => {

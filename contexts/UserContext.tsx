@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import { account, databases } from "../lib/appwrite";
-import { APPWRITE_DATABASE_ID, APPWRITE_USERS_COLLECTION_ID } from '@/env';
+// import { APPWRITE_DATABASE_ID, APPWRITE_USERS_COLLECTION_ID } from '@/env';
 
 
 type UserContextType = {
@@ -11,7 +11,12 @@ type UserContextType = {
   logout: () => Promise<void>;
   updateProfile: (updates: { username?: string; email?: string; avatar?: string; bio?: string }) => Promise<void>;
   authChecked: boolean;
+  refetchProfile: () => Promise<any>;
 };
+
+const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
+const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?? '';
+
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -26,8 +31,8 @@ export function UserProvider({ children }: UserProviderProps) {
   const fetchProfile = async (userId: string) => {
     try {
       const doc = await databases.getDocument(
-        APPWRITE_DATABASE_ID!,
-        APPWRITE_USERS_COLLECTION_ID!,
+        databaseId!,
+        usersCollectionId!,
         userId
       );
       setProfile(doc);
@@ -36,6 +41,11 @@ export function UserProvider({ children }: UserProviderProps) {
       setProfile(null);
       return null;
     }
+  };
+
+  const refetchProfile = async () => {
+    if (!user) return null;
+    return await fetchProfile(user.$id);
   };
 
   async function register(username: string, email: string, password: string) {
@@ -70,8 +80,8 @@ export function UserProvider({ children }: UserProviderProps) {
     }
     // 2. Update in custom users collection
     const updated = await databases.updateDocument(
-      APPWRITE_DATABASE_ID,
-      APPWRITE_USERS_COLLECTION_ID,
+      databaseId,
+      usersCollectionId,
       profile.$id,
       {
         username: updates.username ?? profile.username,
@@ -107,7 +117,8 @@ export function UserProvider({ children }: UserProviderProps) {
       register,
       logout,
       updateProfile,
-      authChecked
+      authChecked, 
+      refetchProfile, 
     }}>
       {children}
     </UserContext.Provider>

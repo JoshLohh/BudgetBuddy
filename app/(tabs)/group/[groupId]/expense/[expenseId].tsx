@@ -5,9 +5,10 @@ import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import ThemedTextInput from '@/components/ThemedTextInput';
 import { ThemedButton } from '@/components/ThemedButton';
-import { ActivityIndicator, Alert } from 'react-native';
+import { ActivityIndicator, Alert, TouchableOpacity } from 'react-native';
 import Spacer from '@/components/Spacer';
 import BackButton from '@/components/BackButton';
+import { Ionicons } from '@expo/vector-icons';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
@@ -77,7 +78,9 @@ export default function ExpenseDetailScreen() {
   return (
     <ThemedView style={{ flex: 1, padding: 20 }}>
         <Spacer height={30}/>
-        <BackButton color="#1976d2" />
+        <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)}>
+            <Ionicons name="arrow-back" size={24} color="#1976d2" />
+        </TouchableOpacity>
         <Spacer height={80}/>
         
       <ThemedText type="title" style={{ marginBottom: 16 }}>Edit Expense</ThemedText>

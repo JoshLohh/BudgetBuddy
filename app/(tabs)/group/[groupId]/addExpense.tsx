@@ -171,7 +171,7 @@ export default function AddExpenseScreen() {
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 18 }}>
           <ThemedButton
             style={{ marginRight: 10, minWidth: 90 , backgroundColor: 'grey'}}
-            onPress={() => router.back()}
+            onPress={() => router.navigate(`/group/${groupId}`)}
           >
             <ThemedText style={{ color: '#fff' }}>Cancel</ThemedText>
           </ThemedButton>
