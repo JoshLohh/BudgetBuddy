@@ -39,7 +39,7 @@ export default function GroupsScreen() {
           style={styles.headerImage}
         />
       }>
-      <ThemedView>
+      <ThemedView style={styles.container}>
       <ThemedText type="title">My Groups</ThemedText>
 
       <FlatList
@@ -69,6 +69,10 @@ export default function GroupsScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#f2f2f2', 
+    padding: 10,                
+  },
   headerImage: {
     color: '#808080',
     bottom: -90,

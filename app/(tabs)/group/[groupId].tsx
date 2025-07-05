@@ -4,7 +4,7 @@ import { ThemedButton } from '@/components/ThemedButton';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Keyboard, KeyboardAvoidingView, Modal, Platform, TextInput, TouchableOpacity, TouchableWithoutFeedback, View , ScrollView} from 'react-native';
 import GroupHeader from '../../../components/GroupHeader';
 import { useGroupDetails } from '../../../hooks/useGroupDetails';
@@ -15,7 +15,6 @@ import SettlementList from './settlementList';
 export default function GroupDetailScreen() {
   const { groupId } = useLocalSearchParams();
   const router = useRouter();
-
   const {
     group,
     loading,
@@ -33,17 +32,23 @@ export default function GroupDetailScreen() {
     handleAddMember,
     handleRemoveMember,
     expenses,
-    // expensesToShow,
+    expensesToShow,
     expensesLoading,
-    // hasMoreExpenses,
-    // showAllExpenses,
-    // setShowAllExpenses,
+    hasMoreExpenses,
+    showAllExpenses,
+    setShowAllExpenses,
     settlements,
     settledSettlements,
     settleUp,
     getUsername,
     totalExpenses,
   } = useGroupDetails(groupId);
+
+  const [currentGroup, setCurrentGroup] = useState(group);
+
+  useEffect(() => {
+    setCurrentGroup(group);
+  }, [group]);
 
   type Expense = {
     $id: string;
@@ -57,12 +62,10 @@ export default function GroupDetailScreen() {
     username: string;
   };
 
-  // For see more/less
-  const [showAllExpenses, setShowAllExpenses] = React.useState(false);
-  const EXPENSES_PREVIEW_COUNT = 5;
+  // const EXPENSES_PREVIEW_COUNT = 5;
   //const expensesToShow = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
-  const expensesToShow: Expense[] = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
-  const hasMoreExpenses = expenses.length > EXPENSES_PREVIEW_COUNT;
+  // const expensesToShow: Expense[] = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
+  // const hasMoreExpenses = expenses.length > EXPENSES_PREVIEW_COUNT;
 
   if (loading) {
     return (
@@ -90,7 +93,11 @@ export default function GroupDetailScreen() {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 120 }}>
         <Spacer height={70} />
-        <GroupHeader group={group} totalExpenses={totalExpenses} />
+        <GroupHeader
+          group={currentGroup}
+          totalExpenses={totalExpenses}
+          onGroupUpdated={setCurrentGroup}
+        />
         <MembersDropdown
           group={group}
           membersExpanded={membersExpanded}
@@ -110,48 +117,15 @@ export default function GroupDetailScreen() {
         />
 
         {/* Expenses Section */}
-        <View style={{ marginTop: 18 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-            <ThemedText style={{ fontSize: 18, fontWeight: '600', marginBottom: 4 }}>Expenses</ThemedText>
-            {showAllExpenses && hasMoreExpenses && (
-              <TouchableOpacity onPress={() => setShowAllExpenses(false)}>
-                <ThemedText style={{ color: '#1e88e5', fontWeight: 'bold' }}>See Less</ThemedText>
-              </TouchableOpacity>
-            )}
-          </View>
-          {expensesLoading ? (
-            <ActivityIndicator />
-          ) : expensesToShow.length === 0 ? (
-            <ThemedText style={{ color: '#aaa', fontStyle: 'italic', marginLeft: 4 }}>No expenses yet.</ThemedText>
-          ) : (
-            expensesToShow.map(item => (
-              <ThemedView
-                key={item.$id}
-                style={{
-                  backgroundColor: '#f2f2f2',
-                  borderRadius: 10,
-                  padding: 12,
-                  marginBottom: 10,
-                }}
-              >
-                <ThemedText style={{ fontSize: 16, fontWeight: '600', marginBottom: 4, color: 'black' }}>{item.description}</ThemedText>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <ThemedText style={{ fontSize: 13, color: '#888' }}>
-                    Paid by: <ThemedText style={{ fontWeight: 'bold', color: '#444' }}>{getUsername(item.paidBy)}</ThemedText>
-                  </ThemedText>
-                  <ThemedText style={{ fontSize: 16, fontWeight: 'bold', color: '#1e88e5' }}>
-                    ${item.amount.toFixed(2)}
-                  </ThemedText>
-                </View>
-              </ThemedView>
-            ))
-          )}
-          {!showAllExpenses && hasMoreExpenses && (
-            <ThemedButton onPress={() => setShowAllExpenses(true)} style={{ marginTop: 8, backgroundColor: 'grey' }}>
-              <ThemedText style={{ color: '#fff', textAlign: 'center' }}>See More</ThemedText>
-            </ThemedButton>
-          )}
-        </View>
+        <ExpenseList
+          expenses={expenses}
+          expensesLoading={expensesLoading}
+          hasMoreExpenses={hasMoreExpenses}
+          showAllExpenses={showAllExpenses}
+          setShowAllExpenses={setShowAllExpenses}
+          getUsername={getUsername}
+        />
+        
         <Modal
           visible={searchModalVisible}
           animationType="slide"

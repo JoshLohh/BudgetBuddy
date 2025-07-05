@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useGroups } from '@/hooks/useGroups';
 import { useUser } from '@/hooks/useUser';
 import { useState } from 'react';
 import { ThemedButton } from '@/components/ThemedButton';
 import { ActivityIndicator, FlatList, TouchableOpacity, StyleSheet, Pressable, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
@@ -23,6 +23,12 @@ export default function GroupsScreen() {
   useEffect(() => {
     fetchGroups();
   }, [user]);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchGroups();
+    }, [fetchGroups])
+  );
 
   if (loading) {
     return <ActivityIndicator />;

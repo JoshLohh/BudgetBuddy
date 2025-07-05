@@ -86,6 +86,11 @@ export default function TabLayout() {
           name="groups"
           options={{ href: null }}
         />
+
+        <Tabs.Screen
+          name="group/[groupId]/expense/[expenseId]"
+          options={{ href: null }}
+        />
       </Tabs>
     </UserOnly>  
   );
