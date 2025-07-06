@@ -172,7 +172,7 @@ export default function AddExpenseScreen() {
               ]}
               type={category === cat.value ? undefined : 'secondary'}
             >
-              <Ionicons name={getCategoryIconName(cat.value)} size={22} color="#1976d2" />
+              <Ionicons name={getCategoryIconName(cat.value)} size={22} color={category === cat.value ? "#fff" : '#1976d2'}/>
               <ThemedText style={category === cat.value ? selectorButtonStyles.textActive : selectorButtonStyles.textInactive}>
                 {" "}{cat.label}
               </ThemedText>
