@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   totalCard: {
-    backgroundColor: '#fff', // Match the rest of the card/page if needed
+    backgroundColor: '#b3e0ff', 
     borderRadius: 10,
     paddingVertical: 8,
     paddingHorizontal: 18,
