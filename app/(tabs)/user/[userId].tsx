@@ -119,6 +119,11 @@ export default function UserProfileScreen() {
           </ThemedText>
         </View>
       </View>
+      {profile.bio ? (
+        <ThemedText style={{ fontSize: 15, marginLeft: 15, marginBottom: 20 }}>
+          {profile.bio}
+        </ThemedText>
+      ) : null}
       <View style={styles.statsCard}>
         <View style={styles.statBox}>
           <ThemedText style={styles.statValue}>{groupsCount}</ThemedText>

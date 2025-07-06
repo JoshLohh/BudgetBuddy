@@ -21,6 +21,7 @@ import ThemedTextInput from '@/components/ThemedTextInput';
 import Spacer from '@/components/Spacer';
 import { databases, client } from '@/lib/appwrite';
 import { Query, Storage, ID } from 'appwrite';
+import { Ionicons } from '@expo/vector-icons';
 
 const AVATAR_SIZE = 150;
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
@@ -78,11 +79,11 @@ export default function Profile() {
           )
           .then(expRes => {
             setUserExpensesCount(expRes.documents.length);
-            const total = expRes.documents.reduce(
-              (sum, doc) => sum + (parseFloat(doc.amount) || 0),
-              0
-            );
-            setUserTotalSpent(total);
+            const total = expRes.documents.reduce((sum, doc) => {
+              const amt = parseFloat(doc.amount);
+              return sum + (isNaN(amt) ? 0 : amt);
+            }, 0);
+            setUserTotalSpent(Number(total.toFixed(2)));
           })
           .catch(() => {
             setUserExpensesCount(0);
@@ -232,6 +233,11 @@ export default function Profile() {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <ThemedView style={styles.container}>
           <Spacer />
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 8 }}>
+            <TouchableOpacity onPress={() => router.push('/settings')}>
+              <Ionicons name="settings-outline" size={28} color="#1976d2" />
+            </TouchableOpacity>
+          </View>
           {/* Top: Avatar + Username */}
           <View style={styles.topRow}>
             <TouchableOpacity onPress={editing ? handleAvatarChange : undefined}>

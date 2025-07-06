@@ -19,7 +19,7 @@ export const Colors = {
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
     navBackground: "#e8e7ef",
-    uiBackGround: "##d6d5e1",
+    uiBackGround: "#d6d5e1",
   },
   dark: {
     text: '#ECEDEE',

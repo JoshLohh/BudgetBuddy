@@ -2,13 +2,14 @@ import React, { useCallback, useEffect } from 'react';
 import { useGroups } from '@/hooks/useGroups';
 import { useUser } from '@/hooks/useUser';
 import { useState } from 'react';
-import { ThemedButton } from '@/components/ThemedButton';
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { ActivityIndicator, FlatList, TouchableOpacity, StyleSheet, Pressable, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { ThemedButton } from '@/components/ThemedButton';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import Spacer from '@/components/Spacer';
 import ThemedCard from '@/components/ThemedCard';
@@ -19,6 +20,9 @@ export default function GroupsScreen() {
   const { user } = useUser();
   const router = useRouter();
   const[loading, setLoading] = useState(false)
+  const colorScheme = useColorScheme() ?? 'light';
+  const backgroundColor = Colors[colorScheme].background;
+  const cardBackground = Colors[colorScheme].uiBackGround || Colors[colorScheme].background;
 
   useEffect(() => {
     fetchGroups();
@@ -35,6 +39,7 @@ export default function GroupsScreen() {
   }
 
   return (
+    <ThemedView style={{ flex: 1, backgroundColor }}>
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
       headerImage={
@@ -45,7 +50,7 @@ export default function GroupsScreen() {
           style={styles.headerImage}
         />
       }>
-      <ThemedView>
+      <ThemedView >
       <ThemedText type="title" >My Groups</ThemedText>
 
       <FlatList
@@ -76,6 +81,7 @@ export default function GroupsScreen() {
     </ThemedView>
  
     </ParallaxScrollView>
+    </ThemedView>
   );
 }
 
