@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Image, TouchableOpacity, Text } from 'react-native';
 import { useLocalSearchParams, useRouter, useFocusEffect } from 'expo-router';
 import { databases } from '@/lib/appwrite';
 import { ThemedView } from '@/components/ThemedView';
@@ -20,6 +20,16 @@ export default function GroupHistoryPage() {
   const [settlements, setSettlements] = useState([]);
   const [userProfiles, setUserProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('DESC');
+
+  // to sort dates
+  const toggleSortOrder = () => setSortOrder(prev => (prev === 'ASC' ? 'DESC' : 'ASC'));
+
+
+
+  // to format dates
+  const formatDate = isoString =>
+  new Date(isoString).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 
   // Fetch all data on mount and when focused
   const fetchData = async () => {
@@ -77,7 +87,11 @@ export default function GroupHistoryPage() {
   const activity = [
     ...expenses.map(e => ({ ...e, type: 'expense', date: e.$createdAt })),
     ...settlements.map(s => ({ ...s, type: 'settlement', date: s.$createdAt })),
-  ].sort((a, b) => new Date(a.date) - new Date(b.date));
+  ].sort((a, b) =>
+    sortOrder === 'ASC'
+      ? new Date(a.date) - new Date(b.date)
+      : new Date(b.date) - new Date(a.date)
+  );
 
   return (
     <ThemedView style={{ flex: 1, padding: 16 }}>
@@ -85,7 +99,25 @@ export default function GroupHistoryPage() {
       <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)}>
         <Ionicons name="arrow-back" size={24} color="#1976d2" />
       </TouchableOpacity>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12, marginTop: 10 }}>
       <ThemedText type="title" style={{ marginBottom: 12, marginTop: 10 }}>Activity Log</ThemedText>
+        <TouchableOpacity
+          onPress={toggleSortOrder}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: 10,
+            paddingVertical: 4,
+            borderRadius: 8,
+            backgroundColor: '#f0f0f0'
+          }}
+        >
+          <Ionicons name={sortOrder === 'ASC' ? 'arrow-up' : 'arrow-down'} size={16} color="#1976d2" />
+          <Text style={{ color: '#1976d2', marginLeft: 4, fontWeight: 'bold' }}>
+            {sortOrder === 'ASC' ? 'Oldest' : 'Newest'}
+          </Text>
+        </TouchableOpacity>
+      </View>
       <ScrollView>
         {loading ? (
           <ThemedText>Loading...</ThemedText>
@@ -127,7 +159,14 @@ export default function GroupHistoryPage() {
                     }}
                     numberOfLines={3}
                   >
-                    paid ${parseFloat(item.amount).toFixed(2)} for "{item.description}"
+                    paid{" "}
+                    <Text style={{ color: '#1e88e5', fontWeight: 'bold'}}>
+                      ${parseFloat(item.amount).toFixed(2)}
+                    </Text> 
+                    {" "}for "{item.description}"
+                  </ThemedText>
+                  <ThemedText style={{ fontSize: 12, color: '#777', marginTop: 2 }}>
+                    {formatDate(item.date)}
                   </ThemedText>
                 </View>
               </View>
@@ -169,7 +208,13 @@ export default function GroupHistoryPage() {
                     <ThemedText style={{ fontWeight: 'bold' , color:'black'}}>
                       {getUserProfile(item.to).username}
                     </ThemedText>
-                    {' '}for ${parseFloat(item.amount).toFixed(2)}
+                    {' '}for{' '}
+                    <Text style={{ color: '#1e88e5', fontWeight: 'bold'}}>
+                      ${parseFloat(item.amount).toFixed(2)}
+                    </Text>
+                  </ThemedText>
+                  <ThemedText style={{ fontSize: 12, color: '#777', marginTop: 2 }}>
+                    {formatDate(item.date)}
                   </ThemedText>
                 </View>
               </View>

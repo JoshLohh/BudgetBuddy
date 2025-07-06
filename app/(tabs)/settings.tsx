@@ -51,7 +51,7 @@ export default function SettingsPage() {
         <ThemedView style={{ flex: 1, padding: 20 }}>
             <Spacer />
             <View style={{ flexDirection: 'row', marginBottom: 18 }}>
-                <TouchableOpacity onPress={() => router.back()}>
+                <TouchableOpacity onPress={() => router.navigate(`/profile`)}>
                 <Ionicons name="arrow-back" size={24} color="#1976d2" />
                 </TouchableOpacity>
                 <ThemedText type="title" style={{ marginLeft: 12 }}>Settings</ThemedText>

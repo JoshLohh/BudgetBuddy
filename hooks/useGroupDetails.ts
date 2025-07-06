@@ -25,7 +25,6 @@ export function useGroupDetails(groupId) {
   const [expensesLoading, setExpensesLoading] = useState(false);
   const [showAllExpenses, setShowAllExpenses] = useState(false);
   const [settlements, setSettlements] = useState([]);
-  const [settleUpIds, setSettleUpIds] = useState([]);
 
   const EXPENSES_PREVIEW_COUNT = 10;
 
@@ -132,14 +131,16 @@ export function useGroupDetails(groupId) {
   // Calculate balances and suggested settlements
   const balances = group ? calculateBalances(group.members, expenses, settlements) : {};
   const allSettlements = group ? calculateSettlements(balances) : [];
+  // Only show settlements that have not yet been recorded
+  const existingSettleKeys = new Set(
+    settlements.map(s => `${s.from}_${s.to}_${+parseFloat(s.amount).toFixed(2)}`)
+  );
+  const suggestedSettlements = allSettlements.filter(
+    s => !existingSettleKeys.has(`${s.from}_${s.to}_${+parseFloat(s.amount).toFixed(2)}`)
+  );
 
-  // Track which settlements have been marked as settled in UI (optional, for "Settle Up" button)
-  // const settledSettlements = allSettlements.filter(s => settleUpIds.includes(`${s.from}_${s.to}_${s.amount}`));
-  const unsettledSettlements = allSettlements.filter(s => !settleUpIds.includes(`${s.from}_${s.to}_${s.amount}`));
-
-  // Mark a settlement as settled (in-memory)
+  // Settle up: create a new settlement in Appwrite and refetch
   const settleUp = async (from, to, amount) => {
-    // Create a new settlement document in Appwrite
     await databases.createDocument(
       databaseId,
       settlementsCollectionId,
@@ -149,7 +150,6 @@ export function useGroupDetails(groupId) {
         from,
         to,
         amount,
-        // Optionally add a timestamp or other fields
       }
     );
     // Refetch settlements to update the UI
@@ -157,21 +157,11 @@ export function useGroupDetails(groupId) {
     setSettlements(res.documents);
   };
 
-  const existingSettleKeys = new Set(settlements.map(s => `${s.from}_${s.to}_${+parseFloat(s.amount).toFixed(2)}`));
-  const suggestedSettlements = allSettlements.filter(
-    s => !existingSettleKeys.has(`${s.from}_${s.to}_${+parseFloat(s.amount).toFixed(2)}`)
-  );
-  const settledSettlements = allSettlements.filter(
-    s => existingSettleKeys.has(`${s.from}_${s.to}_${+parseFloat(s.amount).toFixed(2)}`)
-  );
-
-  // Reset settledIds when expenses or members change
-  useEffect(() => {
-    setSettleUpIds([]);
-  }, [expenses.length, group?.members?.length]);
-
   // Total expenses
-  const totalExpenses = expenses.reduce((sum, exp) => sum + (parseFloat(exp.amount) || 0), 0);
+  const totalExpenses = expenses.reduce((sum, exp) => {
+    const amt = parseFloat(exp.amount);
+    return sum + (isNaN(amt) ? 0 : amt);
+  }, 0);
 
   // User search
   const handleSearch = async () => {
@@ -230,10 +220,8 @@ export function useGroupDetails(groupId) {
     hasMoreExpenses: expenses.length > EXPENSES_PREVIEW_COUNT,
     showAllExpenses,
     setShowAllExpenses,
-    settlements,
-    suggestedSettlements,
-    settledSettlements,
-    unsettledSettlements,
+    settlements, // for history page
+    suggestedSettlements, // for settlement list
     settleUp,
     getUsername,
     totalExpenses,
