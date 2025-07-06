@@ -115,7 +115,7 @@ export default function GroupHistoryPage() {
                   <Ionicons name="person-circle" size={32} color="#888" style={{ marginRight: 10 }} />
                 )}
                 <View style={{ flex: 1, minWidth: 0 }}>
-                  <ThemedText style={{ fontWeight: 'bold', fontSize: 15 }}>
+                  <ThemedText style={{ fontWeight: 'bold', fontSize: 15 , color:'black'}}>
                     {getUserProfile(item.paidBy).username}
                   </ThemedText>
                   <ThemedText
@@ -153,7 +153,7 @@ export default function GroupHistoryPage() {
                   <Ionicons name="person-circle" size={32} color="#888" style={{ marginRight: 10 }} />
                 )}
                 <View style={{ flex: 1, minWidth: 0 }}>
-                  <ThemedText style={{ fontWeight: 'bold', fontSize: 15 }}>
+                  <ThemedText style={{ fontWeight: 'bold', fontSize: 15 , color:'black'}}>
                     {getUserProfile(item.from).username}
                   </ThemedText>
                   <ThemedText
@@ -166,7 +166,7 @@ export default function GroupHistoryPage() {
                     numberOfLines={3}
                   >
                     settled up with{' '}
-                    <ThemedText style={{ fontWeight: 'bold' }}>
+                    <ThemedText style={{ fontWeight: 'bold' , color:'black'}}>
                       {getUserProfile(item.to).username}
                     </ThemedText>
                     {' '}for ${parseFloat(item.amount).toFixed(2)}

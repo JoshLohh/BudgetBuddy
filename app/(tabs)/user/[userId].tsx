@@ -187,7 +187,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 18,
     marginBottom: 24,
-    backgroundColor: '#f2f2f2',
   },
   statBox: {
     alignItems: 'center',

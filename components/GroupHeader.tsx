@@ -144,7 +144,7 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f2f2f2', // Match your page background
+    backgroundColor: '#fff', 
     padding: 10,
     marginBottom: 10,
     borderRadius: 12,
