@@ -6,6 +6,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import Spacer from '@/components/Spacer';
 import { Ionicons } from '@expo/vector-icons';
+import { getCategoryIconName } from '@/constants/categoryUtils';
 import { Query } from 'appwrite';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
@@ -169,6 +170,7 @@ export default function GroupHistoryPage() {
                     {formatDate(item.date)}
                   </ThemedText>
                 </View>
+                <Ionicons name={getCategoryIconName(item.category)} size={22} color="#1976d2" />
               </View>
             ) : (
               <View

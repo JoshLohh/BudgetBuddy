@@ -11,6 +11,7 @@ type Expense = {
   splitBetween: string[];     // user IDs
   splitType: string;          // 'equal' | 'exact' | 'percentage'
   customSplit: string;        // JSON string: { [userId]: number }
+  category: string;
   createdAt: string;
 };
 
@@ -57,6 +58,7 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           splitBetween: doc.splitBetween,
           splitType: doc.splitType,
           customSplit: doc.customSplit,
+          category: doc.category || 'Others',
           createdAt: doc.$createdAt,
         }))
       );
@@ -104,6 +106,7 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             splitBetween: doc.splitBetween,
             splitType: doc.splitType,
             customSplit: doc.customSplit,
+            category: doc.category || 'Others',
             createdAt: doc.$createdAt,
           },
           ...prev,

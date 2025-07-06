@@ -9,6 +9,7 @@ import { ActivityIndicator, Alert, ScrollView, View, Image, TouchableOpacity } f
 import Spacer from '@/components/Spacer';
 import BackButton from '@/components/BackButton';
 import { Ionicons } from '@expo/vector-icons';
+import { getCategoryIconName } from '@/constants/categoryUtils';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
@@ -203,6 +204,19 @@ export default function ExpenseDetailScreen() {
           placeholder="$0.00"
           style={{ marginBottom: 14 }}
         />
+
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+          <Ionicons name={getCategoryIconName(expense.category)} size={22} color="#1976d2" />
+          <ThemedText style={{ marginLeft: 8, fontWeight: 'bold', fontSize: 15 }}>
+            {expense?.category || "Others"}
+          </ThemedText>
+        </View>
+        <ThemedText style={{ fontSize: 14, color: '#888', marginBottom: 8 }}>
+          Paid by: <ThemedText style={{ fontWeight: 'bold', color: '#1976d2' }}>
+            {userProfiles.find(u => u.userId === expense?.paidBy)?.username || expense?.paidBy}
+          </ThemedText>
+        </ThemedText>
+
 
         <ThemedText style={{ fontWeight: 'bold', marginBottom: 4 }}>Split Between</ThemedText>
         <View style={{ flexWrap: 'wrap', flexDirection: 'row', marginBottom: 14 }}>

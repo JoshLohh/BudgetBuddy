@@ -1,5 +1,3 @@
-// addExpense.tsx
-
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -11,6 +9,8 @@ import { ThemedButton } from '@/components/ThemedButton';
 import Spacer from '@/components/Spacer';
 import { ID } from 'appwrite';
 import { Image } from 'expo-image';
+import { Ionicons } from '@expo/vector-icons';
+import { CATEGORIES, getCategoryIconName } from '@/constants/categoryUtils';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
@@ -37,6 +37,7 @@ export default function AddExpenseScreen() {
   const [customSplit, setCustomSplit] = useState<{ [userId: string]: string }>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [category, setCategory] = useState('Others');
 
   useEffect(() => {
     if (!groupId) return;
@@ -118,6 +119,7 @@ export default function AddExpenseScreen() {
           splitBetween,
           splitType,
           customSplit: splitType === 'equal' ? '' : JSON.stringify(customSplit),
+          category,
         }
       );
       router.replace({ pathname: '/group/[groupId]', params: { groupId } });
@@ -155,6 +157,28 @@ export default function AddExpenseScreen() {
           leftIcon="$"
           style={{ marginBottom: 14 }}
         />
+
+        {/* Category */}
+        <ThemedText style={{ fontWeight: 'bold', marginBottom: 4, fontSize: 16 }}>Category</ThemedText>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 12 }}>
+          {CATEGORIES.map(cat => (
+            <ThemedButton
+              key={cat.value}
+              onPress={() => setCategory(cat.value)}
+              style={[
+                selectorButtonStyles.base,
+                category === cat.value ? selectorButtonStyles.active : selectorButtonStyles.inactive,
+                { flexDirection: 'row', alignItems: 'center', minWidth: 120 }
+              ]}
+              type={category === cat.value ? undefined : 'secondary'}
+            >
+              <Ionicons name={getCategoryIconName(cat.value)} size={22} color="#1976d2" />
+              <ThemedText style={category === cat.value ? selectorButtonStyles.textActive : selectorButtonStyles.textInactive}>
+                {" "}{cat.label}
+              </ThemedText>
+            </ThemedButton>
+          ))}
+        </View>
 
         {/* Paid By */}
         <ThemedText style={{ fontWeight: 'bold', marginBottom: 4, fontSize: 16 }}>Paid By</ThemedText>

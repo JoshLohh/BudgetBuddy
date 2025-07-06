@@ -9,6 +9,9 @@ import {
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedButton } from '@/components/ThemedButton';
+import { Ionicons } from '@expo/vector-icons';
+import { getCategoryIconName } from '@/constants/categoryUtils';
+import Spacer from '@/components/Spacer';
 
 type Expense = {
   $id: string;
@@ -73,6 +76,9 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
               style={styles.expenseTouchable}
             >
               <ThemedView style={styles.expenseRow}>
+                <Ionicons name={getCategoryIconName(item.category)} size={22} color="#1976d2" />
+                <Spacer width={15}/>
+                <View style={{ flex: 1, minWidth: 0 }}>
                 <ThemedText style={styles.expenseDescription}>
                   {item.description}
                 </ThemedText>
@@ -86,6 +92,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
                   <ThemedText style={styles.expenseAmount}>
                     ${parseFloat(item.amount as string).toFixed(2)}
                   </ThemedText>
+                </View>
                 </View>
               </ThemedView>
             </TouchableOpacity>
@@ -125,6 +132,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f7f7f7',
     borderRadius: 8,
     padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   expenseDescription: {
     fontSize: 16,
