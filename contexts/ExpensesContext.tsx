@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useCallback, useState } from 'react';
-import { databases } from '@/lib/appwrite'; 
-import { ID, Query } from 'react-native-appwrite';
+import { databases } from '@/lib/appwrite';
+import { ID, Query } from 'appwrite';
 
 type Expense = {
   $id: string;
@@ -8,7 +8,9 @@ type Expense = {
   amount: number;
   description: string;
   paidBy: string;
-  split: Record<string, number>; // userId -> share
+  splitBetween: string[];     // user IDs
+  splitType: string;          // 'equal' | 'exact' | 'percentage'
+  customSplit: string;        // JSON string: { [userId]: number }
   createdAt: string;
 };
 
@@ -21,7 +23,9 @@ type ExpensesContextType = {
     amount: number,
     description: string,
     paidBy: string,
-    split: Record<string, number>
+    splitBetween: string[],
+    splitType: string,
+    customSplit: string
   ) => Promise<void>;
 };
 
@@ -31,7 +35,6 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Make sure these env vars are set in your .env and app.config.js
   const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
   const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
 
@@ -44,7 +47,6 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         expensesCollectionId,
         [Query.equal('groupId', groupId), Query.orderDesc('$createdAt')]
       );
-      // Map each document to your Expense type
       setExpenses(
         res.documents.map((doc: any) => ({
           $id: doc.$id,
@@ -52,8 +54,10 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           amount: doc.amount,
           description: doc.description,
           paidBy: doc.paidBy,
-          split: doc.split,
-          createdAt: doc.createdAt,
+          splitBetween: doc.splitBetween,
+          splitType: doc.splitType,
+          customSplit: doc.customSplit,
+          createdAt: doc.$createdAt,
         }))
       );
     } catch (e) {
@@ -69,7 +73,9 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       amount: number,
       description: string,
       paidBy: string,
-      split: Record<string, number>
+      splitBetween: string[],
+      splitType: string,
+      customSplit: string
     ) => {
       setLoading(true);
       try {
@@ -82,7 +88,9 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             amount,
             description,
             paidBy,
-            split,
+            splitBetween,
+            splitType,
+            customSplit,
             createdAt: new Date().toISOString(),
           }
         );
@@ -93,8 +101,10 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             amount: doc.amount,
             description: doc.description,
             paidBy: doc.paidBy,
-            split: doc.split,
-            createdAt: doc.createdAt,
+            splitBetween: doc.splitBetween,
+            splitType: doc.splitType,
+            customSplit: doc.customSplit,
+            createdAt: doc.$createdAt,
           },
           ...prev,
         ]);

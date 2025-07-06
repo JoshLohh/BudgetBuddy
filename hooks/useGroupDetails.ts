@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { databases } from '@/lib/appwrite';
-import { Query } from 'appwrite';
+import { Query, ID } from 'appwrite';
 import { useFocusEffect } from 'expo-router';
-import { calculateBalances, calculateSettlements } from './settlementUtils';
 import React from 'react';
+import { calculateBalances, calculateSettlements } from './settlementUtils';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
 const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
+const settlementsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_SETTLEMENTS_COLLECTION_ID ?? '';
 
 export function useGroupDetails(groupId) {
   const [group, setGroup] = useState(null);
@@ -23,9 +24,8 @@ export function useGroupDetails(groupId) {
   const [expenses, setExpenses] = useState([]);
   const [expensesLoading, setExpensesLoading] = useState(false);
   const [showAllExpenses, setShowAllExpenses] = useState(false);
-
-  // Settled settlements for this group (in-memory, not persisted)
-  const [settledIds, setSettledIds] = useState<string[]>([]);
+  const [settlements, setSettlements] = useState([]);
+  const [settleUpIds, setSettleUpIds] = useState([]);
 
   const EXPENSES_PREVIEW_COUNT = 10;
 
@@ -58,11 +58,7 @@ export function useGroupDetails(groupId) {
     if (!groupId) return;
     setExpensesLoading(true);
     databases
-      .listDocuments(
-        databaseId,
-        expensesCollectionId,
-        [Query.equal('groupId', groupId)]
-      )
+      .listDocuments(databaseId, expensesCollectionId, [Query.equal('groupId', groupId)])
       .then(res => {
         setExpenses(res.documents);
         setExpensesLoading(false);
@@ -70,22 +66,36 @@ export function useGroupDetails(groupId) {
       .catch(() => setExpensesLoading(false));
   }, [groupId]);
 
-  // Refetch expenses on focus
+  // Fetch settlements
+  useEffect(() => {
+    if (!groupId) return;
+    databases
+      .listDocuments(databaseId, settlementsCollectionId, [Query.equal('groupId', groupId)])
+      .then(res => {
+        setSettlements(res.documents);
+      })
+      .catch(() => setSettlements([]));
+  }, [groupId]);
+
+  // Refetch expenses and settlements on focus
   useFocusEffect(
     React.useCallback(() => {
       if (!groupId) return;
       setExpensesLoading(true);
       databases
-        .listDocuments(
-          databaseId,
-          expensesCollectionId,
-          [Query.equal('groupId', groupId)]
-        )
+        .listDocuments(databaseId, expensesCollectionId, [Query.equal('groupId', groupId)])
         .then(res => {
           setExpenses(res.documents);
           setExpensesLoading(false);
         })
         .catch(() => setExpensesLoading(false));
+
+      databases
+        .listDocuments(databaseId, settlementsCollectionId, [Query.equal('groupId', groupId)])
+        .then(res => {
+          setSettlements(res.documents);
+        })
+        .catch(() => setSettlements([]));
     }, [groupId])
   );
 
@@ -95,7 +105,6 @@ export function useGroupDetails(groupId) {
       setMemberProfiles([]);
       return;
     }
-
     setLoading(true);
     Promise.all(
       group.members.map(userId =>
@@ -104,7 +113,7 @@ export function useGroupDetails(groupId) {
           .then(profile => ({
             userId: profile.$id,
             username: profile.username,
-            avatar: profile.avatar || null, // <-- include avatar
+            avatar: profile.avatar || null,
           }))
           .catch(() => ({ userId, username: '(unknown)', avatar: null }))
       )
@@ -114,100 +123,90 @@ export function useGroupDetails(groupId) {
     });
   }, [group]);
 
-
   // Helper to get username
-  const getUsername = (userId) => {
+  const getUsername = userId => {
     const profile = memberProfiles.find(p => p.userId === userId);
     return profile ? profile.username : userId;
   };
 
-  // Search for users by username
+  // Calculate balances and suggested settlements
+  const balances = group ? calculateBalances(group.members, expenses, settlements) : {};
+  const allSettlements = group ? calculateSettlements(balances) : [];
+
+  // Track which settlements have been marked as settled in UI (optional, for "Settle Up" button)
+  // const settledSettlements = allSettlements.filter(s => settleUpIds.includes(`${s.from}_${s.to}_${s.amount}`));
+  const unsettledSettlements = allSettlements.filter(s => !settleUpIds.includes(`${s.from}_${s.to}_${s.amount}`));
+
+  // Mark a settlement as settled (in-memory)
+  const settleUp = async (from, to, amount) => {
+    // Create a new settlement document in Appwrite
+    await databases.createDocument(
+      databaseId,
+      settlementsCollectionId,
+      ID.unique(),
+      {
+        groupId: group.id,
+        from,
+        to,
+        amount,
+        // Optionally add a timestamp or other fields
+      }
+    );
+    // Refetch settlements to update the UI
+    const res = await databases.listDocuments(databaseId, settlementsCollectionId, [Query.equal('groupId', group.id)]);
+    setSettlements(res.documents);
+  };
+
+  const existingSettleKeys = new Set(settlements.map(s => `${s.from}_${s.to}_${+parseFloat(s.amount).toFixed(2)}`));
+  const suggestedSettlements = allSettlements.filter(
+    s => !existingSettleKeys.has(`${s.from}_${s.to}_${+parseFloat(s.amount).toFixed(2)}`)
+  );
+  const settledSettlements = allSettlements.filter(
+    s => existingSettleKeys.has(`${s.from}_${s.to}_${+parseFloat(s.amount).toFixed(2)}`)
+  );
+
+  // Reset settledIds when expenses or members change
+  useEffect(() => {
+    setSettleUpIds([]);
+  }, [expenses.length, group?.members?.length]);
+
+  // Total expenses
+  const totalExpenses = expenses.reduce((sum, exp) => sum + (parseFloat(exp.amount) || 0), 0);
+
+  // User search
   const handleSearch = async () => {
     setSearching(true);
     try {
-      // const queries = searchQuery.trim()
-      //   ? [Query.search('username', searchQuery.trim())]
-      //   : [];
-      // const res = await databases.listDocuments(
-      //   databaseId,
-      //   usersCollectionId,
-      //   queries
-      // );
-      // setSearchResults(res.documents);
       const res = await databases.listDocuments(databaseId, usersCollectionId, [Query.limit(100)]);
-      console.log('[handleSearch] Fetched users:', res.documents.map(doc => doc.username));
       const filtered = res.documents.filter(doc =>
         doc.username?.toLowerCase().includes(searchQuery.trim().toLowerCase())
       );
-      console.log('[handleSearch] Filtered users:', filtered.map(doc => doc.username));
       setSearchResults(filtered);
-
     } catch (e) {
-      console.error('[handleSearch] Error:', e);
       setSearchResults([]);
     }
     setSearching(false);
   };
 
-
-  // Add member to group
+  // Add member
   const handleAddMember = async userId => {
     if (!group) return;
     if (group.members.includes(userId)) return;
     const updatedMembers = [...group.members, userId];
-    await databases.updateDocument(
-      databaseId,
-      groupsCollectionId,
-      group.id,
-      { members: updatedMembers }
-    );
+    await databases.updateDocument(databaseId, groupsCollectionId, group.id, { members: updatedMembers });
     setGroup({ ...group, members: updatedMembers });
     setSearchModalVisible(false);
     setSearchQuery('');
     setSearchResults([]);
   };
 
-  // Remove member from group
+  // Remove member
   const handleRemoveMember = async userId => {
     if (!group) return;
     const updatedMembers = group.members.filter(id => id !== userId);
-    await databases.updateDocument(
-      databaseId,
-      groupsCollectionId,
-      group.id,
-      { members: updatedMembers }
-    );
+    await databases.updateDocument(databaseId, groupsCollectionId, group.id, { members: updatedMembers });
     setGroup({ ...group, members: updatedMembers });
   };
-
-  // Expenses preview logic
-  const expensesToShow = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
-  const hasMoreExpenses = expenses.length > EXPENSES_PREVIEW_COUNT;
-
-  // Calculate settlements (exclude settled)
-  const balances = group ? calculateBalances(group.members, expenses) : {};
-  const allSettlements = calculateSettlements(balances);
-
-  // Only show settlements that have NOT been settled
-  const settlements = allSettlements.filter(
-    (s, idx) => !settledIds.includes(`${s.from}_${s.to}_${s.amount}`)
-  );
-  const settledSettlements = allSettlements.filter(
-    (s, idx) => settledIds.includes(`${s.from}_${s.to}_${s.amount}`)
-  );
-
-  // Mark a settlement as settled (in-memory)
-  const settleUp = (from: string, to: string, amount: number) => {
-    setSettledIds(prev => [...prev, `${from}_${to}_${amount}`]);
-  };
-
-  // Reset settledIds when expenses or members change (new expense = new round of settlements)
-  useEffect(() => {
-    setSettledIds([]);
-  }, [expenses.length, group?.members?.length]);
-
-  // Total expenses
-  const totalExpenses = expenses.reduce((sum, exp) => sum + (parseFloat(exp.amount) || 0), 0);
 
   return {
     group,
@@ -227,12 +226,14 @@ export function useGroupDetails(groupId) {
     handleRemoveMember,
     expenses,
     expensesLoading,
-    expensesToShow,
-    hasMoreExpenses,
+    expensesToShow: showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT),
+    hasMoreExpenses: expenses.length > EXPENSES_PREVIEW_COUNT,
     showAllExpenses,
     setShowAllExpenses,
     settlements,
+    suggestedSettlements,
     settledSettlements,
+    unsettledSettlements,
     settleUp,
     getUsername,
     totalExpenses,

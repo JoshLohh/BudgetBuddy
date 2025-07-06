@@ -38,7 +38,7 @@ export default function GroupDetailScreen() {
     hasMoreExpenses,
     showAllExpenses,
     setShowAllExpenses,
-    settlements,
+    suggestedSettlements,
     settledSettlements,
     settleUp,
     getUsername,
@@ -98,6 +98,7 @@ export default function GroupDetailScreen() {
         <TouchableOpacity onPress={() => router.navigate('/group/groups')}>
             <Ionicons name="arrow-back" size={24} color="#1976d2" />
         </TouchableOpacity>
+        <Spacer height={10} />
         <GroupHeader
           group={currentGroup}
           totalExpenses={totalExpenses}
@@ -115,7 +116,7 @@ export default function GroupDetailScreen() {
           <ThemedText style={{ color: '#fff', textAlign: 'center' }}>Add Expense</ThemedText>
         </ThemedButton>
         <SettlementList
-          settlements={settlements}
+          settlements={suggestedSettlements}
           settledSettlements={settledSettlements}
           getUsername={getUsername}
           settleUp={settleUp}

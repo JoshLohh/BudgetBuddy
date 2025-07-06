@@ -1,9 +1,8 @@
-import React from 'react';
-import { View } from 'react-native';
-import { ThemedView } from '@/components/ThemedView';
+import React, { useState } from 'react';
+import { View, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
-import { Ionicons } from '@expo/vector-icons';
 import { ThemedButton } from '@/components/ThemedButton';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function SettlementList({
   settlements,
@@ -11,72 +10,58 @@ export default function SettlementList({
   getUsername,
   settleUp,
 }) {
+  const [processing, setProcessing] = useState('');
+
+  const handleSettleUp = (from, to, amount) => {
+    Alert.alert(
+      'Confirm Settle Up',
+      `Are you sure you want to settle $${amount.toFixed(2)} from ${getUsername(from)} to ${getUsername(to)}?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Confirm',
+          onPress: async () => {
+            setProcessing(`${from}_${to}_${amount}`);
+            await settleUp(from, to, amount);
+            setProcessing('');
+          },
+        },
+      ]
+    );
+  };
+
   return (
-    <View style={{ marginTop: 18 }}>
-      <ThemedText style={{ fontSize: 18, fontWeight: '600', marginBottom: 4 }}>Settlements</ThemedText>
+    <View style={{ marginTop: 12 }}>
+      <ThemedText type="subtitle" style={{ fontWeight: 'bold', marginBottom: 8 }}>Settlements</ThemedText>
       {settlements.length === 0 && settledSettlements.length === 0 ? (
-        <ThemedText style={{ color: '#aaa', fontStyle: 'italic', marginLeft: 4 }}>
-          No settlements needed.
-        </ThemedText>
+        <ThemedText>No settlements needed.</ThemedText>
       ) : (
         <>
-          {/* Unsettled settlements */}
-          {settlements.map(({ from, to, amount }, idx) => (
-            <ThemedView
-              key={`${from}_${to}_${amount}_${idx}`}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: '#f2f2f2',
-                borderRadius: 8,
-                padding: 10,
-                marginBottom: 8,
-              }}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <ThemedText style={{ fontSize: 16, color: '#333' }}>
-                  {getUsername(from)} <Ionicons name="arrow-forward" size={16} /> {getUsername(to)}
-                </ThemedText>
-              </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <ThemedText style={{ fontWeight: 'bold', color: '#1e88e5', fontSize: 16, marginRight: 10 }}>
-                  ${amount.toFixed(2)}
-                </ThemedText>
-                <ThemedButton
-                  style={{ paddingHorizontal: 12, paddingVertical: 4, borderRadius: 6 }}
-                  onPress={() => settleUp(from, to, amount)}
-                >
-                  <ThemedText style={{ color: '#fff' }}>Settle Up</ThemedText>
-                </ThemedButton>
-              </View>
-            </ThemedView>
-          ))}
-          {/* Settled settlements (faded, with checkmark) */}
-          {settledSettlements.map(({ from, to, amount }, idx) => (
-            <ThemedView
-              key={`${from}_${to}_${amount}_${idx}_settled`}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: '#e0e0e0',
-                borderRadius: 8,
-                padding: 10,
-                marginBottom: 8,
-                opacity: 0.5,
-              }}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <ThemedText style={{ fontSize: 16, color: '#333' }}>
-                  {getUsername(from)} <Ionicons name="arrow-forward" size={16} /> {getUsername(to)}
-                </ThemedText>
-                <Ionicons name="checkmark-circle" size={18} color="#4caf50" style={{ marginLeft: 8 }} />
-              </View>
-              <ThemedText style={{ fontWeight: 'bold', color: '#1e88e5', fontSize: 16 }}>
-                ${amount.toFixed(2)}
+          {/* Unsettled suggested settlements */}
+          {settlements.map(({ from, to, amount }) => (
+            <View key={`${from}_${to}_${amount}`} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+              <ThemedText style={{ flex: 1 }}>
+                {getUsername(from)} <Ionicons name="arrow-forward" size={16} color="#1976d2" /> {getUsername(to)}
               </ThemedText>
-            </ThemedView>
+              <ThemedText style={{ width: 80 }}>${amount.toFixed(2)}</ThemedText>
+              <ThemedButton
+                onPress={() => handleSettleUp(from, to, amount)}
+                disabled={processing === `${from}_${to}_${amount}`}
+                style={{ marginLeft: 10, minWidth: 90 }}
+              >
+                <ThemedText style={{ color:"#fff" }}>Settle Up</ThemedText>
+              </ThemedButton>
+            </View>
+          ))}
+          {/* Settled settlements (show as ticked/faded) */}
+          {settledSettlements.map(({ from, to, amount }) => (
+            <View key={`settled_${from}_${to}_${amount}`} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8, opacity: 0.5 }}>
+              <Ionicons name="checkmark-circle" size={18} color="#4caf50" style={{ marginRight: 4 }} />
+              <ThemedText style={{ flex: 1 }}>
+                {getUsername(from)} <Ionicons name="arrow-forward" size={14} color="#1976d2" /> {getUsername(to)}
+              </ThemedText>
+              <ThemedText style={{ width: 80 }}>${amount.toFixed(2)}</ThemedText>
+            </View>
           ))}
         </>
       )}

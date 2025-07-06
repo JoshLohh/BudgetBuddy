@@ -7,6 +7,7 @@ import { ThemedButton } from '@/components/ThemedButton';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import { databases } from '@/lib/appwrite';
+import { router } from 'expo-router';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
@@ -107,6 +108,22 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }) {
           <ThemedText style={styles.membersCount}>
             {group.members?.length ?? 0} member{(group.members?.length ?? 0) !== 1 ? 's' : ''}
           </ThemedText>
+          <ThemedButton
+            onPress={() => router.push({ pathname: '/group/[groupId]/history', params: { groupId: group.id } })}
+            style={{
+              marginTop: 4,           
+              marginBottom: 4,        
+              height: 32,             
+              alignSelf: 'flex-start',    
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingVertical: 0,
+              paddingHorizontal: 14,
+              minWidth: 200,
+            }}
+          >
+            <ThemedText style={{ textAlign: 'center', fontSize: 12, color:'#fff' }}>View Activity Log</ThemedText>
+          </ThemedButton>
         </View>
         <View style={styles.rightCol}>
           <View style={styles.totalCard}>

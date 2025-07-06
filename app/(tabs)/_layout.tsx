@@ -88,6 +88,11 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
+          name="group/[groupId]/history"
+          options={{ href: null }}
+        />
+
+        <Tabs.Screen
           name="group/[groupId]/expense/[expenseId]"
           options={{ href: null }}
         />
