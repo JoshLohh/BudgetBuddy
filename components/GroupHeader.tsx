@@ -12,7 +12,19 @@ import { router } from 'expo-router';
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
 
-export default function GroupHeader({ group, totalExpenses, onGroupUpdated }) {
+interface GroupHeaderProps {
+  group: {
+    id: string;
+    title: string;
+    description?: string;
+    members: string[];
+    // add any other fields your group object uses
+  };
+  totalExpenses: number;
+  onGroupUpdated?: (group: any) => void; // Replace 'any' with your group type if available
+}
+
+export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: GroupHeaderProps) {
   const [editing, setEditing] = useState(false);
   const [title, setTitle] = useState(group?.title || '');
   const [description, setDescription] = useState(group?.description || '');
@@ -55,14 +67,14 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }) {
       <ThemedView style={styles.container}>
         <View style={styles.topRow}>
           <View style={styles.leftCol}>
+            <ThemedText style={{ fontWeight: 'bold', marginBottom: 4 , marginLeft: 4 }}>Title</ThemedText>
             <ThemedTextInput
-              label="Group Name"
               value={title}
               onChangeText={setTitle}
               style={{ marginBottom: 8 }}
             />
+            <ThemedText style={{ fontWeight: 'bold', marginBottom: 4 , marginLeft: 4 }}>Description</ThemedText>
             <ThemedTextInput
-              label="Description"
               value={description}
               onChangeText={setDescription}
               style={{ marginBottom: 8 }}

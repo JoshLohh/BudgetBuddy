@@ -12,9 +12,11 @@ import ExpenseList from './expenseList';
 import MembersDropdown from './membersDropdown';
 import SettlementList from './settlementList';
 import { Ionicons } from '@expo/vector-icons';
+import { useUser } from '@/hooks/useUser';
 
 export default function GroupDetailScreen() {
   const { groupId } = useLocalSearchParams();
+  const { user } = useUser();
   const router = useRouter();
   const {
     group,
@@ -39,7 +41,6 @@ export default function GroupDetailScreen() {
     showAllExpenses,
     setShowAllExpenses,
     suggestedSettlements,
-    settledSettlements,
     settleUp,
     getUsername,
     totalExpenses,
@@ -94,7 +95,7 @@ export default function GroupDetailScreen() {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 120 }}>
-        <Spacer height={40} />
+        <Spacer height={30} />
         <TouchableOpacity onPress={() => router.navigate('/group/groups')}>
             <Ionicons name="arrow-back" size={24} color="#0a7ea4" />
         </TouchableOpacity>
@@ -116,10 +117,11 @@ export default function GroupDetailScreen() {
           <ThemedText style={{ color: '#fff', textAlign: 'center' }}>Add Expense</ThemedText>
         </ThemedButton>
         <SettlementList
-          settlements={suggestedSettlements}
-          settledSettlements={settledSettlements}
+          suggestedSettlements={suggestedSettlements}
+          // settledSettlements={settledSettlements}
           getUsername={getUsername}
           settleUp={settleUp}
+          currentUserId={user.$id}
         />
 
         {/* Expenses Section */}

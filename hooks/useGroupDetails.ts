@@ -131,6 +131,7 @@ export function useGroupDetails(groupId) {
   // Calculate balances and suggested settlements
   const balances = group ? calculateBalances(group.members, expenses, settlements) : {};
   const allSettlements = group ? calculateSettlements(balances) : [];
+
   // Only show settlements that have not yet been recorded
   const existingSettleKeys = new Set(
     settlements.map(s => `${s.from}_${s.to}_${+parseFloat(s.amount).toFixed(2)}`)

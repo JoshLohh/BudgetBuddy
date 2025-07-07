@@ -5,10 +5,44 @@ import { ThemedButton } from '@/components/ThemedButton';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function SettlementList({
-  settlements,      // this should be suggestedSettlements from your hook
+  suggestedSettlements,
   getUsername,
   settleUp,
+  currentUserId,
 }) {
+  
+  // Filter settlements for this user
+  const userSettlements = suggestedSettlements.filter(
+    s => s.from === currentUserId || s.to === currentUserId
+  );
+
+  // Calculate net balance
+  let netBalance = 0;
+  suggestedSettlements.forEach(s => {
+    if (s.to === currentUserId) netBalance += s.amount;
+    else if (s.from === currentUserId) netBalance -= s.amount;
+  });
+
+  // Helper for owed/owing statement
+  let statement = '';
+  if (userSettlements.length === 0) {
+    statement = 'No settlements needed.';
+  } else if (netBalance > 0) {
+    statement = `You are owed $${netBalance.toFixed(2)}`;
+  } else if (netBalance < 0) {
+    statement = `You owe $${Math.abs(netBalance).toFixed(2)}`;
+  } else {
+    statement = 'No settlements needed.';
+  }
+
+  // Determine Statement Colour
+  let statementColor = '#888'; // default grey
+  if (netBalance > 0) {
+    statementColor = '#00b359'; // green
+  } else if (netBalance < 0) {
+    statementColor = '#ff5050'; // red
+  }
+
   const [processing, setProcessing] = useState('');
 
   const handleSettleUp = (from, to, amount) => {
@@ -34,15 +68,19 @@ export default function SettlementList({
       <ThemedText type="subtitle" style={{ fontWeight: 'bold', marginBottom: 8 }}>
         Suggested Settlements
       </ThemedText>
-      {settlements.length === 0 ? (
-        <ThemedText>No settlements needed.</ThemedText>
+      <ThemedText style={{ fontWeight:'bold', color: statementColor }}>
+        {statement}
+      </ThemedText>
+      {userSettlements.length === 0 ? (
+        // <ThemedText>No settlements needed.</ThemedText>
+        <></>
       ) : (
-        settlements.map(({ from, to, amount }) => (
+        userSettlements.map(({ from, to, amount }) => (
           <View
             key={`${from}_${to}_${amount}`}
             style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}
           >
-            <ThemedText style={{ flex: 1 }}>
+            <ThemedText style={{ flex: 1 , fontWeight:'bold'}}>
               {getUsername(from)} <Ionicons name="arrow-forward" size={16} color="#1976d2" /> {getUsername(to)}
             </ThemedText>
             <ThemedText style={{ width: 80 , color: '#1e88e5', fontWeight: 'bold'}}>${amount.toFixed(2)}</ThemedText>
@@ -55,7 +93,7 @@ export default function SettlementList({
             </ThemedButton>
           </View>
         ))
-      )}
+      )} 
     </View>
   );
 }
