@@ -10,6 +10,9 @@ import { CATEGORIES, getCategoryIconName } from '@/constants/categoryUtils';
 import CenterLogo from '@/assets/images/logo.png';
 import Spacer from '@/components/Spacer';
 import { Query } from 'appwrite';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { useColorScheme } from '@/hooks/useColorScheme.web';
+import { Colors } from '@/constants/Colors';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
@@ -46,6 +49,8 @@ export default function GroupReportPage() {
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState<'categories' | 'members'>('categories');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const colorScheme = useColorScheme() ?? 'light';
+  const chartBackground = Colors[colorScheme].background;
 
   useEffect(() => {
     let isMounted = true;
@@ -121,9 +126,9 @@ export default function GroupReportPage() {
 
   return (
     <ThemedView style={{ flex: 1, padding: 20 }}>
-        <Spacer />
-      <TouchableOpacity onPress={() => router.back()} style={{ marginBottom: 12 }}>
-        <Ionicons name="arrow-back" size={24} color="#1976d2" />
+        <Spacer height={30}/>
+      <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)} style={{ marginBottom: 12 }}>
+        <Ionicons name="arrow-back" size={24} color={Colors.primary} />
       </TouchableOpacity>
 
       <View style={styles.headerRow}>
@@ -139,7 +144,7 @@ export default function GroupReportPage() {
               setSelectedIndex(null);
             }}
           >
-            <Ionicons name="pricetags" size={16} color={mode === 'categories' ? '#fff' : '#1976d2'} />
+            <Ionicons name="pricetags" size={16} color={mode === 'categories' ? '#fff' : Colors.primary} />
             <ThemedText style={[styles.toggleBtnText, mode === 'categories' && { color: '#fff' }]}>
               Categories
             </ThemedText>
@@ -154,7 +159,7 @@ export default function GroupReportPage() {
               setSelectedIndex(null);
             }}
           >
-            <Ionicons name="people" size={16} color={mode === 'members' ? '#fff' : '#1976d2'} />
+            <Ionicons name="people" size={16} color={mode === 'members' ? '#fff' : Colors.primary} />
             <ThemedText style={[styles.toggleBtnText, mode === 'members' && { color: '#fff' }]}>
               Members
             </ThemedText>
@@ -174,13 +179,14 @@ export default function GroupReportPage() {
                 donut
                 showText
                 textColor="#333"
+                innerCircleColor={chartBackground}
                 textSize={13}
                 focusOnPress
                 onPress={(item, index) => setSelectedIndex(index)}
                 labelsPosition="outward"
                 centerLabelComponent={() =>
                     selectedIndex !== null && pieData[selectedIndex] ? (
-                        <View style={{ alignItems: 'center' }}>
+                        <ThemedView style={{ alignItems: 'center' }}>
                         {/* Icon/avatar for selected slice */}
                         {mode === 'categories' ? (
                             <Ionicons
@@ -208,7 +214,7 @@ export default function GroupReportPage() {
                         <ThemedText style={{ fontSize: 16 }}>
                             {pieData[selectedIndex].label}
                         </ThemedText>
-                        </View>
+                        </ThemedView>
                     ) : (
                         <Image
                         source={CenterLogo}
@@ -269,11 +275,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
   },
   toggleBtnActive: {
-    backgroundColor: '#1976d2',
+    backgroundColor: Colors.primary,
   },
   toggleBtnText: {
     marginLeft: 6,
-    color: '#1976d2',
+    color: Colors.primary,
     fontWeight: 'bold',
     fontSize: 15,
   },

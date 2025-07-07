@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { ScrollView, View } from 'react-native';
+import React, { useState, useEffect, useCallback} from 'react';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { databases } from '@/lib/appwrite';
 import { ThemedView } from '@/components/ThemedView';
@@ -11,6 +12,7 @@ import { ID } from 'appwrite';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { CATEGORIES, getCategoryIconName } from '@/constants/categoryUtils';
+import { Colors } from '@/constants/Colors';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
@@ -22,6 +24,20 @@ const SPLIT_TYPES = [
   { label: 'Exact Amounts', value: 'exact' },
   { label: '% Percentages', value: 'percentage' },
 ];
+
+function getInitialState(members) {
+  return {
+    description: '',
+    amount: '',
+    paidBy: members[0] || '',
+    splitBetween: members.slice() || [],
+    splitType: 'equal',
+    customSplit: {},
+    category: 'Others',
+    error: '',
+  };
+}
+
 
 export default function AddExpenseScreen() {
   const { groupId } = useLocalSearchParams();
@@ -39,26 +55,44 @@ export default function AddExpenseScreen() {
   const [error, setError] = useState('');
   const [category, setCategory] = useState('Others');
 
-  useEffect(() => {
-    if (!groupId) return;
-    databases.getDocument(databaseId, groupsCollectionId, groupId as string).then(doc => {
-      setMembers(doc.members ?? []);
-      setPaidBy(doc.members?.[0] ?? '');
-      setSplitBetween(doc.members ?? []);
-      Promise.all(
-        (doc.members ?? []).map((userId: string) =>
-          databases
-            .getDocument(databaseId, usersCollectionId, userId)
-            .then(profile => ({
-              userId,
-              username: profile.username,
-              avatar: profile.avatar || null,
-            }))
-            .catch(() => ({ userId, username: '(unknown)', avatar: null }))
-        )
-      ).then(setMemberProfiles);
-    });
-  }, [groupId]);
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
+      if (!groupId) return;
+
+      // Fetch group members and reset state
+      databases.getDocument(databaseId, groupsCollectionId, groupId as string).then(doc => {
+        if (!isActive) return;
+        setMembers(doc.members ?? []);
+        setPaidBy(doc.members?.[0] ?? '');
+        setSplitBetween(doc.members ?? []);
+        setCustomSplit({});
+        setDescription('');
+        setAmount('');
+        setSplitType('equal');
+        setCategory('Others');
+        setError('');
+        // Fetch member profiles
+        Promise.all(
+          (doc.members ?? []).map((userId: string) =>
+            databases
+              .getDocument(databaseId, usersCollectionId, userId)
+              .then(profile => ({
+                userId,
+                username: profile.username,
+                avatar: profile.avatar || null,
+              }))
+              .catch(() => ({ userId, username: '(unknown)', avatar: null }))
+          )
+        ).then(setMemberProfiles);
+      });
+
+      return () => {
+        isActive = false;
+      };
+    }, [groupId])
+  );
+
 
   const handleAddExpense = async () => {
     setLoading(true);
@@ -131,13 +165,14 @@ export default function AddExpenseScreen() {
 
   return (
     <ThemedView style={{ flex: 1, paddingHorizontal: 20, paddingTop: 24 }}>
-      <Spacer/>
-      <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
-        <ThemedText type="title" style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 12 }}>
+      <Spacer height={30}/>
+      <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)}>
+              <Ionicons name="arrow-back" size={24} color={Colors.primary} />
+      </TouchableOpacity>
+      <ThemedText type="title" style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 12 , marginTop: 10}}>
           Add Expense
         </ThemedText>
-        <Spacer height={10} />
-
+      <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
         {/* Description */}
         <ThemedText style={{ fontWeight: 'bold', marginBottom: 4, fontSize: 16 }}>Description*</ThemedText>
         <ThemedTextInput

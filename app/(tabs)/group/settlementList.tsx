@@ -42,7 +42,7 @@ export default function SettlementList({
             key={`${from}_${to}_${amount}`}
             style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}
           >
-            <ThemedText style={{ flex: 1 }}>
+            <ThemedText style={{ flex: 1 , fontWeight:'bold'}}>
               {getUsername(from)} <Ionicons name="arrow-forward" size={16} color="#1976d2" /> {getUsername(to)}
             </ThemedText>
             <ThemedText style={{ width: 80 , color: '#1e88e5', fontWeight: 'bold'}}>${amount.toFixed(2)}</ThemedText>

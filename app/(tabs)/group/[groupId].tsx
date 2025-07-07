@@ -94,7 +94,7 @@ export default function GroupDetailScreen() {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 120 }}>
-        <Spacer height={40} />
+        <Spacer height={30} />
         <TouchableOpacity onPress={() => router.navigate('/group/groups')}>
             <Ionicons name="arrow-back" size={24} color="#0a7ea4" />
         </TouchableOpacity>
