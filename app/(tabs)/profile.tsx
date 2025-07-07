@@ -235,7 +235,7 @@ export default function Profile() {
           <Spacer />
           <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 8 }}>
             <TouchableOpacity onPress={() => router.push('/settings')}>
-              <Ionicons name="settings-outline" size={28} color="#1976d2" />
+              <Ionicons name="settings" size={28} color="#0a7ea4" />
             </TouchableOpacity>
           </View>
           {/* Top: Avatar + Username */}

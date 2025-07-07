@@ -10,6 +10,7 @@ import Spacer from '@/components/Spacer';
 import BackButton from '@/components/BackButton';
 import { Ionicons } from '@expo/vector-icons';
 import { getCategoryIconName } from '@/constants/categoryUtils';
+import { Colors } from '@/constants/Colors';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
@@ -180,7 +181,7 @@ export default function ExpenseDetailScreen() {
     <ThemedView style={{ flex: 1, padding: 20 }}>
       <Spacer height={30}/>
         <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)}>
-            <Ionicons name="arrow-back" size={24} color="#1976d2" />
+            <Ionicons name="arrow-back" size={24} color={Colors.primary} />
         </TouchableOpacity>
       <ScrollView>
         <Spacer height={30}/>
@@ -211,7 +212,7 @@ export default function ExpenseDetailScreen() {
             {expense?.category || "Others"}
           </ThemedText>
         </View>
-        <ThemedText style={{ fontSize: 14, color: '#888', marginBottom: 8 }}>
+        <ThemedText style={{ fontWeight: 'bold', marginBottom: 10 }}>
           Paid by: <ThemedText style={{ fontWeight: 'bold', color: '#1976d2' }}>
             {userProfiles.find(u => u.userId === expense?.paidBy)?.username || expense?.paidBy}
           </ThemedText>

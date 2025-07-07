@@ -8,6 +8,7 @@ import Spacer from '@/components/Spacer';
 import { Ionicons } from '@expo/vector-icons';
 import { getCategoryIconName } from '@/constants/categoryUtils';
 import { Query } from 'appwrite';
+import { Colors } from '@/constants/Colors';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
@@ -98,7 +99,7 @@ export default function GroupHistoryPage() {
     <ThemedView style={{ flex: 1, padding: 16 }}>
       <Spacer height={30} />
       <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)}>
-        <Ionicons name="arrow-back" size={24} color="#1976d2" />
+        <Ionicons name="arrow-back" size={24} color={Colors.primary} />
       </TouchableOpacity>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12, marginTop: 10 }}>
       <ThemedText type="title" style={{ marginBottom: 12, marginTop: 10 }}>Activity Log</ThemedText>

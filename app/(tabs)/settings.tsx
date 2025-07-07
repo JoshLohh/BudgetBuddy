@@ -8,6 +8,7 @@ import { useRouter } from 'expo-router';
 import { useUser } from '@/hooks/useUser';
 import Spacer from '@/components/Spacer';
 import { Account, Client } from 'react-native-appwrite';
+import { Colors } from '@/constants/Colors';
 
 const client = new Client()
   .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!)
@@ -52,7 +53,7 @@ export default function SettingsPage() {
             <Spacer />
             <View style={{ flexDirection: 'row', marginBottom: 18 }}>
                 <TouchableOpacity onPress={() => router.navigate(`/profile`)}>
-                <Ionicons name="arrow-back" size={24} color="#1976d2" />
+                <Ionicons name="arrow-back" size={24} color={Colors.primary} />
                 </TouchableOpacity>
                 <ThemedText type="title" style={{ marginLeft: 12 }}>Settings</ThemedText>
             </View>

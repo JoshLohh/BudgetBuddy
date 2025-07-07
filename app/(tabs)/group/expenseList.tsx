@@ -40,11 +40,18 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
   const router = useRouter();
   const { groupId } = useLocalSearchParams();
 
+  // First sort expenses
+  const sortedExpenses = [...expenses].sort(
+    (a, b) => new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime()
+  );
+
+
   // Determine which expenses to show
   const hasMoreExpenses = expenses.length > EXPENSES_PREVIEW_COUNT;
   const expensesToShow = showAllExpenses
-    ? expenses
-    : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
+    ? sortedExpenses
+    : sortedExpenses.slice(0, EXPENSES_PREVIEW_COUNT);
+
 
   return (
     <View style={{ marginTop: 18 }}>

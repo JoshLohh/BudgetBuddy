@@ -96,7 +96,7 @@ export default function GroupDetailScreen() {
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 120 }}>
         <Spacer height={40} />
         <TouchableOpacity onPress={() => router.navigate('/group/groups')}>
-            <Ionicons name="arrow-back" size={24} color="#1976d2" />
+            <Ionicons name="arrow-back" size={24} color="#0a7ea4" />
         </TouchableOpacity>
         <Spacer height={10} />
         <GroupHeader

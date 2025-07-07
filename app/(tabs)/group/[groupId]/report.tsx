@@ -1,0 +1,243 @@
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, Dimensions, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
+import { Ionicons } from '@expo/vector-icons';
+import PieChart from 'react-native-pie-chart';
+import { databases } from '@/lib/appwrite';
+import { CATEGORIES, getCategoryIconName } from '@/constants/categoryUtils';
+import Spacer from '@/components/Spacer';
+import { Query } from 'appwrite';
+
+const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
+const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
+const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?? '';
+
+const CATEGORY_COLOR_MAP = {
+  Food: '#FFB300',
+  Transportation: '#1976D2',
+  Accommodation: '#4CAF50',
+  Entertainment: '#E040FB',
+  Utilities: '#FF7043',
+  Shopping: '#00B8D4',
+  Others: '#BDBDBD',
+};
+const CATEGORY_ORDER = [
+  'Food',
+  'Transportation',
+  'Accommodation',
+  'Entertainment',
+  'Utilities',
+  'Shopping',
+  'Others',
+];
+const MEMBER_COLORS = [
+  '#1976D2', '#FF7043', '#4CAF50', '#E040FB', '#FFB300', '#00B8D4', '#BDBDBD',
+  '#F06292', '#A1887F', '#26A69A', '#7E57C2', '#FF8A65', '#C0CA33'
+];
+
+export default function GroupReportPage() {
+  const { groupId } = useLocalSearchParams();
+  const router = useRouter();
+  const [expenses, setExpenses] = useState([]);
+  const [memberProfiles, setMemberProfiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [mode, setMode] = useState<'categories' | 'members'>('categories');
+
+  useEffect(() => {
+    let isMounted = true;
+    if (!groupId) return;
+    setLoading(true);
+    (async () => {
+      try {
+        const expRes = await databases.listDocuments(
+          databaseId,
+          expensesCollectionId,
+          [Query.equal('groupId', groupId)]
+        );
+        if (!isMounted) return;
+        setExpenses(expRes.documents);
+
+        const memberIds = Array.from(new Set(expRes.documents.map(e => e.paidBy)));
+        const profiles = await Promise.all(
+          memberIds.map((uid) =>
+            databases
+              .getDocument(databaseId, usersCollectionId, uid)
+              .then(profile => ({
+                userId: uid,
+                username: profile.username,
+                avatar: profile.avatar || null,
+              }))
+              .catch(() => ({ userId: uid, username: '(unknown)', avatar: null }))
+          )
+        );
+        if (!isMounted) return;
+        setMemberProfiles(profiles);
+      } catch (e) {
+        setExpenses([]);
+        setMemberProfiles([]);
+      }
+      setLoading(false);
+    })();
+    return () => { isMounted = false; };
+  }, [groupId]);
+
+  // Category Pie Data
+  const categoryTotals = {};
+  expenses.forEach(exp => {
+    const cat = exp.category || 'Others';
+    categoryTotals[cat] = (categoryTotals[cat] || 0) + Number(exp.amount);
+  });
+  const categoryPieData = CATEGORY_ORDER
+    .filter(cat => categoryTotals[cat] > 0)
+    .map(cat => ({
+      value: Number(categoryTotals[cat]),
+      color: CATEGORY_COLOR_MAP[cat] || '#BDBDBD',
+      label: cat,
+      icon: getCategoryIconName(cat),
+    }));
+
+  // Member Pie Data
+  const memberTotals = {};
+  expenses.forEach(exp => {
+    memberTotals[exp.paidBy] = (memberTotals[exp.paidBy] || 0) + Number(exp.amount);
+  });
+  const memberPieData = memberProfiles
+    .map((profile, idx) => ({
+      value: Number(memberTotals[profile.userId] || 0),
+      color: MEMBER_COLORS[idx % MEMBER_COLORS.length],
+      label: profile.username,
+      avatar: profile.avatar,
+    }))
+    .filter(d => d.value > 0);
+
+  // Pie data for chart
+  const pieData = mode === 'categories' ? categoryPieData : memberPieData;
+  const series = pieData.map(d => d.value);
+  const widthAndHeight = Math.min(Dimensions.get('window').width, 320);
+
+  return (
+    <ThemedView style={{ flex: 1, padding: 20 }}>
+        <Spacer height={30}/>
+      <TouchableOpacity onPress={() => router.back()} style={{ marginBottom: 12 }}>
+        <Ionicons name="arrow-back" size={24} color="#1976d2" />
+      </TouchableOpacity>
+
+      <View style={styles.headerRow}>
+        {/* <ThemedText type="title" style={{ fontSize: 22, fontWeight: 'bold' }}>
+          Group Report
+        </ThemedText> */}
+        <View style={styles.toggleRow}>
+          <TouchableOpacity
+            style={[
+              styles.toggleBtn,
+              mode === 'categories' && styles.toggleBtnActive,
+            ]}
+            onPress={() => setMode('categories')}
+          >
+            <Ionicons name="pricetags" size={16} color={mode === 'categories' ? '#fff' : '#1976d2'} />
+            <ThemedText style={[styles.toggleBtnText, mode === 'categories' && { color: '#fff' }]}>
+              Categories
+            </ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.toggleBtn,
+              mode === 'members' && styles.toggleBtnActive,
+            ]}
+            onPress={() => setMode('members')}
+          >
+            <Ionicons name="people" size={16} color={mode === 'members' ? '#fff' : '#1976d2'} />
+            <ThemedText style={[styles.toggleBtnText, mode === 'members' && { color: '#fff' }]}>
+              Members
+            </ThemedText>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <Spacer height={10} />
+
+      <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 40 }}>
+        {loading ? (
+          <ThemedText>Loading...</ThemedText>
+        ) : pieData.length === 0 ? (
+          <ThemedText>No expenses to show.</ThemedText>
+        ) : (
+          <>
+            <PieChart
+              widthAndHeight={widthAndHeight}
+              series={pieData}
+              cover={0.6}
+            />
+            <View style={{ marginTop: 24, width: '100%' }}>
+              {pieData.map((d, idx) => (
+                <View key={d.label} style={styles.legendRow}>
+                  {mode === 'categories' ? (
+                    <Ionicons name={d.icon} size={18} color={d.color} style={{ marginRight: 8 }} />
+                  ) : d.avatar ? (
+                    <Image source={{ uri: d.avatar }} style={styles.avatar} />
+                  ) : (
+                    <Ionicons name="person-circle" size={18} color={d.color} style={{ marginRight: 8 }} />
+                  )}
+                  <ThemedText style={{ flex: 1, fontSize: 15 }}>{d.label}</ThemedText>
+                  <ThemedText style={{ color: d.color, fontWeight: 'bold', fontSize: 15 }}>
+                    ${d.value.toFixed(2)}
+                  </ThemedText>
+                </View>
+              ))}
+            </View>
+          </>
+        )}
+        <Spacer height={20} />
+      </ScrollView>
+    </ThemedView>
+  );
+}
+
+const styles = StyleSheet.create({
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  toggleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e3f2fd',
+    borderRadius: 8,
+    padding: 2,
+  },
+  toggleBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    marginHorizontal: 2,
+  },
+  toggleBtnActive: {
+    backgroundColor: '#1976d2',
+  },
+  toggleBtnText: {
+    marginLeft: 6,
+    color: '#1976d2',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  legendRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomColor: '#eee',
+    borderBottomWidth: 1,
+    marginHorizontal: 4,
+  },
+  avatar: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    marginRight: 8,
+    backgroundColor: '#fff',
+  },
+});

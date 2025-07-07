@@ -21,7 +21,7 @@ export function ThemedView({ style, safe = false,  lightColor, darkColor, ...oth
   return (
     <View 
     style={[{
-       backgroundColor,
+      backgroundColor,
       paddingTop: insets.top,
       paddingBottom: insets.bottom,
       }, style]} 

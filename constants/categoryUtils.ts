@@ -1,9 +1,9 @@
 export const CATEGORIES = [
   { label: 'Food', value: 'Food', icon: 'restaurant' },
   { label: 'Transportation', value: 'Transportation', icon: 'car' },
-  { label: 'Accommodation', value: 'Accommodation', icon: 'bed' },
-  { label: 'Entertainment', value: 'Entertainment', icon: 'game-controller' },
-  { label: 'Utilities', value: 'Utilities', icon: 'flash' },
+  { label: 'Accommodation', value: 'Accommodation', icon: 'home' },
+  { label: 'Entertainment', value: 'Entertainment', icon: 'film' },
+  { label: 'Utilities', value: 'Utilities', icon: 'bulb' },
   { label: 'Shopping', value: 'Shopping', icon: 'cart' },
   { label: 'Others', value: 'Others', icon: 'ellipsis-horizontal' },
 ];

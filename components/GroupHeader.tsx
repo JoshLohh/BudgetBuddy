@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import ThemedTextInput from '@/components/ThemedTextInput';
@@ -126,10 +126,12 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }) {
           </ThemedButton>
         </View>
         <View style={styles.rightCol}>
+          <TouchableOpacity onPress={() => router.push({ pathname: '/group/[groupId]/report', params: { groupId: group.id } })}>
           <View style={styles.totalCard}>
             <ThemedText style={styles.totalLabel}>Total</ThemedText>
             <ThemedText style={styles.totalAmount}>${totalExpenses.toFixed(2)}</ThemedText>
           </View>
+          </TouchableOpacity>
           <ThemedButton
             onPress={() => setEditing(true)}
             style={styles.editBtn}
