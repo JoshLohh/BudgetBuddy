@@ -35,6 +35,14 @@ export default function SettlementList({
     statement = 'No settlements needed.';
   }
 
+  // Determine Statement Colour
+  let statementColor = '#888'; // default grey
+  if (netBalance > 0) {
+    statementColor = '#00b359'; // green
+  } else if (netBalance < 0) {
+    statementColor = '#ff5050'; // red
+  }
+
   const [processing, setProcessing] = useState('');
 
   const handleSettleUp = (from, to, amount) => {
@@ -60,11 +68,12 @@ export default function SettlementList({
       <ThemedText type="subtitle" style={{ fontWeight: 'bold', marginBottom: 8 }}>
         Suggested Settlements
       </ThemedText>
-      <ThemedText style={{ fontWeight:'bold', color: '#888' }}>
+      <ThemedText style={{ fontWeight:'bold', color: statementColor }}>
         {statement}
       </ThemedText>
       {userSettlements.length === 0 ? (
-        <ThemedText>No settlements needed.</ThemedText>
+        // <ThemedText>No settlements needed.</ThemedText>
+        <></>
       ) : (
         userSettlements.map(({ from, to, amount }) => (
           <View
@@ -84,7 +93,7 @@ export default function SettlementList({
             </ThemedButton>
           </View>
         ))
-      )}
+      )} 
     </View>
   );
 }
