@@ -4,9 +4,10 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { Ionicons } from '@expo/vector-icons';
-import PieChart from 'react-native-pie-chart';
+import { PieChart } from 'react-native-gifted-charts';
 import { databases } from '@/lib/appwrite';
 import { CATEGORIES, getCategoryIconName } from '@/constants/categoryUtils';
+import CenterLogo from '@/assets/images/logo.png';
 import Spacer from '@/components/Spacer';
 import { Query } from 'appwrite';
 
@@ -44,6 +45,7 @@ export default function GroupReportPage() {
   const [memberProfiles, setMemberProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState<'categories' | 'members'>('categories');
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -114,27 +116,28 @@ export default function GroupReportPage() {
 
   // Pie data for chart
   const pieData = mode === 'categories' ? categoryPieData : memberPieData;
-  const series = pieData.map(d => d.value);
   const widthAndHeight = Math.min(Dimensions.get('window').width, 320);
+  const totalValue = pieData.reduce((sum, d) => sum + d.value, 0);
 
   return (
     <ThemedView style={{ flex: 1, padding: 20 }}>
-        <Spacer height={30}/>
+        <Spacer />
       <TouchableOpacity onPress={() => router.back()} style={{ marginBottom: 12 }}>
         <Ionicons name="arrow-back" size={24} color="#1976d2" />
       </TouchableOpacity>
 
       <View style={styles.headerRow}>
-        {/* <ThemedText type="title" style={{ fontSize: 22, fontWeight: 'bold' }}>
-          Group Report
-        </ThemedText> */}
+
         <View style={styles.toggleRow}>
           <TouchableOpacity
             style={[
               styles.toggleBtn,
               mode === 'categories' && styles.toggleBtnActive,
             ]}
-            onPress={() => setMode('categories')}
+            onPress={() => {
+              setMode('categories');
+              setSelectedIndex(null);
+            }}
           >
             <Ionicons name="pricetags" size={16} color={mode === 'categories' ? '#fff' : '#1976d2'} />
             <ThemedText style={[styles.toggleBtnText, mode === 'categories' && { color: '#fff' }]}>
@@ -146,7 +149,10 @@ export default function GroupReportPage() {
               styles.toggleBtn,
               mode === 'members' && styles.toggleBtnActive,
             ]}
-            onPress={() => setMode('members')}
+            onPress={() => {
+              setMode('members');
+              setSelectedIndex(null);
+            }}
           >
             <Ionicons name="people" size={16} color={mode === 'members' ? '#fff' : '#1976d2'} />
             <ThemedText style={[styles.toggleBtnText, mode === 'members' && { color: '#fff' }]}>
@@ -155,7 +161,6 @@ export default function GroupReportPage() {
           </TouchableOpacity>
         </View>
       </View>
-      <Spacer height={10} />
 
       <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 40 }}>
         {loading ? (
@@ -165,19 +170,66 @@ export default function GroupReportPage() {
         ) : (
           <>
             <PieChart
-              widthAndHeight={widthAndHeight}
-              series={pieData}
-              cover={0.6}
+                data={pieData}
+                donut
+                showText
+                textColor="#333"
+                textSize={13}
+                focusOnPress
+                onPress={(item, index) => setSelectedIndex(index)}
+                labelsPosition="outward"
+                centerLabelComponent={() =>
+                    selectedIndex !== null && pieData[selectedIndex] ? (
+                        <View style={{ alignItems: 'center' }}>
+                        {/* Icon/avatar for selected slice */}
+                        {mode === 'categories' ? (
+                            <Ionicons
+                            name={pieData[selectedIndex].icon}
+                            size={50}
+                            color={pieData[selectedIndex].color}
+                            style={{ marginBottom: 5 }}
+                            />
+                        ) : pieData[selectedIndex].avatar ? (
+                            <Image
+                            source={{ uri: pieData[selectedIndex].avatar }}
+                            style={{ width: 32, height: 32, borderRadius: 16, marginBottom: 5, backgroundColor: '#fff' }}
+                            />
+                        ) : (
+                            <Ionicons
+                            name="person-circle"
+                            size={50}
+                            color={pieData[selectedIndex].color}
+                            style={{ marginBottom: 5 }}
+                            />
+                        )}
+                        <ThemedText style={{ fontWeight: 'bold', fontSize: 20 }}>
+                            {((pieData[selectedIndex].value / totalValue) * 100).toFixed(1)}%
+                        </ThemedText>
+                        <ThemedText style={{ fontSize: 16 }}>
+                            {pieData[selectedIndex].label}
+                        </ThemedText>
+                        </View>
+                    ) : (
+                        <Image
+                        source={CenterLogo}
+                        style={{ width: 100, height: 100, resizeMode: 'contain' }}
+                        />
+                    )
+                }
+
+                radius={widthAndHeight / 2}
+                innerRadius={widthAndHeight / 2.6}
             />
+
             <View style={{ marginTop: 24, width: '100%' }}>
               {pieData.map((d, idx) => (
                 <View key={d.label} style={styles.legendRow}>
                   {mode === 'categories' ? (
-                    <Ionicons name={d.icon} size={18} color={d.color} style={{ marginRight: 8 }} />
+                    <Ionicons name={d.icon} size={24} color={d.color} style={{ marginRight: 8 }} />
                   ) : d.avatar ? (
                     <Image source={{ uri: d.avatar }} style={styles.avatar} />
                   ) : (
-                    <Ionicons name="person-circle" size={18} color={d.color} style={{ marginRight: 8 }} />
+                    <Ionicons name="person-circle" size={32} color={d.color} style={{ marginRight: 8 }} />
                   )}
                   <ThemedText style={{ flex: 1, fontSize: 15 }}>{d.label}</ThemedText>
                   <ThemedText style={{ color: d.color, fontWeight: 'bold', fontSize: 15 }}>
@@ -234,9 +286,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   avatar: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     marginRight: 8,
     backgroundColor: '#fff',
   },

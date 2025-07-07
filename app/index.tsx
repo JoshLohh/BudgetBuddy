@@ -5,12 +5,18 @@ import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import Spacer from '@/components/Spacer';
+import { Image } from 'expo-image';
 
 
 export default function HomeScreen() {
   return (
   
     <ThemedView style={styles.container}>
+          <Image
+          source={require('@/assets/images/logo.png')}
+          style={{ width: 200, height: 200, resizeMode: 'contain' }}
+          />
+          <Spacer />
           <ThemedView style={styles.titleContainer}>
             <ThemedText style={styles.title} type="title">Welcome to BudgetBuddy</ThemedText>
           </ThemedView>
