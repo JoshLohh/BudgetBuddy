@@ -12,9 +12,11 @@ import ExpenseList from './expenseList';
 import MembersDropdown from './membersDropdown';
 import SettlementList from './settlementList';
 import { Ionicons } from '@expo/vector-icons';
+import { useUser } from '@/hooks/useUser';
 
 export default function GroupDetailScreen() {
   const { groupId } = useLocalSearchParams();
+  const { user } = useUser();
   const router = useRouter();
   const {
     group,
@@ -39,7 +41,6 @@ export default function GroupDetailScreen() {
     showAllExpenses,
     setShowAllExpenses,
     suggestedSettlements,
-    settledSettlements,
     settleUp,
     getUsername,
     totalExpenses,
@@ -116,10 +117,11 @@ export default function GroupDetailScreen() {
           <ThemedText style={{ color: '#fff', textAlign: 'center' }}>Add Expense</ThemedText>
         </ThemedButton>
         <SettlementList
-          settlements={suggestedSettlements}
-          settledSettlements={settledSettlements}
+          suggestedSettlements={suggestedSettlements}
+          // settledSettlements={settledSettlements}
           getUsername={getUsername}
           settleUp={settleUp}
+          currentUserId={user.$id}
         />
 
         {/* Expenses Section */}
