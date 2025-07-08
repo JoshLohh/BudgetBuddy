@@ -259,7 +259,7 @@ Before starting, ensure you have the following installed:
 
 Clone the project from GitHub and navigate into the directory:
 ```sh
-git clone https://github.com/your-org/BudgetBuddy.git
+git clone https://github.com/JoshLohh/BudgetBuddy.git
 cd BudgetBuddy
 ```
 
