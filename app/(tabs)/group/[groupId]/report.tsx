@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Dimensions, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, ScrollView, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
@@ -13,6 +13,7 @@ import { Query } from 'appwrite';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Colors } from '@/constants/Colors';
+import { Image } from 'expo-image';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
@@ -217,8 +218,9 @@ export default function GroupReportPage() {
                         </ThemedView>
                     ) : (
                         <Image
-                        source={CenterLogo}
-                        style={{ width: 100, height: 100, resizeMode: 'contain' }}
+                          source={CenterLogo}
+                          style={{ width: 100, height: 100 }}
+                          contentFit="contain"
                         />
                     )
                 }

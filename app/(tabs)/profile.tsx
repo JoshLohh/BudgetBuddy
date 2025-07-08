@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, cache } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
-import { useFocusEffect } from 'expo-router';
 import { useUser } from '@/hooks/useUser';
 import { useRouter } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
@@ -39,18 +38,19 @@ export default function Profile() {
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
+  const [loadingProfile, setLoadingProfile] = useState(false);
 
   // Statistics state
   const [groupsCount, setGroupsCount] = useState(0);
   const [userExpensesCount, setUserExpensesCount] = useState(0);
   const [userTotalSpent, setUserTotalSpent] = useState(0);
 
+  // Fetch stats for user
   const fetchStats = useCallback(() => {
     if (!user) return;
-
     databases
       .listDocuments(
         databaseId,
@@ -60,22 +60,18 @@ export default function Profile() {
       .then(res => {
         setGroupsCount(res.documents.length);
         const groupIds = res.documents.map(doc => doc.$id);
-
         if (groupIds.length === 0) {
           setUserExpensesCount(0);
           setUserTotalSpent(0);
           return;
         }
-
         databases
           .listDocuments(
             databaseId,
             expensesCollectionId,
-            [
-              Query.equal('paidBy', user.$id),
-              Query.equal('groupId', groupIds),
-              Query.limit(100),
-            ]
+            Query.equal('paidBy', user.$id),
+            Query.equal('groupId', groupIds),
+            Query.limit(100),
           )
           .then(expRes => {
             setUserExpensesCount(expRes.documents.length);
@@ -97,7 +93,6 @@ export default function Profile() {
       });
   }, [user]);
 
-
   // Sync form fields with profile when loaded
   useEffect(() => {
     if (profile) {
@@ -107,14 +102,16 @@ export default function Profile() {
     }
   }, [profile, user]);
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchStats();
-    }, [fetchStats])
-  );
+  // Manual reload function
+  const reloadProfile = useCallback(async () => {
+    setLoadingProfile(true);
+    await refetchProfile();
+    fetchStats();
+    setLoadingProfile(false);
+  }, [refetchProfile, fetchStats]);
 
+  // Avatar change handler
   const handleAvatarChange = async () => {
-    console.log("avatar pressed");
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permission.granted) {
       alert('Permission to access gallery is required!');
@@ -127,7 +124,6 @@ export default function Profile() {
         aspect: [1, 1],
         quality: 0.7,
       });
-      console.log("picker result:", result);
       if (result.canceled) {
         setUploading(false);
         return;
@@ -137,7 +133,6 @@ export default function Profile() {
       const uri = asset.uri;
       const fileName = uri.split('/').pop();
       const fileId = Math.random().toString(36).substring(2, 18);
-
       const formData = new FormData();
       formData.append('fileId', fileId);
       formData.append('file', {
@@ -145,9 +140,7 @@ export default function Profile() {
         name: fileName,
         type: asset.mimeType || 'image/jpeg',
       });
-
       const endpoint = `${process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${avatarbucketId}/files`;
-
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -155,7 +148,6 @@ export default function Profile() {
         },
         body: formData,
       });
-
       let fileRes;
       try {
         fileRes = await response.json();
@@ -164,13 +156,11 @@ export default function Profile() {
         alert('Upload failed: invalid response from server.');
         return;
       }
-
       if (!response.ok) {
         setUploading(false);
         alert('Upload failed: ' + (fileRes?.message || response.status));
         return;
       }
-
       const viewUrl = `${process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${avatarbucketId}/files/${fileRes.$id}/view?project=${process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID}&t=${Date.now()}`;
       await updateProfile({ avatar: viewUrl });
       if (typeof refetchProfile === 'function') {
@@ -184,12 +174,13 @@ export default function Profile() {
     }
   };
 
-  // Handle logout and redirect to index
+  // Logout handler
   const handleLogout = async () => {
     await logout();
     router.replace('/');
   };
 
+  // Save profile changes
   const handleSave = async () => {
     setSaving(true);
     setError(null);
@@ -205,154 +196,158 @@ export default function Profile() {
     }
   };
 
-  if (!authChecked) {
+  if (!authChecked || loadingProfile) {
     return (
-      <ThemedView style={styles.loadingContainer}>
+      <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" />
-      </ThemedView>
+        <ThemedText>Loading profile...</ThemedText>
+      </View>
     );
   }
 
   if (!profile) {
     return (
-      <ThemedView style={styles.loadingContainer}>
-        <ThemedText style={{ color: 'red' }}>
-          No profile loaded. Please try logging out and back in, or contact support.
-        </ThemedText>
-        <Spacer height={12} />
-        <ThemedButton onPress={handleLogout}>
-          <ThemedText style={{ color: '#f2f2f2' , textAlign: 'center'}}>Logout</ThemedText>
+      <View style={styles.loadingContainer}>
+        <ThemedText style={{ textAlign:'center' }}>
+          No profile loaded. 
+          Please try logging out and back in, or contact support. 
+          If you just created a new account, please wait a moment for your profile to load.
+          </ThemedText>
+        <ThemedButton onPress={reloadProfile} style={styles.editBtn}>
+          <ThemedText style={{ color: '#f2f2f2', textAlign:'center' }}>Reload</ThemedText>
         </ThemedButton>
-      </ThemedView>
+        <ThemedButton onPress={handleLogout} style={styles.logoutBtn}>
+              <ThemedText style={{ color: '#f2f2f2', textAlign:'center' }}>Logout</ThemedText>
+        </ThemedButton>
+      </View>
     );
   }
 
-  // console.log('Rendering avatar:', profile?.avatar);
-
   return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <ThemedView style={styles.container}>
-          <Spacer />
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 8 }}>
-            <TouchableOpacity onPress={() => router.push('/settings')}>
-              <Ionicons name="settings" size={28} color="#0a7ea4" />
-            </TouchableOpacity>
-          </View>
-          {/* Top: Avatar + Username */}
-          <View style={styles.topRow}>
-            <TouchableOpacity onPress={editing ? handleAvatarChange : undefined}>
-              <Image
-                key={profile?.avatar ? profile.avatar : 'default'}
-                source={
-                  profile?.avatar
-                    ? { uri: profile.avatar + `&cb=${cacheBuster}`, cache: 'reload' }
-                    : require('../../assets/images/default-avatar.png')
-                }
-                style={styles.avatar}
-                transition={300}
-              />
-              {uploading && (
-                <ActivityIndicator style={{ position: 'absolute', left: 24, top: 24 }} />
-              )}
-            </TouchableOpacity>
-
-            <View style={styles.infoCol}>
-              {!editing ? (
-                <ThemedText type="title" style={styles.username}>
-                  {profile.username || 'Unnamed'}
-                </ThemedText>
-              ) : (
-                <ThemedTextInput
-                  style={styles.editInput}
-                  value={username}
-                  onChangeText={setUsername}
-                  placeholder="Username"
-                  autoCapitalize="none"
-                  autoFocus
-                />
-              )}
-            </View>
-          </View>
-          {/* Show bio beneath Top (avatar + username) */}
-          {!editing && profile.bio ? (
-            <>
-              <Spacer height={4} />
-              <ThemedText style={styles.bio}>{profile.bio}</ThemedText>
-            </>
-          ) : null}
-          <Spacer height={16} />
-
-          {/* Statistics */}
-          <View style={styles.statsCard}>
-            <View style={styles.statBox}>
-              <ThemedText style={styles.statValue}>{groupsCount}</ThemedText>
-              <ThemedText style={styles.statLabel}>Groups</ThemedText>
-            </View>
-            <View style={styles.statBox}>
-              <ThemedText style={styles.statValue}>
-                ${userTotalSpent.toFixed(2)}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ThemedView style={styles.container}>
+        <Spacer />
+        {/* Top: Avatar + Username */}
+        <View style={styles.topRow}>
+          <TouchableOpacity onPress={handleAvatarChange} disabled={uploading}>
+            <Image
+              source={profile.avatar || require('@/assets/images/default-avatar.png')}
+              style={[styles.avatar, uploading && { opacity: 0.5 }]}
+              contentFit="cover"
+              key={cacheBuster}
+            />
+            {uploading && (
+              <View
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: 0,
+                  width: AVATAR_SIZE,
+                  height: AVATAR_SIZE,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'rgba(255,255,255,0.5)',
+                  borderRadius: AVATAR_SIZE / 2,
+                }}
+              >
+                <ActivityIndicator size="large" />
+              </View>
+            )}
+          </TouchableOpacity>
+          <View style={styles.infoCol}>
+            {!editing ? (
+              <ThemedText type="title" style={styles.username}>
+                {profile.username || 'Unnamed'}
               </ThemedText>
-              <ThemedText style={styles.statLabel}>Total Spent</ThemedText>
-            </View>
-            <View style={styles.statBox}>
-              <ThemedText style={styles.statValue}>{userExpensesCount}</ThemedText>
-              <ThemedText style={styles.statLabel}># Expenses</ThemedText>
-            </View>
-          </View>
-
-          {/* Edit Profile */}
-          {editing ? (
-            <>
+            ) : (
               <ThemedTextInput
+                value={username}
+                onChangeText={setUsername}
+                placeholder="Username"
                 style={styles.editInput}
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Email"
-                keyboardType="email-address"
                 autoCapitalize="none"
               />
-              <ThemedTextInput
-                style={[styles.editInput, { height: 60 }]}
-                value={bio}
-                onChangeText={setBio}
-                placeholder="Bio"
-                multiline
-              />
-              {error ? (
-                <ThemedText style={{ color: 'red', marginBottom: 8 }}>{error}</ThemedText>
-              ) : null}
-              <ThemedButton onPress={handleSave} disabled={saving} style={styles.saveBtn}>
+            )}
+          </View>
+        </View>
+
+        {/* Show bio beneath Top (avatar + username) */}
+        {!editing && profile.bio ? (
+          <View>
+            <ThemedText style={styles.bio}>{profile.bio}</ThemedText>
+            <Spacer size={8} />
+          </View>
+        ) : null}
+
+        {/* Statistics */}
+        <View style={styles.statsCard}>
+          <View style={styles.statBox}>
+            <ThemedText style={styles.statValue}>{groupsCount}</ThemedText>
+            <ThemedText style={styles.statLabel}>Groups</ThemedText>
+          </View>
+          <View style={styles.statBox}>
+            <ThemedText style={styles.statValue}>${userTotalSpent.toFixed(2)}</ThemedText>
+            <ThemedText style={styles.statLabel}>Total Spent</ThemedText>
+          </View>
+          <View style={styles.statBox}>
+            <ThemedText style={styles.statValue}>{userExpensesCount}</ThemedText>
+            <ThemedText style={styles.statLabel}># Expenses</ThemedText>
+          </View>
+        </View>
+
+        {/* Edit Profile */}
+        {editing ? (
+          <>
+            <ThemedTextInput
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Email"
+              style={styles.editInput}
+              autoCapitalize="none"
+              keyboardType="email-address"
+            />
+            <ThemedTextInput
+              value={bio}
+              onChangeText={setBio}
+              placeholder="Bio"
+              style={styles.editInput}
+              multiline
+            />
+            {error ? (
+              <ThemedText style={styles.error}>{error}</ThemedText>
+            ) : null}
+            <ThemedButton onPress={handleSave} disabled={saving} style={styles.saveBtn}>
                 <ThemedText style={{ color: '#f2f2f2' }}>{saving ? 'Saving...' : 'Save Changes'}</ThemedText>
-              </ThemedButton>
-              <ThemedButton
+            </ThemedButton>
+            <ThemedButton
                 onPress={() => setEditing(false)}
                 style={styles.cancelBtn}
-              >
+            >
                 <ThemedText style={{ color: '#222' }}>Cancel</ThemedText>
-              </ThemedButton>
-            </>
-          ) : (
-            <View style={{ alignItems: 'center'}}>
-              <ThemedButton
+            </ThemedButton>
+          </>
+        ) : (
+          <View style={{ alignItems: 'center'}}>
+            <ThemedButton
                 onPress={() => setEditing(true)}
                 style={styles.editBtn}
-              >
+            >
                 <ThemedText style={{ color: '#f2f2f2' , textAlign: 'center'}}>Edit Profile</ThemedText>
-              </ThemedButton>
-            </View>
-          )}
+            </ThemedButton>
+          </View>
+        )}
 
-          <View style={styles.flexGrow} />
+        <View style={styles.flexGrow} />
 
-          {/* Logout Button at Bottom */}
+        {/* Logout Button at Bottom */}
           <View style={styles.logoutContainer}>
             <ThemedButton onPress={handleLogout} style={styles.logoutBtn}>
               <ThemedText style={{ color: '#f2f2f2', textAlign:'center' }}>Logout</ThemedText>
             </ThemedButton>
           </View>
         <Spacer height={100}/>
-        </ThemedView>
-      </TouchableWithoutFeedback>
+      </ThemedView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -451,6 +446,16 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontSize: 16,
     width: '100%',
+  },
+  error: {
+    color: '#cb4d31',
+    padding: 10,
+    backgroundColor: '#f5c1c8',
+    borderColor: '#cb4d31',
+    borderWidth: 1,
+    borderRadius: 6,
+    marginHorizontal: 10,
+    marginBottom: 6,
   },
   flexGrow: { flex: 1 },
 });

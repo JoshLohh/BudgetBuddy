@@ -81,11 +81,11 @@ export default function TabLayout() {
           name="group/settlementList"
           options={{ href: null }}
         />
-
+{/* 
         <Tabs.Screen
           name="groups"
           options={{ href: null }}
-        />
+        /> */}
 
         <Tabs.Screen
           name="home"

@@ -1,5 +1,5 @@
 import { Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback, Text} from 'react-native'
-import { Link } from 'expo-router'
+import { Link, useRouter } from 'expo-router'
 import React, { useState } from 'react'
 
 import { ThemedText } from '@/components/ThemedText';
@@ -17,22 +17,26 @@ const Register = () => {
     const [password, setPassword] = useState('')
     const [error, setError] = useState<string | null>(null)
     
-    const { register } = useUser()
+    const { register, refetchProfile } = useUser();
+    const router = useRouter();
 
     const handleSubmit = async () => {
-        setError(null)
-
+        setError(null);
         try {
-            await register(username, email, password)
-            // Optionally navigate to home/profile
-        } catch (error) {
-            if (error instanceof Error) {
-                setError(error.message)
-            } else {
-                setError('An unknown error has occured')
-            }
+        await register(username, email, password);
+        // Explicitly fetch profile after registration
+        const profile = await refetchProfile();
+        if (profile) {
+            // Navigate only after profile is loaded
+            router.replace('/profile');
+        } else {
+            setError('Profile not loaded. Please try again.');
         }
-    }
+        } catch (error) {
+        setError(error instanceof Error ? error.message : 'An unknown error has occurred');
+        }
+    };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ThemedView style={styles.container}>
