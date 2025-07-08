@@ -65,11 +65,19 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
 
     async function fetchGroupsById(id: string) {
         try {
-
-        } catch(error) {
-            throw Error((error as Error).message)  
+            const doc = await databases.getDocument(DATABASE_ID, COLLECTION_ID, id);
+            return {
+            id: doc.$id,
+            title: doc.title,
+            description: doc.description,
+            members: doc.members,
+            createdBy: doc.createdBy,
+            };
+        } catch (error) {
+            throw Error((error as Error).message);
         }
     }
+
 
     async function createGroup(data: CreateGroupInput) {
         try {
@@ -116,11 +124,13 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
 
     async function deleteGroup(id: string) {
         try {
-
-        } catch(error) {
-            throw Error((error as Error).message)        
+            await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, id);
+            setGroups(prev => prev.filter(g => g.id !== id));
+        } catch (error) {
+            throw Error((error as Error).message);
         }
     }
+
 
     useEffect(() => {
 
