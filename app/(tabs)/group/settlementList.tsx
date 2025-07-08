@@ -23,24 +23,19 @@ export default function SettlementList({
     else if (s.from === currentUserId) netBalance -= s.amount;
   });
 
-  // Helper for owed/owing statement
+  // Helper for owed/owing statement and color
   let statement = '';
+  let statementColor = '#888';
   if (userSettlements.length === 0) {
     statement = 'No settlements needed.';
   } else if (netBalance > 0) {
     statement = `You are owed $${netBalance.toFixed(2)}`;
+    statementColor = '#00cc66';
   } else if (netBalance < 0) {
     statement = `You owe $${Math.abs(netBalance).toFixed(2)}`;
+    statementColor = '#ff5050';
   } else {
     statement = 'No settlements needed.';
-  }
-
-  // Determine Statement Colour
-  let statementColor = '#888'; // default grey
-  if (netBalance > 0) {
-    statementColor = '#00b359'; // green
-  } else if (netBalance < 0) {
-    statementColor = '#ff5050'; // red
   }
 
   const [processing, setProcessing] = useState('');

@@ -1,7 +1,5 @@
 import 'dotenv/config';
 
-//console.log('TEST ENV:', process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID);
-
 
 export default ({ config }) => ({
   ...config,
