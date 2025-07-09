@@ -169,7 +169,7 @@ export default function GroupsScreen() {
       <View style={[styles.header, { backgroundColor: headerBackgroundColor[colorScheme] }]}>
 	              <IconSymbol
 	                size={350}
-	                color="#808080"
+	                color="#0a7ea4"
 	                name="person.3.sequence.fill"
 	                style={styles.headerImage}
 	              />
@@ -215,7 +215,6 @@ export default function GroupsScreen() {
 
 const styles = StyleSheet.create({
   headerImage: {
-    color: '#808080',
     bottom: -90,
     left: -35,
     position: 'absolute',
