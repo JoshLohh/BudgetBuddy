@@ -42,7 +42,7 @@ jest.mock('@/lib/appwrite', () => ({
   },
 }));
 
-function TestExpensesComponent({ groupId }) {
+function TestExpensesComponent({ groupId }: { groupId: string }) {
   const { expenses, loading, fetchExpenses, addExpense } = useExpenses();
   React.useEffect(() => {
     fetchExpenses(groupId);

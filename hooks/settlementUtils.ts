@@ -1,60 +1,95 @@
-// settlementUtils.ts
 
-export function calculateBalances(members, expenses, settlements = []) {
+export type Expense = {
+  amount: number | string;
+  paidBy: string;
+  splitBetween: string[];
+  splitType: 'equal' | 'custom';
+  customSplit?: string;
+}
+
+export type Settlement = {
+  from: string;
+  to: string;
+  amount: number;
+}
+
+export type Balances = Record<string, number>;
+
+/**
+ * Calculate net balances for each member.
+ */
+export function calculateBalances(
+  members: string[],
+  expenses: Expense[],
+  settlements: Settlement[] = []
+): Balances {
   // 1. Calculate net paid and owed for each member
-  const paid = {};
-  const owed = {};
+  const paid: Record<string, number> = {};
+  const owed: Record<string, number> = {};
 
-  members.forEach(id => {
+  members.forEach((id: string) => {
     paid[id] = 0;
     owed[id] = 0;
   });
 
   // Go through each expense
-  expenses.forEach(exp => {
-    const amount = parseFloat(exp.amount) || 0;
+  expenses.forEach((exp: Expense) => {
+    const amount = parseFloat(String(exp.amount)) || 0;
     paid[exp.paidBy] += amount;
 
-    let splits = {};
     if (exp.splitType === 'equal') {
       const share = amount / exp.splitBetween.length;
-      exp.splitBetween.forEach(uid => {
-        splits[uid] = share;
+      exp.splitBetween.forEach((uid: string) => {
+        owed[uid] += share;
       });
     } else {
-      splits = exp.customSplit ? JSON.parse(exp.customSplit) : {};
+      // custom split
+      let splits: Record<string, number> = {};
+      if (exp.customSplit) {
+        try {
+          splits = JSON.parse(exp.customSplit);
+        } catch {
+          splits = {};
+        }
+      }
+      exp.splitBetween.forEach((uid: string) => {
+        owed[uid] += parseFloat(String(splits[uid] ?? '0'));
+      });
     }
-
-    exp.splitBetween.forEach(uid => {
-      owed[uid] += parseFloat(splits[uid] || '0');
-    });
   });
 
   // 2. Subtract settlements
   // Each settlement is { from, to, amount }
-  settlements.forEach(set => {
+  settlements.forEach((set: Settlement) => {
     // 'from' paid 'to', so 'from' owes less, 'to' is owed less
     owed[set.from] -= set.amount;
     owed[set.to] += set.amount;
   });
 
   // 3. Calculate net balance
-  const balances = {};
-  members.forEach(id => {
+  const balances: Record<string, number> = {};
+  members.forEach((id: string) => {
     balances[id] = +(paid[id] - owed[id]).toFixed(2);
   });
 
   return balances;
 }
 
-export function calculateSettlements(balances) {
+/**
+ * Suggest minimal transactions to settle all debts.
+ */
+export function calculateSettlements(balances: Balances): Settlement[] {
   // Greedy algorithm to suggest minimal transactions to settle all debts
   // Returns array of { from, to, amount }
   // balances: { userId: number }
-  const settlements = [];
+  const settlements: Settlement[] = [];
+
   // Convert balances object to array [{userId, balance}]
-  const arr = Object.entries(balances)
-    .map(([userId, balance]) => ({ userId, balance: +balance.toFixed(2) }))
+  const arr: { userId: string; balance: number }[] = Object.entries(balances)
+    .map(([userId, balance]) => ({
+      userId,
+      balance: typeof balance === 'number' ? +balance.toFixed(2) : 0,
+    }))
     .filter(u => Math.abs(u.balance) > 0.01);
 
   // Separate creditors and debtors
@@ -80,5 +115,6 @@ export function calculateSettlements(balances) {
     if (Math.abs(debtor.balance) < 0.01) i++;
     if (Math.abs(creditor.balance) < 0.01) j++;
   }
+
   return settlements;
 }

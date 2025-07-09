@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, act, waitFor } from '@testing-library/react-native';
-import { GroupsProvider, GroupsContext } from '@/contexts/GroupsContext';
+import { GroupsProvider, GroupsContext, GroupsContextType } from '@/contexts/GroupsContext';
 import { UserContext } from '@/contexts/UserContext';
 import { Text } from 'react-native';
 
@@ -45,25 +45,35 @@ jest.mock('@/lib/appwrite', () => ({
   },
 }));
 
-function MockUserProvider({ children, user = { $id: 'user1', email: 'test@example.com' } }) {
-  const mockProfile = { userId: 'user1', username: 'Test User' };
-  return (
-    <UserContext.Provider value={{
-      user,
-      profile: mockProfile,
-      login: jest.fn(),
-      logout: jest.fn(),
-      register: jest.fn(),
-      updateProfile: jest.fn(),
-      refetchProfile: jest.fn()
-    }}>
-      {children}
-    </UserContext.Provider>
-  );
-}
+type MockUserProviderProps = {
+  children: React.ReactNode;
+  user?: { $id: string; email: string };
+};
+
+function MockUserProvider({ children, user = { $id: 'user1', email: 'test@example.com' } }: MockUserProviderProps) {
+    const [mockUser, setMockUser] = React.useState(user);
+    const mockProfile = { userId: 'user1', username: 'Test User' };
+    return (
+      <UserContext.Provider value={{
+        user: mockUser,
+        profile: mockProfile,
+        login: jest.fn(),
+        logout: jest.fn(),
+        register: jest.fn(),
+        updateProfile: jest.fn(),
+        refetchProfile: jest.fn(),
+        authChecked: true,
+      }}>
+        {children}
+      </UserContext.Provider>
+    );
+  }
+
 
 function TestGroupsComponent() {
-  const { groups, fetchGroups, createGroup, deleteGroup } = React.useContext(GroupsContext);
+  const context = React.useContext(GroupsContext);
+  if (!context) throw new Error('GroupsContext is not provided');
+  const { groups, fetchGroups, createGroup, deleteGroup } = context;
   React.useEffect(() => {
     fetchGroups();
   }, []);
@@ -145,69 +155,90 @@ describe('GroupsContext', () => {
   });
 
   it('fetches a group by ID', async () => {
-    let contextValue;
+    const contextValue = { current: undefined as GroupsContextType | undefined };
     render(
       <MockUserProvider>
         <GroupsProvider>
           <GroupsContext.Consumer>
-            {value => { contextValue = value; return null; }}
+            {value => { contextValue.current = value; return null; }}
           </GroupsContext.Consumer>
         </GroupsProvider>
       </MockUserProvider>
     );
-    const group = await contextValue.fetchGroupsById('group42');
+    const group = await contextValue.current!.fetchGroupsById('group42');
     expect(group).toBeDefined();
     expect(group.id).toBe('group42');
     expect(group.title).toBe('Fetched Group');
   });
 
   it('handles error in fetchGroupsById', async () => {
-    let contextValue;
+    const contextValue = { current: undefined as GroupsContextType | undefined };
     render(
       <MockUserProvider>
         <GroupsProvider>
           <GroupsContext.Consumer>
-            {value => { contextValue = value; return null; }}
+            {value => { contextValue.current = value; return null; }}
           </GroupsContext.Consumer>
         </GroupsProvider>
       </MockUserProvider>
     );
-    await expect(contextValue.fetchGroupsById('bad-id')).rejects.toThrow('Not found');
+    await expect(contextValue.current!.fetchGroupsById('bad-id')).rejects.toThrow('Not found');
   });
 
   it('throws error if user is not authenticated in createGroup', async () => {
-    let contextValue;
+    const contextValue = { current: undefined as GroupsContextType | undefined };
     render(
-      <MockUserProvider user={null}>
+      <UserContext.Provider value={{
+        user: undefined,
+        profile: undefined,
+        login: jest.fn(),
+        logout: jest.fn(),
+        register: jest.fn(),
+        updateProfile: jest.fn(),
+        refetchProfile: jest.fn(),
+        authChecked: true,
+      }}>
         <GroupsProvider>
           <GroupsContext.Consumer>
-            {value => { contextValue = value; return null; }}
+            {value => { contextValue.current = value; return null; }}
           </GroupsContext.Consumer>
         </GroupsProvider>
-      </MockUserProvider>
+      </UserContext.Provider>
     );
-    await expect(contextValue.createGroup({ title: 'x' })).rejects.toThrow('User not authenticated');
+    await expect(contextValue.current!.createGroup({ title: 'x' })).rejects.toThrow('User not authenticated');
   });
 
+
+
+
   it('handles error in deleteGroup', async () => {
-    let contextValue;
+    const contextValue = { current: undefined as GroupsContextType | undefined };
     render(
       <MockUserProvider>
         <GroupsProvider>
           <GroupsContext.Consumer>
-            {value => { contextValue = value; return null; }}
+            {value => { contextValue.current = value; return null; }}
           </GroupsContext.Consumer>
         </GroupsProvider>
       </MockUserProvider>
     );
-    await expect(contextValue.deleteGroup('bad-id')).rejects.toThrow('Delete failed');
+    await expect(contextValue.current!.deleteGroup('bad-id')).rejects.toThrow('Delete failed');
   });
 
   it('clears groups when user logs out', async () => {
     const mockUser = { $id: 'user1', email: 'test@example.com' };
     const mockProfile = { userId: 'user1', username: 'Test User' };
     const { rerender, getByTestId } = render(
-      <UserContext.Provider value={{ user: mockUser, profile: mockProfile }}>
+      <UserContext.Provider value={{
+        user: mockUser,
+        profile: mockProfile,
+        login: jest.fn(),
+        register: jest.fn(),
+        logout: jest.fn(),
+        updateProfile: jest.fn(),
+        refetchProfile: jest.fn(),
+        authChecked: true, 
+      }}>
         <GroupsProvider>
           <TestGroupsComponent />
         </GroupsProvider>
@@ -218,7 +249,16 @@ describe('GroupsContext', () => {
     });
     // Simulate logout
     rerender(
-      <UserContext.Provider value={{ user: null, profile: null }}>
+      <UserContext.Provider value={{
+        user: null,
+        profile: null,
+        login: jest.fn(),
+        register: jest.fn(),
+        logout: jest.fn(),
+        updateProfile: jest.fn(),
+        refetchProfile: jest.fn(),
+        authChecked: true, 
+      }}>
         <GroupsProvider>
           <TestGroupsComponent />
         </GroupsProvider>

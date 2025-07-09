@@ -3,7 +3,8 @@
   "compilerOptions": {
     "strict": true,
     "types": [
-      "bun-types"
+      "bun-types",
+      "jest"
     ],
     "lib": [
       "ESNext",

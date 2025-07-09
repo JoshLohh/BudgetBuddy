@@ -3,7 +3,7 @@ import { account, databases } from "../lib/appwrite";
 // import { APPWRITE_DATABASE_ID, APPWRITE_USERS_COLLECTION_ID } from '@/env';
 
 
-type UserContextType = {
+export type UserContextType = {
   user: any;
   profile: any;
   login: (email: string, password: string) => Promise<void>;

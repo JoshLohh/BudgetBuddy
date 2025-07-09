@@ -6,7 +6,7 @@ import { useUser } from "@/hooks/useUser";
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const COLLECTION_ID = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
 
-export interface Group {
+export type Group = {
     id: string;
     title: string;
     members: string[]
@@ -15,19 +15,19 @@ export interface Group {
 }
 
 
-interface CreateGroupInput {
+type CreateGroupInput = {
   title: string;
   description?: string;
   // Add more fields as needed
 }
 
-interface GroupsContextType {
+export type GroupsContextType = {
   groups: Group[];
   fetchGroups: () => Promise<void>;
-  fetchGroupsById: (id: string) => Promise<void>;
+  fetchGroupsById: (id: string) => Promise<Group>;
   createGroup: (data: CreateGroupInput) => Promise<void>;
   deleteGroup: (id: string) => Promise<void>;
-}
+};
 
 export const GroupsContext = createContext<GroupsContextType | undefined>(undefined);
 
