@@ -61,7 +61,7 @@ export default function SettingsPage() {
 
             {/* Change Password Section */}
             <View style={{ marginBottom: 18 , alignSelf:'center'}}>
-                <ThemedText style={{ fontWeight: 'bold', marginBottom: 8 , textAlign:'center'}}>Forgot your password?</ThemedText>
+                {/* <ThemedText style={{ fontWeight: 'bold', marginBottom: 8 , textAlign:'center'}}>Forgot your password?</ThemedText> */}
                 <ThemedButton
                 onPress={() => setShowChangePassword(true)}
                 style={{

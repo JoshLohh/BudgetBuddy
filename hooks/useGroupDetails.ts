@@ -101,11 +101,16 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
         .then(res => {
           setExpenses(
             (res.documents as any[]).map(doc => ({
+              $id: doc.$id,
               amount: doc.amount,
               paidBy: doc.paidBy,
               splitBetween: doc.splitBetween,
               splitType: doc.splitType,
               customSplit: doc.customSplit,
+              description: doc.description,
+              groupId: doc.groupId,
+              category: doc.category ?? 'Others',
+              createdAt: doc.createdAt,
             }))
           );
           setExpensesLoading(false);

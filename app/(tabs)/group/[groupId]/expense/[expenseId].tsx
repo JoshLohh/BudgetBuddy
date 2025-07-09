@@ -7,7 +7,6 @@ import ThemedTextInput from '@/components/ThemedTextInput';
 import { ThemedButton } from '@/components/ThemedButton';
 import { ActivityIndicator, Alert, ScrollView, View, Image, TouchableOpacity } from 'react-native';
 import Spacer from '@/components/Spacer';
-import BackButton from '@/components/BackButton';
 import { Ionicons } from '@expo/vector-icons';
 import { getCategoryIconName } from '@/constants/categoryUtils';
 import { Colors } from '@/constants/Colors';
@@ -184,8 +183,7 @@ export default function ExpenseDetailScreen() {
             <Ionicons name="arrow-back" size={24} color={Colors.primary} />
         </TouchableOpacity>
       <ScrollView>
-        <Spacer height={30}/>
-        <ThemedText type="title" style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 12 }}>
+        <ThemedText type="title" style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 12 , marginTop: 10}}>
           Edit Expense
         </ThemedText>
 

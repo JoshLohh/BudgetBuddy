@@ -12,17 +12,12 @@ import { ThemedButton } from '@/components/ThemedButton';
 import { Ionicons } from '@expo/vector-icons';
 import { getCategoryIconName } from '@/constants/categoryUtils';
 import Spacer from '@/components/Spacer';
-
-type Expense = {
-  $id: string;
-  description: string;
-  paidBy: string;
-  amount: number | string;
-};
+import type { Expense } from '@/types/expense';
 
 interface ExpenseListProps {
   expenses: Expense[];
   expensesLoading: boolean;
+  hasMoreExpenses: boolean;
   showAllExpenses: boolean;
   setShowAllExpenses: (show: boolean) => void;
   getUsername: (userId: string) => string;
@@ -42,7 +37,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
 
   // First sort expenses
   const sortedExpenses = [...expenses].sort(
-    (a, b) => new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime()
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
 
@@ -51,7 +46,6 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
   const expensesToShow = showAllExpenses
     ? sortedExpenses
     : sortedExpenses.slice(0, EXPENSES_PREVIEW_COUNT);
-
 
   return (
     <View style={{ marginTop: 18 }}>
@@ -73,7 +67,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
         <>
           {expensesToShow.map(item => (
             <TouchableOpacity
-              key={item.$id}
+              key={item.$id ?? `${item.paidBy}-${item.amount}-${item.description}`}
               onPress={() =>
                 router.push({
                   pathname: '/group/[groupId]/expense/[expenseId]',

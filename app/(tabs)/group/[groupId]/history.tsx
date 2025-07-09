@@ -27,8 +27,6 @@ export default function GroupHistoryPage() {
   // to sort dates
   const toggleSortOrder = () => setSortOrder(prev => (prev === 'ASC' ? 'DESC' : 'ASC'));
 
-
-
   // to format dates
   const formatDate = isoString =>
   new Date(isoString).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
