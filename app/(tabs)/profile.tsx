@@ -18,9 +18,10 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedButton } from '@/components/ThemedButton';
 import ThemedTextInput from '@/components/ThemedTextInput';
 import Spacer from '@/components/Spacer';
-import { databases, client } from '@/lib/appwrite';
-import { Query, Storage, ID } from 'appwrite';
+import { client } from '@/lib/appwrite';
+import { Storage } from 'appwrite';
 import { Ionicons } from '@expo/vector-icons';
+import { useStats } from '@/contexts/StatsContext';
 
 const AVATAR_SIZE = 150;
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
@@ -31,6 +32,7 @@ const storage = new Storage(client);
 
 export default function Profile() {
   const { user, profile, updateProfile, logout, authChecked, refetchProfile } = useUser();
+  const { groupsCount, userExpensesCount, userTotalSpent, loading: statsLoading, refetchStats } = useStats(); // Use stats context
   const router = useRouter();
 
   const [editing, setEditing] = useState(false);
@@ -43,55 +45,54 @@ export default function Profile() {
   const [cacheBuster, setCacheBuster] = useState(Date.now());
   const [loadingProfile, setLoadingProfile] = useState(false);
 
-  // Statistics state
-  const [groupsCount, setGroupsCount] = useState(0);
-  const [userExpensesCount, setUserExpensesCount] = useState(0);
-  const [userTotalSpent, setUserTotalSpent] = useState(0);
-
   // Fetch stats for user
-  const fetchStats = useCallback(() => {
-    if (!user) return;
-    databases
-      .listDocuments(
-        databaseId,
-        groupsCollectionId,
-        [Query.search('members', user.$id)]
-      )
-      .then(res => {
-        setGroupsCount(res.documents.length);
-        const groupIds = res.documents.map(doc => doc.$id);
-        if (groupIds.length === 0) {
-          setUserExpensesCount(0);
-          setUserTotalSpent(0);
-          return;
-        }
-        databases
-          .listDocuments(
-            databaseId,
-            expensesCollectionId,
-            Query.equal('paidBy', user.$id),
-            Query.equal('groupId', groupIds),
-            Query.limit(100),
-          )
-          .then(expRes => {
-            setUserExpensesCount(expRes.documents.length);
-            const total = expRes.documents.reduce((sum, doc) => {
-              const amt = parseFloat(doc.amount);
-              return sum + (isNaN(amt) ? 0 : amt);
-            }, 0);
-            setUserTotalSpent(Number(total.toFixed(2)));
-          })
-          .catch(() => {
-            setUserExpensesCount(0);
-            setUserTotalSpent(0);
-          });
-      })
-      .catch(() => {
-        setGroupsCount(0);
-        setUserExpensesCount(0);
-        setUserTotalSpent(0);
-      });
-  }, [user]);
+  // const fetchStats = useCallback(() => {
+  //   if (!user) return;
+  //   databases
+  //     .listDocuments(
+  //       databaseId,
+  //       groupsCollectionId,
+  //       [Query.contains('members', user.$id)]
+  //     )
+  //     .then(res => {
+  //       setGroupsCount(res.documents.length);
+  //       const groupIds = res.documents.map(doc => doc.$id);
+  //       if (groupIds.length === 0) {
+  //         setUserExpensesCount(0);
+  //         setUserTotalSpent(0);
+  //         return;
+  //       }
+  //       databases
+  //         .listDocuments(
+  //           databaseId,
+  //           expensesCollectionId,
+  //         [
+  //           Query.equal('paidBy', user.$id),
+  //           Query.equal('groupId', groupIds),
+  //           Query.limit(100),
+  //         ]
+  //         )
+  //         .then(expRes => {
+  //           setUserExpensesCount(expRes.documents.length);
+  //           const total = expRes.documents.reduce((sum, doc) => {
+  //             const amt = parseFloat(doc.amount);
+  //             return sum + (isNaN(amt) ? 0 : amt);
+  //           }, 0);
+  //           setUserTotalSpent(Number(total.toFixed(2)));
+  //         })
+  //         .catch(() => {
+  //           console.error('Failed to fetch stats:', error);
+  //           setUserExpensesCount(0);
+  //           setUserTotalSpent(0);
+  //         });
+  //     })
+  //     .catch(() => {
+  //       console.error('Failed to fetch stats:', error);
+  //       setGroupsCount(0);
+  //       setUserExpensesCount(0);
+  //       setUserTotalSpent(0);
+  //     });
+  // }, [user]);
 
   // Sync form fields with profile when loaded
   useEffect(() => {
@@ -106,9 +107,9 @@ export default function Profile() {
   const reloadProfile = useCallback(async () => {
     setLoadingProfile(true);
     await refetchProfile();
-    fetchStats();
+    refetchStats();
     setLoadingProfile(false);
-  }, [refetchProfile, fetchStats]);
+  }, [refetchProfile, refetchStats]);
 
   // Avatar change handler
   const handleAvatarChange = async () => {
@@ -207,19 +208,19 @@ export default function Profile() {
 
   if (!profile) {
     return (
-      <View style={styles.loadingContainer}>
-        <ThemedText style={{ textAlign:'center' }}>
-          No profile loaded. 
-          Please try logging out and back in, or contact support. 
-          If you just created a new account, please wait a moment for your profile to load.
-          </ThemedText>
+      <ThemedView style={styles.loadingContainer}>
+        <ThemedView>
+          <ThemedText style={{ color: 'red' , textAlign: 'center', justifyContent: 'center'}}>No profile loaded. </ThemedText>
+          <ThemedText style={{ color: 'red' , textAlign: 'center', justifyContent: 'center'}}>Please try logging out and back in, or contact support. </ThemedText>
+          <ThemedText style={{ color: 'red' , textAlign: 'center', justifyContent: 'center'}}>If you just created a new account, please wait a moment for your profile to load.</ThemedText>
+          </ThemedView>
         <ThemedButton onPress={reloadProfile} style={styles.editBtn}>
           <ThemedText style={{ color: '#f2f2f2', textAlign:'center' }}>Reload</ThemedText>
         </ThemedButton>
         <ThemedButton onPress={handleLogout} style={styles.logoutBtn}>
               <ThemedText style={{ color: '#f2f2f2', textAlign:'center' }}>Logout</ThemedText>
         </ThemedButton>
-      </View>
+      </ThemedView>
     );
   }
 
@@ -227,6 +228,11 @@ export default function Profile() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ThemedView style={styles.container}>
         <Spacer />
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 8 }}>
+            <TouchableOpacity onPress={() => router.push('/settings')}>
+              <Ionicons name="settings" size={28} color="#0a7ea4" />
+            </TouchableOpacity>
+          </View>
         {/* Top: Avatar + Username */}
         <View style={styles.topRow}>
           <TouchableOpacity onPress={handleAvatarChange} disabled={uploading}>
@@ -279,21 +285,24 @@ export default function Profile() {
           </View>
         ) : null}
 
-        {/* Statistics */}
-        <View style={styles.statsCard}>
-          <View style={styles.statBox}>
-            <ThemedText style={styles.statValue}>{groupsCount}</ThemedText>
-            <ThemedText style={styles.statLabel}>Groups</ThemedText>
+        {statsLoading ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          <View style={styles.statsCard}>
+            <View style={styles.statBox}>
+              <ThemedText style={styles.statValue}>{groupsCount}</ThemedText>
+              <ThemedText style={styles.statLabel}>Groups</ThemedText>
+            </View>
+            <View style={styles.statBox}>
+              <ThemedText style={styles.statValue}>${userTotalSpent.toFixed(2)}</ThemedText>
+              <ThemedText style={styles.statLabel}>Total Spent</ThemedText>
+            </View>
+            <View style={styles.statBox}>
+              <ThemedText style={styles.statValue}>{userExpensesCount}</ThemedText>
+              <ThemedText style={styles.statLabel}># Expenses</ThemedText>
+            </View>
           </View>
-          <View style={styles.statBox}>
-            <ThemedText style={styles.statValue}>${userTotalSpent.toFixed(2)}</ThemedText>
-            <ThemedText style={styles.statLabel}>Total Spent</ThemedText>
-          </View>
-          <View style={styles.statBox}>
-            <ThemedText style={styles.statValue}>{userExpensesCount}</ThemedText>
-            <ThemedText style={styles.statLabel}># Expenses</ThemedText>
-          </View>
-        </View>
+        )}
 
         {/* Edit Profile */}
         {editing ? (

@@ -1,19 +1,4 @@
-
-export type Expense = {
-  amount: number | string;
-  paidBy: string;
-  splitBetween: string[];
-  splitType: 'equal' | 'custom';
-  customSplit?: string;
-}
-
-export type Settlement = {
-  from: string;
-  to: string;
-  amount: number;
-}
-
-export type Balances = Record<string, number>;
+import type { Balances, Expense, Settlement } from '@/types';
 
 /**
  * Calculate net balances for each member.

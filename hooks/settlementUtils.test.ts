@@ -1,6 +1,7 @@
 // utils/settlementUtils.test.ts
 
-import { calculateBalances, calculateSettlements, Expense, Settlement, Balances } from './settlementUtils';
+import { calculateBalances, calculateSettlements } from './settlementUtils';
+import type { Balances, Expense, Settlement } from '@/types';
 
 describe('calculateBalances', () => {
   it('calculates balances for equal split', () => {

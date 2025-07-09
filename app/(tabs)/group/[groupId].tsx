@@ -52,23 +52,6 @@ export default function GroupDetailScreen() {
     setCurrentGroup(group);
   }, [group]);
 
-  type Expense = {
-    $id: string;
-    description: string;
-    paidBy: string;
-    amount: number;
-  };
-
-  type UserProfile = {
-    $id: string;
-    username: string;
-  };
-
-  // const EXPENSES_PREVIEW_COUNT = 5;
-  //const expensesToShow = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
-  // const expensesToShow: Expense[] = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
-  // const hasMoreExpenses = expenses.length > EXPENSES_PREVIEW_COUNT;
-
   if (loading) {
     return (
       <ThemedView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -101,7 +84,7 @@ export default function GroupDetailScreen() {
         </TouchableOpacity>
         <Spacer height={10} />
         <GroupHeader
-          group={currentGroup}
+          group={group}
           totalExpenses={totalExpenses}
           onGroupUpdated={setCurrentGroup}
         />
@@ -177,7 +160,7 @@ export default function GroupDetailScreen() {
                 ) : (
                   <FlatList
                     data={searchResults}
-                    keyExtractor={item => item.$id}
+                    keyExtractor={item => item.userId}
                     renderItem={({ item }) => (
                       <TouchableOpacity
                         style={{
@@ -186,7 +169,7 @@ export default function GroupDetailScreen() {
                           borderBottomWidth: 0.5,
                           borderBottomColor: '#eee',
                         }}
-                        onPress={() => handleAddMember(item.$id)}
+                        onPress={() => handleAddMember(item.userId)}
                       >
                         <ThemedText style={{ fontSize: 16, color: '#333' }}>{item.username}</ThemedText>
                       </TouchableOpacity>

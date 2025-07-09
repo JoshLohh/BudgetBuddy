@@ -1,7 +1,5 @@
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import { account, databases } from "../lib/appwrite";
-// import { APPWRITE_DATABASE_ID, APPWRITE_USERS_COLLECTION_ID } from '@/env';
-
 
 export type UserContextType = {
   user: any;
@@ -25,7 +23,7 @@ type UserProviderProps = { children: ReactNode };
 export function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState<any | null>(null);
   const [profile, setProfile] = useState<any | null>(null);
-  const [authChecked, setAuthChecked] = useState(false);
+  const [authChecked, setAuthChecked] = useState<boolean>(false);
 
   // Fetch profile by document ID (which is userId)
   const fetchProfile = async (userId: string) => {

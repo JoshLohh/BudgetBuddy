@@ -8,20 +8,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import { databases } from '@/lib/appwrite';
 import { router } from 'expo-router';
+import type { Group } from '@/types/group'
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
 
 interface GroupHeaderProps {
-  group: {
-    id: string;
-    title: string;
-    description?: string;
-    members: string[];
-    // add any other fields your group object uses
-  };
+  group: Group;
   totalExpenses: number;
-  onGroupUpdated?: (group: any) => void; // Replace 'any' with your group type if available
+  onGroupUpdated?: (group: Group) => void; // Replace 'any' with your group type if available
 }
 
 export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: GroupHeaderProps) {

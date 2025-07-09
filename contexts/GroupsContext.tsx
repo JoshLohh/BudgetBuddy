@@ -2,24 +2,10 @@ import { databases } from "@/lib/appwrite";
 import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { ID, Permission, Query, Role } from "react-native-appwrite";
 import { useUser } from "@/hooks/useUser";
+import type { Group, CreateGroupInput } from '@/types/group';
 
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const COLLECTION_ID = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
-
-export type Group = {
-    id: string;
-    title: string;
-    members: string[]
-    createdBy: string;
-    description?: string;
-}
-
-
-type CreateGroupInput = {
-  title: string;
-  description?: string;
-  // Add more fields as needed
-}
 
 export type GroupsContextType = {
   groups: Group[];
@@ -59,6 +45,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
 
             setGroups(parsedGroups)
         } catch(error) {
+            console.error('Failed to fetch groups:', error);
             throw Error((error as Error).message)  
         }
     }
@@ -74,6 +61,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
             createdBy: doc.createdBy,
             };
         } catch (error) {
+            console.error('Failed to fetch groups: by Id', error);
             throw Error((error as Error).message);
         }
     }

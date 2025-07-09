@@ -1,19 +1,7 @@
 import React, { createContext, useContext, useCallback, useState } from 'react';
 import { databases } from '@/lib/appwrite';
 import { ID, Query } from 'appwrite';
-
-type Expense = {
-  $id: string;
-  groupId: string;
-  amount: number;
-  description: string;
-  paidBy: string;
-  splitBetween: string[];     // user IDs
-  splitType: string;          // 'equal' | 'exact' | 'percentage'
-  customSplit: string;        // JSON string: { [userId]: number }
-  category: string;
-  createdAt: string;
-};
+import type { Expense } from '@/types/expense';
 
 type ExpensesContextType = {
   expenses: Expense[];
@@ -34,7 +22,7 @@ const ExpensesContext = createContext<ExpensesContextType | undefined>(undefined
 
 export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
   const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
@@ -63,6 +51,7 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }))
       );
     } catch (e) {
+      console.error('Failed to fetch expenses:', e);
       setExpenses([]);
     }
     setLoading(false);
