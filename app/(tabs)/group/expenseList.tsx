@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import {
   View,
@@ -13,6 +13,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { getCategoryIconName } from '@/constants/categoryUtils';
 import Spacer from '@/components/Spacer';
 import type { Expense } from '@/types/expense';
+import { Query } from 'appwrite';
+import { databases } from '@/lib/appwrite';
+
+const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
+const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?? '';
 
 interface ExpenseListProps {
   expenses: Expense[];
@@ -34,18 +39,60 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
 }) => {
   const router = useRouter();
   const { groupId } = useLocalSearchParams();
+  const [userMap, setUserMap] = useState({}); // { userId: username }
+
 
   // First sort expenses
   const sortedExpenses = [...expenses].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
-
   // Determine which expenses to show
   const hasMoreExpenses = expenses.length > EXPENSES_PREVIEW_COUNT;
   const expensesToShow = showAllExpenses
     ? sortedExpenses
     : sortedExpenses.slice(0, EXPENSES_PREVIEW_COUNT);
+
+  async function fetchUsernames(userIds: string[]) {
+    if (!userIds || userIds.length === 0) return {};
+    try {
+      const response = await databases.listDocuments(
+        databaseId,
+        usersCollectionId,
+        [Query.equal('$id', userIds)]
+      );
+      // Map userId to username
+      const userMap = {};
+      response.documents.forEach(doc => {
+        userMap[doc.$id] = doc.username || "Unknown User";
+      });
+      // Fill in missing users as "Unknown User"
+      userIds.forEach(id => {
+        if (!userMap[id]) userMap[id] = "Unknown User";
+      });
+      return userMap;
+    } catch (error) {
+      console.error('Error batch fetching usernames:', error);
+      // Fallback: all unknown
+      const fallback = {};
+      userIds.forEach(id => { fallback[id] = "Unknown User"; });
+      return fallback;
+    }
+  }
+
+  // On mount or when expenses change:
+  useEffect(() => {
+    const allUserIds = Array.from(new Set(expenses.map(e => e.paidBy)));
+    const missingUserIds = allUserIds.filter(id => !userMap[id]);
+    if (missingUserIds.length > 0) {
+      // Fetch usernames for missingUserIds from backend
+      fetchUsernames(missingUserIds).then(fetchedMap => {
+        setUserMap(prev => ({ ...prev, ...fetchedMap }));
+      });
+    }
+  }, [expenses]);
+
+  const getUsernameFromMap = (userId) => userMap[userId] || "Unknown User";
 
   return (
     <View style={{ marginTop: 18 }}>
@@ -87,7 +134,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
                   <ThemedText style={styles.expensePaidBy}>
                     Paid by:{' '}
                     <ThemedText style={styles.expensePaidByName}>
-                      {getUsername(item.paidBy)}
+                      {getUsernameFromMap(item.paidBy)}
                     </ThemedText>
                   </ThemedText>
                   <ThemedText style={styles.expenseAmount}>

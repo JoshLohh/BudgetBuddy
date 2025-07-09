@@ -8,7 +8,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { UserProvider } from '@/contexts/UserContext';
 import { GroupsProvider } from '@/contexts/GroupsContext';
 import { StatsProvider } from '@/contexts/StatsContext';
-import { ExpensesProvider } from '@/contexts/ExpensesContext';
+import { MenuProvider } from 'react-native-popup-menu';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -22,6 +22,7 @@ export default function RootLayout() {
   }
 
   return (
+    <MenuProvider>
     <UserProvider>
       <StatsProvider>
         <GroupsProvider>
@@ -37,5 +38,6 @@ export default function RootLayout() {
         </GroupsProvider>
       </StatsProvider>
     </UserProvider>
+    </MenuProvider>
   );
 }

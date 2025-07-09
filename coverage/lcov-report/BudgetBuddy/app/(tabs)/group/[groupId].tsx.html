@@ -268,24 +268,7 @@
 <a name='L203'></a><a href='#L203'>203</a>
 <a name='L204'></a><a href='#L204'>204</a>
 <a name='L205'></a><a href='#L205'>205</a>
-<a name='L206'></a><a href='#L206'>206</a>
-<a name='L207'></a><a href='#L207'>207</a>
-<a name='L208'></a><a href='#L208'>208</a>
-<a name='L209'></a><a href='#L209'>209</a>
-<a name='L210'></a><a href='#L210'>210</a>
-<a name='L211'></a><a href='#L211'>211</a>
-<a name='L212'></a><a href='#L212'>212</a>
-<a name='L213'></a><a href='#L213'>213</a>
-<a name='L214'></a><a href='#L214'>214</a>
-<a name='L215'></a><a href='#L215'>215</a>
-<a name='L216'></a><a href='#L216'>216</a>
-<a name='L217'></a><a href='#L217'>217</a>
-<a name='L218'></a><a href='#L218'>218</a>
-<a name='L219'></a><a href='#L219'>219</a>
-<a name='L220'></a><a href='#L220'>220</a>
-<a name='L221'></a><a href='#L221'>221</a>
-<a name='L222'></a><a href='#L222'>222</a>
-<a name='L223'></a><a href='#L223'>223</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L206'></a><a href='#L206'>206</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -337,23 +320,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -561,23 +527,6 @@ export default function <span class="fstat-no" title="function not covered" >Gro
 <span class="cstat-no" title="statement not covered" >    setCurrentGroup(group);</span>
   }, [group]);
 &nbsp;
-  type Expense = {
-    $id: string;
-    description: string;
-    paidBy: string;
-    amount: number;
-  };
-&nbsp;
-  type UserProfile = {
-    $id: string;
-    username: string;
-  };
-&nbsp;
-  // const EXPENSES_PREVIEW_COUNT = 5;
-  //const expensesToShow = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
-  // const expensesToShow: Expense[] = showAllExpenses ? expenses : expenses.slice(0, EXPENSES_PREVIEW_COUNT);
-  // const hasMoreExpenses = expenses.length &gt; EXPENSES_PREVIEW_COUNT;
-&nbsp;
 <span class="cstat-no" title="statement not covered" >  if (loading) {</span>
 <span class="cstat-no" title="statement not covered" >    return (</span>
       &lt;ThemedView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}&gt;
@@ -610,7 +559,7 @@ export default function <span class="fstat-no" title="function not covered" >Gro
         &lt;/TouchableOpacity&gt;
         &lt;Spacer height={10} /&gt;
         &lt;GroupHeader
-          group={currentGroup}
+          group={group}
           totalExpenses={totalExpenses}
           onGroupUpdated={setCurrentGroup}
         /&gt;
@@ -686,7 +635,7 @@ export default function <span class="fstat-no" title="function not covered" >Gro
                 ) : (
                   &lt;FlatList
                     data={searchResults}
-                    keyExtractor={<span class="fstat-no" title="function not covered" >it</span>em =&gt; <span class="cstat-no" title="statement not covered" >item.$id}</span>
+                    keyExtractor={<span class="fstat-no" title="function not covered" >it</span>em =&gt; <span class="cstat-no" title="statement not covered" >item.userId}</span>
                     renderItem={<span class="fstat-no" title="function not covered" >({</span> item }) =&gt; (
 <span class="cstat-no" title="statement not covered" >                      &lt;TouchableOpacity</span>
                         style={{
@@ -695,7 +644,7 @@ export default function <span class="fstat-no" title="function not covered" >Gro
                           borderBottomWidth: 0.5,
                           borderBottomColor: '#eee',
                         }}
-                        onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >handleAddMember(item.$id)}</span>
+                        onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >handleAddMember(item.userId)}</span>
                       &gt;
                         &lt;ThemedText style={{ fontSize: 16, color: '#333' }}&gt;{item.username}&lt;/ThemedText&gt;
                       &lt;/TouchableOpacity&gt;
@@ -736,7 +685,7 @@ export default function <span class="fstat-no" title="function not covered" >Gro
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-09T08:48:49.804Z
+                at 2025-07-09T14:33:18.010Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

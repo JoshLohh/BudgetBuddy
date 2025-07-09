@@ -162,6 +162,21 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
     return profile ? profile.username : userId;
   };
 
+  async function fetchUsernameById(userId: string) {
+    try {
+      const userDoc = await databases.getDocument(
+        databaseId,
+        usersCollectionId,
+        userId
+      );
+      // Assuming your user document has a 'username' field
+      return userDoc.username || "Unknown User";
+    } catch (error) {
+      console.error('Error fetching username:', error);
+      return "Unknown User";
+    }
+  }
+
   // Calculate balances and suggested settlements
   const balances = group ? calculateBalances(group.members, expenses, settlements) : {};
   const allSettlements = group ? calculateSettlements(balances) : [];
