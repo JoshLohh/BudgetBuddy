@@ -268,35 +268,9 @@
 <a name='L203'></a><a href='#L203'>203</a>
 <a name='L204'></a><a href='#L204'>204</a>
 <a name='L205'></a><a href='#L205'>205</a>
-<a name='L206'></a><a href='#L206'>206</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -315,11 +289,41 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -488,13 +492,14 @@ import MembersDropdown from './membersDropdown';
 import SettlementList from './settlementList';
 import { Ionicons } from '@expo/vector-icons';
 import { useUser } from '@/hooks/useUser';
+import { Group } from '@/types';
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >GroupDetailScreen(</span>) {
   const { groupId } = <span class="cstat-no" title="statement not covered" >useLocalSearchParams();</span>
   const { user } = <span class="cstat-no" title="statement not covered" >useUser();</span>
   const router = <span class="cstat-no" title="statement not covered" >useRouter();</span>
   const {
-    group,
+    group: fetchedGroup,
     loading,
     error,
     membersExpanded,
@@ -521,11 +526,12 @@ export default function <span class="fstat-no" title="function not covered" >Gro
     totalExpenses,
   } = <span class="cstat-no" title="statement not covered" >useGroupDetails(groupId);</span>
 &nbsp;
-  const [currentGroup, setCurrentGroup] = <span class="cstat-no" title="statement not covered" >useState(group);</span>
+  const [group, setGroup] = <span class="cstat-no" title="statement not covered" >useState&lt;Group | null&gt;(null);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    setCurrentGroup(group);</span>
-  }, [group]);
+<span class="cstat-no" title="statement not covered" >    setGroup(fetchedGroup);</span>
+  }, [fetchedGroup]);
+&nbsp;
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  if (loading) {</span>
 <span class="cstat-no" title="statement not covered" >    return (</span>
@@ -561,7 +567,7 @@ export default function <span class="fstat-no" title="function not covered" >Gro
         &lt;GroupHeader
           group={group}
           totalExpenses={totalExpenses}
-          onGroupUpdated={setCurrentGroup}
+          onGroupUpdated={setGroup}
         /&gt;
         &lt;MembersDropdown
           group={group}
@@ -685,7 +691,7 @@ export default function <span class="fstat-no" title="function not covered" >Gro
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-10T07:16:06.382Z
+                at 2025-07-10T11:48:09.206Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

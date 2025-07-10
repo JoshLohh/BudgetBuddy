@@ -19,6 +19,7 @@ import ThemedTextInput from '@/components/ThemedTextInput';
 import { Ionicons } from '@expo/vector-icons';
 import { databases } from '@/lib/appwrite';
 import { Image } from 'expo-image';
+import { Group } from '@/types';
 
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
@@ -61,7 +62,7 @@ export default function GroupsScreen() {
     }, [fetchGroups])
   );
 
-  const deleteGroupForUser = async (group) => {
+  const deleteGroupForUser = async (group: Group) => {
     console.log('deleteGroupForUser called with group:', group);
 
     if (!group) {
@@ -104,7 +105,7 @@ export default function GroupsScreen() {
     }
   };
 
-  async function fetchUserById(userId) {
+  async function fetchUserById(userId: string) {
   try {
     const userDoc = await databases.getDocument(
       databaseId,
@@ -131,7 +132,7 @@ useEffect(() => {
 
 
   // FlatList renderItem
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: Group }) => (
     <ThemedCard style={styles.card}>
       <View style={styles.avatarContainer}>
         {item.avatar ? (
@@ -144,7 +145,7 @@ useEffect(() => {
         )}
       </View>
       <View style={{ flex: 1, minWidth: 0 }}>
-        <Pressable onPress={() => router.push(`/group/${item.id}`)}>
+        <Pressable onPress={() => router.push({pathname: '/group/[groupId]', params: { groupId: item.id }})}>
           <ThemedText type="subtitle">{item.title}</ThemedText>
           <ThemedText>{item.description}</ThemedText>
         </Pressable>

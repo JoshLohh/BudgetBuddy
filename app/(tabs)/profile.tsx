@@ -12,7 +12,7 @@ import {
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import { useUser } from '@/hooks/useUser';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedButton } from '@/components/ThemedButton';
@@ -40,7 +40,7 @@ export default function Profile() {
   const [email, setEmail] = useState('');
   const [bio, setBio] = useState('');
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
   const [loadingProfile, setLoadingProfile] = useState(false);
@@ -88,15 +88,16 @@ export default function Profile() {
       const formData = new FormData();
       formData.append('fileId', fileId);
       formData.append('file', {
-        uri,
-        name: fileName,
-        type: asset.mimeType || 'image/jpeg',
-      });
+          uri,
+          name: fileName,
+          type: asset.mimeType || 'image/jpeg',
+        } as any
+      );
       const endpoint = `${process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${avatarbucketId}/files`;
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
-          'X-Appwrite-Project': process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
+          'X-Appwrite-Project': process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID ?? '',
         },
         body: formData,
       });
@@ -232,7 +233,7 @@ export default function Profile() {
         {!editing && profile.bio ? (
           <View>
             <ThemedText style={styles.bio}>{profile.bio}</ThemedText>
-            <Spacer size={8} />
+            <Spacer height={8} />
           </View>
         ) : null}
 
@@ -331,7 +332,7 @@ const styles = StyleSheet.create({
   },
   bio: {
     fontSize: 15,
-    marginLeft: 2,
+    marginLeft: 12,
     marginBottom: 6,
   },
   avatar: {
