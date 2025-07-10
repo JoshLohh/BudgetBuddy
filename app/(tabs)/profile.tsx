@@ -24,11 +24,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useStats } from '@/contexts/StatsContext';
 
 const AVATAR_SIZE = 150;
-const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
-const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
-const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
+// const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
+// const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
+// const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
 const avatarbucketId = process.env.EXPO_PUBLIC_APPWRITE_AVATAR_BUCKET_ID ?? 'avatars';
-const storage = new Storage(client);
+// const storage = new Storage(client);
 
 export default function Profile() {
   const { user, profile, updateProfile, logout, authChecked, refetchProfile } = useUser();
@@ -44,55 +44,6 @@ export default function Profile() {
   const [uploading, setUploading] = useState(false);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
   const [loadingProfile, setLoadingProfile] = useState(false);
-
-  // Fetch stats for user
-  // const fetchStats = useCallback(() => {
-  //   if (!user) return;
-  //   databases
-  //     .listDocuments(
-  //       databaseId,
-  //       groupsCollectionId,
-  //       [Query.contains('members', user.$id)]
-  //     )
-  //     .then(res => {
-  //       setGroupsCount(res.documents.length);
-  //       const groupIds = res.documents.map(doc => doc.$id);
-  //       if (groupIds.length === 0) {
-  //         setUserExpensesCount(0);
-  //         setUserTotalSpent(0);
-  //         return;
-  //       }
-  //       databases
-  //         .listDocuments(
-  //           databaseId,
-  //           expensesCollectionId,
-  //         [
-  //           Query.equal('paidBy', user.$id),
-  //           Query.equal('groupId', groupIds),
-  //           Query.limit(100),
-  //         ]
-  //         )
-  //         .then(expRes => {
-  //           setUserExpensesCount(expRes.documents.length);
-  //           const total = expRes.documents.reduce((sum, doc) => {
-  //             const amt = parseFloat(doc.amount);
-  //             return sum + (isNaN(amt) ? 0 : amt);
-  //           }, 0);
-  //           setUserTotalSpent(Number(total.toFixed(2)));
-  //         })
-  //         .catch(() => {
-  //           console.error('Failed to fetch stats:', error);
-  //           setUserExpensesCount(0);
-  //           setUserTotalSpent(0);
-  //         });
-  //     })
-  //     .catch(() => {
-  //       console.error('Failed to fetch stats:', error);
-  //       setGroupsCount(0);
-  //       setUserExpensesCount(0);
-  //       setUserTotalSpent(0);
-  //     });
-  // }, [user]);
 
   // Sync form fields with profile when loaded
   useEffect(() => {

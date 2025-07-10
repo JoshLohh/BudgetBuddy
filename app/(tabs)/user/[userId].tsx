@@ -101,6 +101,7 @@ export default function UserProfileScreen() {
   return (
     <ThemedView style={styles.container}>
       <Spacer/>
+      {/* <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}> */}
       <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)} style={styles.backBtn}>
         <Ionicons name="arrow-back" size={24} color="#1976d2" />
       </TouchableOpacity>

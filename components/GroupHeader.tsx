@@ -9,9 +9,15 @@ import { Colors } from '@/constants/Colors';
 import { databases } from '@/lib/appwrite';
 import { router } from 'expo-router';
 import type { Group } from '@/types/group'
+import * as ImagePicker from 'expo-image-picker';
+import { Storage } from 'appwrite';
+import { Image } from 'expo-image';
+import { useGroups } from '@/hooks/useGroups';
+import { useGroupDetails } from '@/hooks/useGroupDetails';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
+const avatarbucketId = process.env.EXPO_PUBLIC_APPWRITE_AVATAR_BUCKET_ID ?? 'avatars';
 
 interface GroupHeaderProps {
   group: Group;
@@ -25,10 +31,15 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
   const [description, setDescription] = useState(group?.description || '');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [avatar, setAvatar] = useState(group?.avatar || '');
+  const [uploading, setUploading] = useState(false);
+
+  console.log('Fetched group:', group);
 
   useEffect(() => {
     setTitle(group?.title || '');
     setDescription(group?.description || '');
+    setAvatar(group?.avatar || ''); 
   }, [group]);
 
   if (!group) {
@@ -39,6 +50,81 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
     );
   }
 
+  const handleAvatarChange = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      alert('Permission to access gallery is required!');
+      return;
+    }
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: 'images',
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.7,
+      });
+      if (result.canceled) return;
+
+      setUploading(true);
+      const asset = result.assets[0];
+      const uri = asset.uri;
+      const fileName = uri.split('/').pop();
+      const fileId = Math.random().toString(36).substring(2, 18);
+      const formData = new FormData();
+      formData.append('fileId', fileId);
+      formData.append('file', {
+        uri,
+        name: fileName,
+        type: asset.mimeType || 'image/jpeg',
+      });
+      const endpoint = `${process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${avatarbucketId}/files`;
+      console.log('Uploading avatar to:', endpoint);
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'X-Appwrite-Project': process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
+        },
+        body: formData,
+      });
+      let fileRes;
+      try {
+        fileRes = await response.json();
+      } catch (e) {
+        setUploading(false);
+        alert('Upload failed: invalid response from server.');
+        return;
+      }
+      if (!response.ok) {
+        setUploading(false);
+        alert('Upload failed: ' + (fileRes?.message || response.status));
+        return;
+      }
+      const viewUrl = `${process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${avatarbucketId}/files/${fileRes.$id}/view?project=${process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID}&t=${Date.now()}`;
+      console.log('Avatar uploaded, viewUrl:', viewUrl);
+
+      // Update the group in Appwrite
+      const updateRes = await databases.updateDocument(
+        databaseId,
+        groupsCollectionId,
+        group.id,
+        { avatar: viewUrl }
+      );
+      console.log('Group document updated:', updateRes);
+
+      setAvatar(viewUrl);
+      if (onGroupUpdated) {
+        console.log('Calling onGroupUpdated with avatar:', viewUrl);
+        onGroupUpdated({ ...group, avatar: viewUrl });
+      }
+    } catch (e) {
+      alert('Error updating avatar');
+      console.error('Error in handleAvatarChange:', e);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+
   const handleSave = async () => {
     setSaving(true);
     setError('');
@@ -46,16 +132,25 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
       await databases.updateDocument(databaseId, groupsCollectionId, group.id, {
         title,
         description,
+        avatar: group.avatar, // Always include avatar to avoid overwriting
       });
+      // Fetch the updated group document
+      // const updatedGroup = await databases.getDocument(databaseId, groupsCollectionId, group.id);
       setEditing(false);
       if (onGroupUpdated) {
-        onGroupUpdated({ ...group, title, description });
+        onGroupUpdated({
+          ...group,
+          title,
+          description,
+          avatar, // group.avatar (already present)
+        });
       }
     } catch (e) {
       setError('Failed to update group details.');
     }
     setSaving(false);
   };
+
 
   if (editing) {
     return (
@@ -108,10 +203,21 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
     <ThemedView style={styles.container}>
       <View style={styles.topRow}>
         <View style={styles.leftCol}>
-          <ThemedText type="title" style={styles.groupTitle}>{group.title}</ThemedText>
-          {group.description ? (
-            <ThemedText style={styles.groupDescription}>{group.description}</ThemedText>
-          ) : null}
+          <View style={styles.headerRow}>
+            <TouchableOpacity onPress={handleAvatarChange} style={styles.avatarEditContainer}>
+              {avatar ? (
+                <Image source={ avatar } style={styles.groupAvatarLarge} />
+              ) : (
+                <Ionicons name="people-circle" size={60} color="#007AFF" />
+              )}
+            </TouchableOpacity>
+            <View style={styles.headerTextCol}>
+              <ThemedText type="title" style={styles.groupTitle}>{group.title}</ThemedText>
+              {group.description ? (
+                <ThemedText style={styles.groupDescription}>{group.description}</ThemedText>
+              ) : null}
+            </View>
+          </View>
           <ThemedText style={styles.membersCount}>
             {group.members?.length ?? 0} member{(group.members?.length ?? 0) !== 1 ? 's' : ''}
           </ThemedText>
@@ -216,6 +322,27 @@ const styles = StyleSheet.create({
     width: 110,
     alignSelf: 'flex-end',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarEditContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 12,
+  },
+  groupAvatarLarge: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#fff',
+    marginRight: 10,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  headerTextCol: {
+    flex: 1,
     justifyContent: 'center',
   },
 });

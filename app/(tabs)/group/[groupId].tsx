@@ -13,13 +13,14 @@ import MembersDropdown from './membersDropdown';
 import SettlementList from './settlementList';
 import { Ionicons } from '@expo/vector-icons';
 import { useUser } from '@/hooks/useUser';
+import { Group } from '@/types';
 
 export default function GroupDetailScreen() {
   const { groupId } = useLocalSearchParams();
   const { user } = useUser();
   const router = useRouter();
   const {
-    group,
+    group: fetchedGroup,
     loading,
     error,
     membersExpanded,
@@ -46,11 +47,12 @@ export default function GroupDetailScreen() {
     totalExpenses,
   } = useGroupDetails(groupId);
 
-  const [currentGroup, setCurrentGroup] = useState(group);
+  const [group, setGroup] = useState<Group | null>(null);
 
   useEffect(() => {
-    setCurrentGroup(group);
-  }, [group]);
+    setGroup(fetchedGroup);
+  }, [fetchedGroup]);
+
 
   if (loading) {
     return (
@@ -86,7 +88,7 @@ export default function GroupDetailScreen() {
         <GroupHeader
           group={group}
           totalExpenses={totalExpenses}
-          onGroupUpdated={setCurrentGroup}
+          onGroupUpdated={setGroup}
         />
         <MembersDropdown
           group={group}

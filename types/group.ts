@@ -4,6 +4,8 @@ export interface Group {
   description?: string;
   members: string[];
   createdBy: string;
+  avatar?: string | null;
+
 }
 
 export interface CreateGroupInput {
