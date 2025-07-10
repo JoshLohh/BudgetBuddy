@@ -41,6 +41,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
                 description: doc.description,
                 members: doc.members,
                 createdBy: doc.createdBy,
+                avatar: doc.avatar,
                 }));
 
             setGroups(parsedGroups)

@@ -44,6 +44,7 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
           description: doc.description,
           members: doc.members ?? [],
           createdBy: doc.createdBy,
+          avatar: doc.avatar, 
         });
         setLoading(false);
       })

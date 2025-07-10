@@ -11,6 +11,7 @@ interface RequestBody extends Models.User<Models.Preferences> {
 export default async ({ req, res, log, error }: any) => {
   // You can use the Appwrite SDK to interact with other services
   // For this example, we're using the Users service
+  console.log("✅ Appwrite Function started");
   const client = new Client()
     .setEndpoint(Bun.env["APPWRITE_FUNCTION_API_ENDPOINT"])
     .setProject(Bun.env["APPWRITE_FUNCTION_PROJECT_ID"])
@@ -19,6 +20,7 @@ export default async ({ req, res, log, error }: any) => {
   const databases = new Databases(client);
 
   const data: RequestBody = req.bodyJson;
+  console.log("📦 Payload received:");
 
   try {
     const user = await databases.getDocument(
@@ -49,10 +51,12 @@ export default async ({ req, res, log, error }: any) => {
         Permission.delete(Role.user(data.$id))
       ]
     );
+    console.log("✅ Document created:");
     log("User created successfully");
     return res.json({ message: "User created successfully" });
   } catch (e: any) {
     error("Failed to create the user in the database: " + JSON.stringify(e));
+    console.error("❌ Error creating document:", error);
     return res.json({ message: "Failed to create the user in the database:" + JSON.stringify(e)});
   }
 };

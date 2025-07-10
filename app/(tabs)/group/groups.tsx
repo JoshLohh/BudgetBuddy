@@ -18,9 +18,12 @@ import { Colors } from '@/constants/Colors';
 import ThemedTextInput from '@/components/ThemedTextInput';
 import { Ionicons } from '@expo/vector-icons';
 import { databases } from '@/lib/appwrite';
+import { Image } from 'expo-image';
+
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
+const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?? '';
 
 export default function GroupsScreen() {
   const { groups, fetchGroups } = useGroups();
@@ -31,10 +34,10 @@ export default function GroupsScreen() {
   const [search, setSearch] = useState('');
   const [filteredGroups, setFilteredGroups] = useState(groups);
   const [menuVisibleId, setMenuVisibleId] = useState<string | null>(null);
+  const [creatorInfo, setCreatorInfo] = useState({ username: '', avatar: null });
   const colorScheme = useColorScheme() ?? 'light';
   const backgroundColor = Colors[colorScheme].background;
   const headerBackgroundColor = { dark: '#222', light: '#fff' };
-  
 
   useEffect(() => {
     fetchGroups();
@@ -101,10 +104,45 @@ export default function GroupsScreen() {
     }
   };
 
+  async function fetchUserById(userId) {
+  try {
+    const userDoc = await databases.getDocument(
+      databaseId,
+      usersCollectionId,
+      userId
+    );
+    return {
+      username: userDoc.username,
+      avatar: userDoc.avatar, // Adjust field name if needed
+    };
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return { username: 'Unknown User', avatar: null };
+  }
+}
+
+const currentGroup = filteredGroups.find(g => g.id === menuVisibleId);
+useEffect(() => {
+  if (menuVisibleId && currentGroup) {
+    // Fetch the creator's info when the modal opens or the group changes
+    fetchUserById(currentGroup.createdBy).then(setCreatorInfo);
+  }
+}, [menuVisibleId, currentGroup]);
+
 
   // FlatList renderItem
   const renderItem = ({ item }) => (
     <ThemedCard style={styles.card}>
+      <View style={styles.avatarContainer}>
+        {item.avatar ? (
+          <Image
+            source={{ uri: item.avatar }}
+            style={styles.groupAvatar}
+          />
+        ) : (
+          <Ionicons name="people-circle" size={40} color="#007AFF" style={{ marginRight: 8 }} />
+        )}
+      </View>
       <View style={{ flex: 1, minWidth: 0 }}>
         <Pressable onPress={() => router.push(`/group/${item.id}`)}>
           <ThemedText type="subtitle">{item.title}</ThemedText>
@@ -126,7 +164,7 @@ export default function GroupsScreen() {
           onRequestClose={() => setMenuVisibleId(null)}
         >
           <Pressable style={styles.modalOverlay} onPress={() => setMenuVisibleId(null)} />
-          <View style={styles.centeredModalContainer}>
+          <ThemedView style={styles.centeredModalContainer}>
             {/* Close Button */}
             <Pressable
               style={styles.closeButton}
@@ -136,13 +174,40 @@ export default function GroupsScreen() {
               <Ionicons name="close" size={22} color="#888" />
             </Pressable>
             {/* Group Info */}
-            <View style={styles.groupInfoSection}>
-              <Ionicons name="people-circle" size={40} color="#007AFF" style={{ marginBottom: 8 }} />
+            <ThemedView style={styles.groupInfoSection}>
+              {item.avatar ? (
+                <Image
+                  source={{ uri: item.avatar }}
+                  style={styles.groupAvatar}
+                />
+              ) : (
+                <Ionicons name="people-circle" size={40} color="#007AFF" style={{ marginRight: 8 }} />
+              )}
               <ThemedText type="subtitle" style={styles.groupTitleModal}>
                 {item.title}
               </ThemedText>
               <ThemedText style={styles.groupDescModal}>{item.description}</ThemedText>
-            </View>
+              <ThemedText style={{ marginBottom: 4, fontWeight: 'bold' }}>
+                  Created By:
+                </ThemedText>
+                <ThemedView style={styles.createdBy}>
+                  {creatorInfo.avatar ? (
+                    <Image
+                      source={{ uri: creatorInfo.avatar }}
+                      style={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: 16,
+                        marginRight: 8,
+                        backgroundColor: '#fff',
+                      }}
+                    />
+                      ) : <Ionicons name="person-circle" size={32} color="#fff" style={{ marginRight: 10 }} />}
+                      <ThemedText style={styles.creatorText}>
+                        {creatorInfo.username}
+                      </ThemedText>
+                    </ThemedView>
+            </ThemedView>
             {/* Exit Group Action */}
             <Pressable
               style={styles.exitButton}
@@ -154,7 +219,7 @@ export default function GroupsScreen() {
               <Ionicons name="exit-outline" size={20} color="#e53935" style={{ marginRight: 6 }} />
               <ThemedText style={styles.exitButtonText}>Leave & Exit Group</ThemedText>
             </Pressable>
-          </View>
+          </ThemedView>
         </Modal>
       )}
     </ThemedCard>
@@ -267,7 +332,7 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -150 }], // Center the modal (half its width)
     width: 300,
     minHeight: 180,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     borderRadius: 16,
     padding: 20,
     alignItems: 'center',
@@ -314,5 +379,35 @@ const styles = StyleSheet.create({
     color: '#e53935',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  createdBy: {
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    marginRight: 8,
+    minWidth: 90,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1e88e5',
+
+  },
+  creatorText: {
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  avatarContainer: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  groupAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#fff',
+    // marginBottom: 8,
+    marginRight: 8,
   },
 });
