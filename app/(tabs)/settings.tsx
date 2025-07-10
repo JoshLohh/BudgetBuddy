@@ -81,7 +81,6 @@ export default function SettingsPage() {
             <View style={{ marginBottom: 18 , alignSelf:'center'}}>
                 <ThemedButton
                 onPress={logout}
-                type="secondary"
                 style={{
                     width: 200,
                     alignSelf: 'flex-start',
@@ -97,7 +96,6 @@ export default function SettingsPage() {
             <View style={{ marginBottom: 18 , alignSelf:'center'}}>
                 <ThemedButton
                 onPress={() => Alert.alert('Delete Account', 'This feature is not implemented yet.')}
-                type="secondary"
                 style={{
                     width: 160,
                     alignSelf: 'flex-start',
@@ -177,7 +175,6 @@ export default function SettingsPage() {
                         setChangePwSuccess('');
                     }}
                     style={{ paddingHorizontal: 16, paddingVertical: 8, backgroundColor: 'grey' }}
-                    type="secondary"
                     >
                     <ThemedText style={{ color:'#fff', textAlign:'center' }}>Cancel</ThemedText>
                     </ThemedButton>

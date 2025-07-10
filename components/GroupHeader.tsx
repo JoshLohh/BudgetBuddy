@@ -12,8 +12,7 @@ import type { Group } from '@/types/group'
 import * as ImagePicker from 'expo-image-picker';
 import { Storage } from 'appwrite';
 import { Image } from 'expo-image';
-import { useGroups } from '@/hooks/useGroups';
-import { useGroupDetails } from '@/hooks/useGroupDetails';
+
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
@@ -73,16 +72,17 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
       const formData = new FormData();
       formData.append('fileId', fileId);
       formData.append('file', {
-        uri,
-        name: fileName,
-        type: asset.mimeType || 'image/jpeg',
-      });
+          uri,
+          name: fileName,
+          type: asset.mimeType || 'image/jpeg',
+        } as any
+      );
       const endpoint = `${process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${avatarbucketId}/files`;
       console.log('Uploading avatar to:', endpoint);
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
-          'X-Appwrite-Project': process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
+          'X-Appwrite-Project': process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID ?? '',
         },
         body: formData,
       });

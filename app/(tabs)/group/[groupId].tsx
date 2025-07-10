@@ -98,7 +98,7 @@ export default function GroupDetailScreen() {
           handleRemoveMember={handleRemoveMember}
           setSearchModalVisible={setSearchModalVisible}
         />
-        <ThemedButton onPress={() => router.push({ pathname: '/group/[groupId]/addExpense', params: { groupId } })}>
+        <ThemedButton onPress={() => router.push({ pathname: '/group/[groupId]/addExpense', params: { groupId: group.id } })}>
           <ThemedText style={{ color: '#fff', textAlign: 'center' }}>Add Expense</ThemedText>
         </ThemedButton>
         <SettlementList
