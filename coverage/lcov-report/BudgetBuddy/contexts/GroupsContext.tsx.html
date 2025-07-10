@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.22% </span>
+                <span class="strong">94.73% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>35/36</span>
+                <span class='fraction'>36/38</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.77% </span>
+                <span class="strong">93.93% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>30/31</span>
+                <span class='fraction'>31/33</span>
             </div>
         
             
@@ -202,40 +202,14 @@
 <a name='L137'></a><a href='#L137'>137</a>
 <a name='L138'></a><a href='#L138'>138</a>
 <a name='L139'></a><a href='#L139'>139</a>
-<a name='L140'></a><a href='#L140'>140</a>
-<a name='L141'></a><a href='#L141'>141</a>
-<a name='L142'></a><a href='#L142'>142</a>
-<a name='L143'></a><a href='#L143'>143</a>
-<a name='L144'></a><a href='#L144'>144</a>
-<a name='L145'></a><a href='#L145'>145</a>
-<a name='L146'></a><a href='#L146'>146</a>
-<a name='L147'></a><a href='#L147'>147</a>
-<a name='L148'></a><a href='#L148'>148</a>
-<a name='L149'></a><a href='#L149'>149</a>
-<a name='L150'></a><a href='#L150'>150</a>
-<a name='L151'></a><a href='#L151'>151</a>
-<a name='L152'></a><a href='#L152'>152</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L140'></a><a href='#L140'>140</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -276,6 +250,7 @@
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -290,6 +265,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -369,24 +345,10 @@
 import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { ID, Permission, Query, Role } from "react-native-appwrite";
 import { useUser } from "@/hooks/useUser";
+import type { Group, CreateGroupInput } from '@/types/group';
 &nbsp;
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? <span class="branch-1 cbranch-no" title="branch not covered" >'';</span>
 const COLLECTION_ID = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? <span class="branch-1 cbranch-no" title="branch not covered" >'';</span>
-&nbsp;
-export type Group = {
-    id: string;
-    title: string;
-    members: string[]
-    createdBy: string;
-    description?: string;
-}
-&nbsp;
-&nbsp;
-type CreateGroupInput = {
-  title: string;
-  description?: string;
-  // Add more fields as needed
-}
 &nbsp;
 export type GroupsContextType = {
   groups: Group[];
@@ -426,6 +388,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
 &nbsp;
             setGroups(parsedGroups)
         } catch(error) {
+<span class="cstat-no" title="statement not covered" >            console.error('Failed to fetch groups:', error);</span>
 <span class="cstat-no" title="statement not covered" >            throw Error((error as Error).message)  </span>
         }
     }
@@ -441,6 +404,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
             createdBy: doc.createdBy,
             };
         } catch (error) {
+            console.error('Failed to fetch groups: by Id', error);
             throw Error((error as Error).message);
         }
     }
@@ -523,7 +487,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-09T08:48:49.804Z
+                at 2025-07-09T19:41:28.428Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

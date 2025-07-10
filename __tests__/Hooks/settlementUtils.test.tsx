@@ -1,6 +1,6 @@
 // utils/settlementUtils.test.ts
 
-import { calculateBalances, calculateSettlements } from './settlementUtils';
+import { calculateBalances, calculateSettlements } from '../../hooks/settlementUtils';
 import type { Balances, Expense, Settlement } from '@/types';
 
 describe('calculateBalances', () => {
