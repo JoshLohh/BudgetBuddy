@@ -45,3 +45,10 @@ coverage/
 # Expo's iOS/Andriod build artifacts
 ios/
 andriod/
+
+# coverage files
+coverage/
+
+# Expo's iOS/Andriod build artifacts
+ios/
+andriod/
