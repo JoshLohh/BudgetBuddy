@@ -87,7 +87,7 @@ export default function GroupsScreen() {
         await databases.updateDocument(
         databaseId,
         groupsCollectionId,
-        group.id,
+        group.$id,
         { members: updatedMembers }
       );
         console.log('handleRemoveMember completed');
@@ -95,9 +95,9 @@ export default function GroupsScreen() {
         console.log('Error in handleRemoveMember:', error);
       }
     } else {
-      console.log('Only one member, deleting group:', group.id);
+      console.log('Only one member, deleting group:', group.$id);
       try {
-        await deleteGroup(group.id);
+        await deleteGroup(group.$id);
         console.log('deleteGroup completed');
       } catch (error) {
         console.log('Error in deleteGroup:', error);
@@ -122,7 +122,7 @@ export default function GroupsScreen() {
   }
 }
 
-const currentGroup = filteredGroups.find(g => g.id === menuVisibleId);
+const currentGroup = filteredGroups.find(g => g.$id === menuVisibleId);
 useEffect(() => {
   if (menuVisibleId && currentGroup) {
     // Fetch the creator's info when the modal opens or the group changes
@@ -145,19 +145,20 @@ useEffect(() => {
         )}
       </View>
       <View style={{ flex: 1, minWidth: 0 }}>
-        <Pressable onPress={() => router.push({pathname: '/group/[groupId]', params: { groupId: item.id }})}>
+        {/* <Pressable onPress={() => router.navigate(`/group/${item.$id}`)}> */}
+        <Pressable onPress={() => router.navigate({pathname: '/group/[groupId]', params: { groupId: item.$id }})}>
           <ThemedText type="subtitle">{item.title}</ThemedText>
           <ThemedText>{item.description}</ThemedText>
         </Pressable>
       </View>
       <Pressable
-        onPress={() => setMenuVisibleId(item.id)}
+        onPress={() => setMenuVisibleId(item.$id)}
         style={styles.menuButton}
       >
         <Ionicons name="ellipsis-vertical" size={22} color="#888" />
       </Pressable>
       {/* Simple Popup Menu at a fixed position */}
-      {menuVisibleId === item.id && (
+      {menuVisibleId === item.$id && (
         <Modal
           transparent
           animationType="fade"
@@ -254,7 +255,7 @@ useEffect(() => {
       <Spacer height={10}/>
 		<FlatList
 			data={filteredGroups}
-			keyExtractor={item => item.id}
+			keyExtractor={item => item.$id}
 			contentContainerStyle={styles.list}
 			renderItem={renderItem}
 			ListEmptyComponent={

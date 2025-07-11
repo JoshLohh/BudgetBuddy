@@ -48,7 +48,7 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           splitType: doc.splitType,
           customSplit: doc.customSplit,
           category: doc.category || 'Others',
-          createdAt: doc.$createdAt,
+          $createdAt: doc.$createdAt,
         }))
       );
     } catch (e) {
@@ -99,7 +99,7 @@ export const ExpensesProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             splitType: doc.splitType,
             customSplit: doc.customSplit,
             category: doc.category || 'Others',
-            createdAt: doc.$createdAt,
+            $createdAt: doc.$createdAt,
           },
           ...prev,
         ]);

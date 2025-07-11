@@ -39,7 +39,7 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
       .getDocument(databaseId, groupsCollectionId, id)
       .then(doc => {
         setGroup({
-          id: doc.$id,
+          $id: doc.$id,
           title: doc.title,
           description: doc.description,
           members: doc.members ?? [],
@@ -63,11 +63,16 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
       .then(res => {
         setExpenses(
           (res.documents as any[]).map(doc => ({
+            $id: doc.$id,
             amount: doc.amount,
             paidBy: doc.paidBy,
             splitBetween: doc.splitBetween,
             splitType: doc.splitType,
             customSplit: doc.customSplit,
+            description: doc.description,
+            groupId: doc.groupId,
+            category: doc.category ?? 'Others',
+            $createdAt: doc.$createdAt,
           }))
         );
         setExpensesLoading(false);
@@ -83,9 +88,12 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
       .then(res => {
         setSettlements(
           (res.documents as any[]).map(doc => ({
+            $id: doc.$id,
             from: doc.from,
             to: doc.to,
             amount: doc.amount,
+            groupId: doc.groupId,
+            $createdAt: doc.$createdAt,
           }))
         );
       })
@@ -111,7 +119,7 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
               description: doc.description,
               groupId: doc.groupId,
               category: doc.category ?? 'Others',
-              createdAt: doc.createdAt,
+              $createdAt: doc.$createdAt,
             }))
           );
           setExpensesLoading(false);
@@ -123,9 +131,12 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
         .then(res => {
           setSettlements(
             (res.documents as any[]).map(doc => ({
+              $id: doc.$id,
               from: doc.from,
               to: doc.to,
               amount: doc.amount,
+              groupId: doc.groupId,
+              $createdAt: doc.$createdAt,
             }))
           );
         })
@@ -198,19 +209,22 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
       settlementsCollectionId,
       ID.unique(),
       {
-        groupId: group.id,
+        groupId: group.$id,
         from,
         to,
         amount,
       }
     );
     // Refetch settlements to update the UI
-    const res = await databases.listDocuments(databaseId, settlementsCollectionId, [Query.equal('groupId', group.id)]);
+    const res = await databases.listDocuments(databaseId, settlementsCollectionId, [Query.equal('groupId', group.$id)]);
     setSettlements(
       (res.documents as any[]).map(doc => ({
+        $id: doc.$id,
         from: doc.from,
         to: doc.to,
         amount: doc.amount,
+        groupId: doc.groupId,
+        $createdAt: doc.$createdAt,
       }))
     );
   };
@@ -253,13 +267,13 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
       return;
     }
     const updatedMembers = [...group.members, userId];
-    console.log('handleAddMember: group.id =', group.id);
+    console.log('handleAddMember: group.id =', group.$id);
     console.log('handleAddMember: updatedMembers =', updatedMembers);
 
     await databases.updateDocument(
       databaseId,
       groupsCollectionId,
-      group.id, // Check this value in your logs
+      group.$id, // Check this value in your logs
       { members: updatedMembers }
     );
 
@@ -275,7 +289,7 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
   const handleRemoveMember = async (userId: string) => {
     if (!group) return;
     const updatedMembers = group.members.filter(id => id !== userId);
-    await databases.updateDocument(databaseId, groupsCollectionId, group.id, { members: updatedMembers });
+    await databases.updateDocument(databaseId, groupsCollectionId, group.$id, { members: updatedMembers });
     setGroup({ ...group, members: updatedMembers });
   };
 

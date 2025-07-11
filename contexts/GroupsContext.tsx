@@ -36,7 +36,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
             );
 
             const parsedGroups: Group[] = res.documents.map((doc) => ({
-                id: doc.$id,
+                $id: doc.$id,
                 title: doc.title,
                 description: doc.description,
                 members: doc.members,
@@ -55,7 +55,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
         try {
             const doc = await databases.getDocument(DATABASE_ID, COLLECTION_ID, id);
             return {
-            id: doc.$id,
+            $id: doc.$id,
             title: doc.title,
             description: doc.description,
             members: doc.members,
@@ -96,7 +96,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
 
             // Add returned group to state, with explicit `id` from `res`
             const newGroup: Group = {
-                id: res.$id,
+                $id: res.$id,
                 title: res.title,
                 description: res.description,
                 createdBy: res.createdBy,
@@ -114,7 +114,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
     async function deleteGroup(id: string) {
         try {
             await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, id);
-            setGroups(prev => prev.filter(g => g.id !== id));
+            setGroups(prev => prev.filter(g => g.$id !== id));
         } catch (error) {
             throw Error((error as Error).message);
         }

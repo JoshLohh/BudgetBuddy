@@ -57,7 +57,7 @@ export default function ExpenseDetailScreen() {
           description: doc.description,
           groupId: doc.groupId,
           category: doc.category || 'Others',
-          createdAt: doc.$createdAt,
+          $createdAt: doc.$createdAt,
         });
         // Set individual form states
         setDescription(doc.description);

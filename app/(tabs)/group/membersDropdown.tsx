@@ -6,15 +6,27 @@ import { ThemedButton } from '@/components/ThemedButton';
 import Spacer from '@/components/Spacer';
 import { useRouter } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
+import type { Group, MemberProfile } from '@/types';
+
+interface MembersDropdownProps {
+  currentUserId: string;
+  group: Group;
+  membersExpanded: boolean;
+  setMembersExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  memberProfiles: MemberProfile[];
+  handleRemoveMember: (userId: string) => void;
+  setSearchModalVisible: (visible: boolean) => void;
+}
 
 export default function MembersDropdown({
+  currentUserId,
   group,
   membersExpanded,
   setMembersExpanded,
   memberProfiles,
   handleRemoveMember,
   setSearchModalVisible,
-}) {
+}: MembersDropdownProps) {
   const router = useRouter();
   return (
     <View>
@@ -22,7 +34,7 @@ export default function MembersDropdown({
       <View style={styles.headerRow}>
         <ThemedText style={{ fontWeight: 'bold', fontSize: 17 }}>Group Members</ThemedText>
         <TouchableOpacity
-          onPress={() => setMembersExpanded(prev => !prev)}
+          onPress={() => setMembersExpanded((prev: boolean)  => !prev)}
           activeOpacity={0.7}
           style={styles.toggleBtn}
         >
@@ -42,21 +54,21 @@ export default function MembersDropdown({
           {memberProfiles.length === 0 ? (
             <ThemedText style={{ color: '#aaa', marginLeft: 4 }}>No members.</ThemedText>
           ) : (
-            memberProfiles.map(item => {
+            memberProfiles.map((item: MemberProfile) => {
               return (
               <View key={item.userId} style={styles.memberRow}>
                 <TouchableOpacity
                   onPress={() =>
                     router.push({
                       pathname: '/user/[userId]',
-                      params: { userId: item.userId , groupId: group.id},
+                      params: { userId: item.userId , groupId: group.$id},
                     })
                   }
                   style={styles.avatarTouchable}
                 >
                   <Image
                     source={
-                      item.avatar && typeof item.avatar === 'string'
+                      item.avatar && typeof item.avatar === 'string' && item.avatar !== ''
                         ? { uri: item.avatar }
                         : require('../../../assets/images/default-avatar.png')
                     }
@@ -64,12 +76,14 @@ export default function MembersDropdown({
                   />
                 </TouchableOpacity>
                 <ThemedText style={{ marginLeft: 12, flex: 1 }}>{item.username}</ThemedText>
-                <TouchableOpacity
-                  onPress={() => handleRemoveMember(item.userId)}
-                  style={styles.removeBtn}
-                >
-                  <Ionicons name="close-circle" size={20} color="#e57373" />
-                </TouchableOpacity>
+                {item.userId !== currentUserId && (
+                  <TouchableOpacity
+                    onPress={() => handleRemoveMember(item.userId)}
+                    style={styles.removeBtn}
+                  >
+                    <Ionicons name="close-circle" size={20} color="#e57373" />
+                  </TouchableOpacity>
+                )}
               </View>
             )})
           )}
