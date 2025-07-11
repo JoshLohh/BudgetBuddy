@@ -31,6 +31,7 @@ describe('UserContext', () => {
         </UserContext.Consumer>
       </UserProvider>
     );
+    //Wrap this in act, change state
     await act(async () => {
       await contextValue.current!.login('test@example.com', 'password');
     });
@@ -114,10 +115,12 @@ describe('UserContext', () => {
         </UserContext.Consumer>
       </UserProvider>
     );
-    // Ensure profile is null
+    // Ensure profile is null (no act needed, direct assignment)
     contextValue.current!.profile = null;
-    await expect(contextValue.current!.updateProfile({ username: 'shouldFail' }))
-      .rejects.toThrow('No profile loaded');
+    await act(async () => {
+      await expect(contextValue.current!.updateProfile({ username: 'shouldFail' }))
+        .rejects.toThrow('No profile loaded');
+    });
   });
 
 
@@ -151,7 +154,10 @@ describe('UserContext', () => {
     );
     // Ensure user is null
     expect(contextValue.current!.user).toBeNull();
-    const result = await contextValue.current!.refetchProfile();
+    let result;
+    await act(async () => {
+      result = await contextValue.current!.refetchProfile();
+    });
     expect(result).toBeNull();
   });
 

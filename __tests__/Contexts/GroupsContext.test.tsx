@@ -3,6 +3,17 @@ import { render, act, waitFor } from '@testing-library/react-native';
 import { GroupsProvider, GroupsContext, GroupsContextType } from '@/contexts/GroupsContext';
 import { UserContext } from '@/contexts/UserContext';
 import { Text } from 'react-native';
+import { Group } from '@/types';
+
+let errorSpy: jest.SpyInstance;
+
+beforeEach(() => {
+  errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+});
+
+afterEach(() => {
+  errorSpy.mockRestore();
+});
 
 // Mock Appwrite SDK
 jest.mock('@/lib/appwrite', () => ({
@@ -165,10 +176,13 @@ describe('GroupsContext', () => {
         </GroupsProvider>
       </MockUserProvider>
     );
-    const group = await contextValue.current!.fetchGroupsById('group42');
+    let group: Group | undefined;
+    await act(async () => {
+      group = await contextValue.current!.fetchGroupsById('group42');
+    });
     expect(group).toBeDefined();
-    expect(group.id).toBe('group42');
-    expect(group.title).toBe('Fetched Group');
+    expect(group!.id).toBe('group42');
+    expect(group!.title).toBe('Fetched Group');
   });
 
   it('handles error in fetchGroupsById', async () => {
@@ -182,7 +196,14 @@ describe('GroupsContext', () => {
         </GroupsProvider>
       </MockUserProvider>
     );
-    await expect(contextValue.current!.fetchGroupsById('bad-id')).rejects.toThrow('Not found');
+    await act(async () => { 
+      await expect(contextValue.current!.fetchGroupsById('bad-id')).rejects.toThrow('Not found');
+    });
+     // Assert that console.error was called with the expected arguments
+    expect(errorSpy).toHaveBeenCalledWith(
+      'Failed to fetch groups: by Id',
+      expect.any(Error)
+    );
   });
 
   it('throws error if user is not authenticated in createGroup', async () => {
@@ -205,7 +226,9 @@ describe('GroupsContext', () => {
         </GroupsProvider>
       </UserContext.Provider>
     );
-    await expect(contextValue.current!.createGroup({ title: 'x' })).rejects.toThrow('User not authenticated');
+    await act (async () => {
+      await expect(contextValue.current!.createGroup({ title: 'x' })).rejects.toThrow('User not authenticated');
+    });
   });
 
 
@@ -222,7 +245,9 @@ describe('GroupsContext', () => {
         </GroupsProvider>
       </MockUserProvider>
     );
-    await expect(contextValue.current!.deleteGroup('bad-id')).rejects.toThrow('Delete failed');
+    await act (async () => {
+      await expect(contextValue.current!.deleteGroup('bad-id')).rejects.toThrow('Delete failed');
+    });
   });
 
   it('clears groups when user logs out', async () => {
