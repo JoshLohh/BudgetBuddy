@@ -1,3 +1,5 @@
+import { Ionicons } from "@expo/vector-icons";
+
 export const CATEGORIES = [
   { label: 'Food', value: 'Food', icon: 'restaurant' },
   { label: 'Transportation', value: 'Transportation', icon: 'car' },
@@ -12,3 +14,5 @@ export const getCategoryIconName = (category: string) => {
   const found = CATEGORIES.find(c => c.value === category);
   return found?.icon || 'ellipsis-horizontal';
 };
+
+export type IoniconName = React.ComponentProps<typeof Ionicons>['name'];

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -11,8 +11,9 @@ import Spacer from '@/components/Spacer';
 import { ID } from 'appwrite';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
-import { CATEGORIES, getCategoryIconName } from '@/constants/categoryUtils';
+import { CATEGORIES , IoniconName } from '@/constants/categoryUtils';
 import { Colors } from '@/constants/Colors';
+import { TextStyle } from 'react-native';
 import type { Expense } from '@/types/expense';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
@@ -26,22 +27,8 @@ const SPLIT_TYPES = [
   { label: '% Percentages', value: 'percentage' },
 ];
 
-function getInitialState(members) {
-  return {
-    description: '',
-    amount: '',
-    paidBy: members[0] || '',
-    splitBetween: members.slice() || [],
-    splitType: 'equal',
-    customSplit: {},
-    category: 'Others',
-    error: '',
-  };
-}
-
-
 export default function AddExpenseScreen() {
-  const { groupId } = useLocalSearchParams();
+  const { groupId } = useLocalSearchParams<{ groupId: string }>();
   const router = useRouter();
 
   const [description, setDescription] = useState('');
@@ -157,7 +144,8 @@ export default function AddExpenseScreen() {
           category,
         }
       );
-      router.replace({ pathname: '/group/[groupId]', params: { groupId } });
+      router.navigate(`/group/${groupId}`)
+      // router.navigate({ pathname: '/group/[groupId]', params: { groupId } });
     } catch (e: any) {
       setError(e.message || 'Failed to add expense');
     }
@@ -190,7 +178,7 @@ export default function AddExpenseScreen() {
           onChangeText={val => setAmount(val.replace(/[^0-9.]/g, ''))}
           keyboardType="decimal-pad"
           placeholder="$0.00"
-          leftIcon="$"
+          // leftIcon="$"
           style={{ marginBottom: 14 }}
         />
 
@@ -206,9 +194,9 @@ export default function AddExpenseScreen() {
                 category === cat.value ? selectorButtonStyles.active : selectorButtonStyles.inactive,
                 { flexDirection: 'row', alignItems: 'center', minWidth: 120 }
               ]}
-              type={category === cat.value ? undefined : 'secondary'}
+              // type={category === cat.value ? undefined : 'secondary'}
             >
-              <Ionicons name={getCategoryIconName(cat.value)} size={22} color={category === cat.value ? "#fff" : '#1976d2'}/>
+              <Ionicons name={cat.icon as IoniconName} size={22} color={category === cat.value ? "#fff" : '#1976d2'}/>
               <ThemedText style={category === cat.value ? selectorButtonStyles.textActive : selectorButtonStyles.textInactive}>
                 {" "}{cat.label}
               </ThemedText>
@@ -230,7 +218,7 @@ export default function AddExpenseScreen() {
                   isActive ? selectorButtonStyles.active : selectorButtonStyles.inactive,
                   { flexDirection: 'row', alignItems: 'center' }, // align avatar and text horizontally
                 ]}
-                type={isActive ? undefined : 'secondary'}
+                // type={isActive ? undefined : 'secondary'}
               >
                 {m.avatar ? (
                   <Image
@@ -257,7 +245,7 @@ export default function AddExpenseScreen() {
               splitBetween.length === members.length ? selectorButtonStyles.active : selectorButtonStyles.inactive,
               { flexDirection: 'row', alignItems: 'center' },
             ]}
-            type={splitBetween.length === members.length ? undefined : 'secondary'}
+            // type={splitBetween.length === members.length ? undefined : 'secondary'}
           >
             <ThemedText style={splitBetween.length === members.length ? selectorButtonStyles.textActive : selectorButtonStyles.textInactive}>
               Everyone
@@ -280,7 +268,7 @@ export default function AddExpenseScreen() {
                   isSelected ? selectorButtonStyles.active : selectorButtonStyles.inactive,
                   { flexDirection: 'row', alignItems: 'center' },
                 ]}
-                type={isSelected ? undefined : 'secondary'}
+                // type={isSelected ? undefined : 'secondary'}
               >
                 {m.avatar ? (
                   <Image
@@ -309,7 +297,7 @@ export default function AddExpenseScreen() {
                 selectorButtonStyles.splitTypeMinWidth,
                 splitType === opt.value ? selectorButtonStyles.active : selectorButtonStyles.inactive,
               ]}
-              type={splitType === opt.value ? undefined : 'secondary'}
+              // type={splitType === opt.value ? undefined : 'secondary'}
             >
               <ThemedText style={splitType === opt.value ? selectorButtonStyles.textActive : selectorButtonStyles.textInactive}>
                 {opt.label}
@@ -408,11 +396,11 @@ const selectorButtonStyles = {
   },
   textActive: {
     color: '#fff',
-    fontWeight: 'bold',
+    fontWeight: 'bold' as TextStyle['fontWeight'],
   },
   textInactive: {
     color: '#1e88e5',
-    fontWeight: 'bold',
+    fontWeight: 'bold' as TextStyle['fontWeight'],
   },
   splitTypeMinWidth: {
     minWidth: 120,

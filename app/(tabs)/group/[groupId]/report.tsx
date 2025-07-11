@@ -43,7 +43,7 @@ const MEMBER_COLORS = [
 ];
 
 export default function GroupReportPage() {
-  const { groupId } = useLocalSearchParams();
+  const { groupId } = useLocalSearchParams<{ groupId: string }>();
   const router = useRouter();
   const [expenses, setExpenses] = useState([]);
   const [memberProfiles, setMemberProfiles] = useState([]);

@@ -8,18 +8,19 @@ import { ThemedButton } from '@/components/ThemedButton';
 import { ActivityIndicator, Alert, ScrollView, View, Image, TouchableOpacity } from 'react-native';
 import Spacer from '@/components/Spacer';
 import { Ionicons } from '@expo/vector-icons';
-import { getCategoryIconName } from '@/constants/categoryUtils';
+import { getCategoryIconName, IoniconName } from '@/constants/categoryUtils';
 import { Colors } from '@/constants/Colors';
+import type { Expense } from '@/types/expense';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
 const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?? '';
 
 export default function ExpenseDetailScreen() {
-  const { groupId, expenseId } = useLocalSearchParams();
+  const { groupId, expenseId } = useLocalSearchParams<{ groupId: string; expenseId: string }>();
   const router = useRouter();
 
-  const [expense, setExpense] = useState(null);
+  const [expense, setExpense] = useState<Expense | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -46,7 +47,19 @@ export default function ExpenseDetailScreen() {
     databases.getDocument(databaseId, expensesCollectionId, expenseId)
       .then(async doc => {
         if (!isMounted) return;
-        setExpense(doc);
+        setExpense({
+          $id: doc.$id,
+          amount: doc.amount,
+          paidBy: doc.paidBy,
+          splitBetween: doc.splitBetween || [],
+          splitType: doc.splitType || 'equal',
+          customSplit: doc.customSplit, // Keep as string; parse separately for UI
+          description: doc.description,
+          groupId: doc.groupId,
+          category: doc.category || 'Others',
+          createdAt: doc.$createdAt,
+        });
+        // Set individual form states
         setDescription(doc.description);
         setAmount(String(doc.amount));
         setSplitBetween(doc.splitBetween || []);
@@ -137,7 +150,8 @@ export default function ExpenseDetailScreen() {
         customSplit: splitType === 'equal' ? '' : JSON.stringify(customSplit),
       });
       Alert.alert('Success', 'Expense updated');
-      router.replace({ pathname: '/group/[groupId]', params: { groupId } });
+      router.replace(`/group/${groupId}`)
+      // router.replace({ pathname: '/group/[groupId]', params: { groupId } });
     } catch (e) {
       setError('Failed to update expense');
       setSaving(false);
@@ -157,7 +171,8 @@ export default function ExpenseDetailScreen() {
           try {
             await databases.deleteDocument(databaseId, expensesCollectionId, expenseId);
             Alert.alert('Deleted', 'Expense deleted');
-            router.replace({ pathname: '/group/[groupId]', params: { groupId } });
+            router.replace(`/group/${groupId}`)
+            // router.replace({ pathname: '/group/[groupId]', params: { groupId } });
           } catch (e) {
             setError('Failed to delete expense');
           } finally {
@@ -205,7 +220,7 @@ export default function ExpenseDetailScreen() {
         />
 
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-          <Ionicons name={getCategoryIconName(expense.category)} size={22} color="#1976d2" />
+          <Ionicons name={getCategoryIconName(expense?.category || 'Others') as IoniconName} size={22} color="#1976d2" />
           <ThemedText style={{ marginLeft: 8, fontWeight: 'bold', fontSize: 15 }}>
             {expense?.category || "Others"}
           </ThemedText>
@@ -307,7 +322,7 @@ export default function ExpenseDetailScreen() {
         )}
 
         {deleting ? (
-          <ThemedButton disabled type="secondary">
+          <ThemedButton disabled >
             <ThemedText>Deleting...</ThemedText>
           </ThemedButton>
         ) : (
