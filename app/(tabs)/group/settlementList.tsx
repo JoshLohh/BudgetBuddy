@@ -3,13 +3,21 @@ import { View, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedButton } from '@/components/ThemedButton';
 import { Ionicons } from '@expo/vector-icons';
+import { Settlement } from '@/types';
+
+interface SettlementListProps {
+  suggestedSettlements: Settlement[];
+  getUsername: (userId: string) => string;
+  settleUp: (from: string, to: string, amount: number) => Promise<void>;
+  currentUserId: string;
+}
 
 export default function SettlementList({
   suggestedSettlements,
   getUsername,
   settleUp,
   currentUserId,
-}) {
+}: SettlementListProps) {
   
   // Filter settlements for this user
   const userSettlements = suggestedSettlements.filter(
@@ -40,7 +48,7 @@ export default function SettlementList({
 
   const [processing, setProcessing] = useState('');
 
-  const handleSettleUp = (from, to, amount) => {
+  const handleSettleUp = (from: string, to: string, amount: number) => {
     Alert.alert(
       'Confirm Settle Up',
       `Are you sure you want to settle $${amount.toFixed(2)} from ${getUsername(from)} to ${getUsername(to)}?`,
@@ -67,7 +75,6 @@ export default function SettlementList({
         {statement}
       </ThemedText>
       {userSettlements.length === 0 ? (
-        // <ThemedText>No settlements needed.</ThemedText>
         <></>
       ) : (
         userSettlements.map(({ from, to, amount }) => (

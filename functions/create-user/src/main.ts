@@ -12,6 +12,9 @@ export default async ({ req, res, log, error }: any) => {
   // You can use the Appwrite SDK to interact with other services
   // For this example, we're using the Users service
   console.log("✅ Appwrite Function started");
+  const databaseId = process.env.DATABASE_ID ?? '';
+  const collectionId = process.env.COLLECTION_ID ?? '';
+
   const client = new Client()
     .setEndpoint(Bun.env["APPWRITE_FUNCTION_API_ENDPOINT"])
     .setProject(Bun.env["APPWRITE_FUNCTION_PROJECT_ID"])
@@ -23,9 +26,12 @@ export default async ({ req, res, log, error }: any) => {
   console.log("📦 Payload received:");
 
   try {
+    if (!databaseId || !collectionId) {
+      throw new Error('Missing required environment variables: DATABASE_ID or COLLECTION_ID');
+    }
     const user = await databases.getDocument(
-      Bun.env["DATABASE_ID"],
-      Bun.env["COLLECTION_ID"],
+      databaseId,
+      collectionId,
       data.$id,
     );
 
@@ -38,8 +44,8 @@ export default async ({ req, res, log, error }: any) => {
   
   try {
     await databases.createDocument(
-      Bun.env["DATABASE_ID"],
-      Bun.env["COLLECTION_ID"],
+      databaseId,
+      collectionId,
       data.$id,
       {
         username: data.name,

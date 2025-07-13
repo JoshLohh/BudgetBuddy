@@ -16,7 +16,8 @@ import { useUser } from '@/hooks/useUser';
 import { Group } from '@/types';
 
 export default function GroupDetailScreen() {
-  const { groupId } = useLocalSearchParams();
+  const { groupId } = useLocalSearchParams<{ groupId: string }>();
+  console.log('groupId param:', groupId);
   const { user } = useUser();
   const router = useRouter();
   const {
@@ -91,6 +92,7 @@ export default function GroupDetailScreen() {
           onGroupUpdated={setGroup}
         />
         <MembersDropdown
+          currentUserId={user.$id}
           group={group}
           membersExpanded={membersExpanded}
           setMembersExpanded={setMembersExpanded}
@@ -98,12 +100,11 @@ export default function GroupDetailScreen() {
           handleRemoveMember={handleRemoveMember}
           setSearchModalVisible={setSearchModalVisible}
         />
-        <ThemedButton onPress={() => router.push({ pathname: '/group/[groupId]/addExpense', params: { groupId: group.id } })}>
+        <ThemedButton onPress={() => router.push({ pathname: '/group/[groupId]/addExpense', params: { groupId: group.$id } })}>
           <ThemedText style={{ color: '#fff', textAlign: 'center' }}>Add Expense</ThemedText>
         </ThemedButton>
         <SettlementList
           suggestedSettlements={suggestedSettlements}
-          // settledSettlements={settledSettlements}
           getUsername={getUsername}
           settleUp={settleUp}
           currentUserId={user.$id}
@@ -116,7 +117,7 @@ export default function GroupDetailScreen() {
           hasMoreExpenses={hasMoreExpenses}
           showAllExpenses={showAllExpenses}
           setShowAllExpenses={setShowAllExpenses}
-          getUsername={getUsername}
+          // getUsername={getUsername}
         />
         
         <Modal

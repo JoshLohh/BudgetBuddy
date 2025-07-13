@@ -6,20 +6,20 @@ import { ThemedText } from '@/components/ThemedText';
 import { Ionicons } from '@expo/vector-icons';
 import { PieChart } from 'react-native-gifted-charts';
 import { databases } from '@/lib/appwrite';
-import { CATEGORIES, getCategoryIconName } from '@/constants/categoryUtils';
-import CenterLogo from '@/assets/images/logo.png';
+import { CATEGORIES, getCategoryIconName, IoniconName } from '@/constants/categoryUtils';
 import Spacer from '@/components/Spacer';
 import { Query } from 'appwrite';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useColorScheme } from '@/hooks/useColorScheme.web';
 import { Colors } from '@/constants/Colors';
 import { Image } from 'expo-image';
+import { Expense, MemberProfile , PieDataItem } from '@/types';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const expensesCollectionId = process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';
 const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?? '';
 
-const CATEGORY_COLOR_MAP = {
+const CATEGORY_COLOR_MAP: Record<string, string>  = {
   Food: '#FFB300',
   Transportation: '#1976D2',
   Accommodation: '#4CAF50',
@@ -43,11 +43,11 @@ const MEMBER_COLORS = [
 ];
 
 export default function GroupReportPage() {
-  const { groupId } = useLocalSearchParams();
+  const { groupId } = useLocalSearchParams<{ groupId: string }>();
   const router = useRouter();
-  const [expenses, setExpenses] = useState([]);
-  const [memberProfiles, setMemberProfiles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [memberProfiles, setMemberProfiles] = useState<MemberProfile[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [mode, setMode] = useState<'categories' | 'members'>('categories');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const colorScheme = useColorScheme() ?? 'light';
@@ -65,11 +65,24 @@ export default function GroupReportPage() {
           [Query.equal('groupId', groupId)]
         );
         if (!isMounted) return;
-        setExpenses(expRes.documents);
+        // setExpenses(expRes.documents);
+        setExpenses(expRes.documents.map((doc: any) => ({
+          $id: doc.$id,
+          amount: doc.amount,
+          paidBy: doc.paidBy,
+          splitBetween: doc.splitBetween,
+          splitType: doc.splitType,
+          customSplit: doc.customSplit,
+          description: doc.description,
+          groupId: doc.groupId,
+          category: doc.category ?? 'Others',
+          $createdAt: doc.$createdAt,
+        })));
+
 
         const memberIds = Array.from(new Set(expRes.documents.map(e => e.paidBy)));
-        const profiles = await Promise.all(
-          memberIds.map((uid) =>
+        const profiles: MemberProfile[]  = await Promise.all(
+          memberIds.map((uid: string) =>
             databases
               .getDocument(databaseId, usersCollectionId, uid)
               .then(profile => ({
@@ -92,14 +105,14 @@ export default function GroupReportPage() {
   }, [groupId]);
 
   // Category Pie Data
-  const categoryTotals = {};
+  const categoryTotals: Record<string, number> = {};
   expenses.forEach(exp => {
     const cat = exp.category || 'Others';
     categoryTotals[cat] = (categoryTotals[cat] || 0) + Number(exp.amount);
   });
   const categoryPieData = CATEGORY_ORDER
-    .filter(cat => categoryTotals[cat] > 0)
-    .map(cat => ({
+    .filter((cat: string) => categoryTotals[cat] > 0)
+    .map((cat: string) => ({
       value: Number(categoryTotals[cat]),
       color: CATEGORY_COLOR_MAP[cat] || '#BDBDBD',
       label: cat,
@@ -107,7 +120,7 @@ export default function GroupReportPage() {
     }));
 
   // Member Pie Data
-  const memberTotals = {};
+  const memberTotals: Record<string, number> = {};
   expenses.forEach(exp => {
     memberTotals[exp.paidBy] = (memberTotals[exp.paidBy] || 0) + Number(exp.amount);
   });
@@ -167,6 +180,7 @@ export default function GroupReportPage() {
           </TouchableOpacity>
         </View>
       </View>
+      <Spacer height={20}/>
 
       <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 40 }}>
         {loading ? (
@@ -183,20 +197,20 @@ export default function GroupReportPage() {
                 innerCircleColor={chartBackground}
                 textSize={13}
                 focusOnPress
-                onPress={(item, index) => setSelectedIndex(index)}
+                onPress={( item: PieDataItem, index: number)  => setSelectedIndex(index)}
                 labelsPosition="outward"
                 centerLabelComponent={() =>
                     selectedIndex !== null && pieData[selectedIndex] ? (
                         <ThemedView style={{ alignItems: 'center' }}>
                         {/* Icon/avatar for selected slice */}
-                        {mode === 'categories' ? (
+                        {mode === 'categories'  && 'icon' in pieData[selectedIndex] ? (
                             <Ionicons
-                            name={pieData[selectedIndex].icon}
+                            name={pieData[selectedIndex].icon as IoniconName}
                             size={50}
                             color={pieData[selectedIndex].color}
                             style={{ marginBottom: 5 }}
                             />
-                        ) : pieData[selectedIndex].avatar ? (
+                        ) : 'avatar' in pieData[selectedIndex] && pieData[selectedIndex].avatar ? (
                             <Image
                             source={{ uri: pieData[selectedIndex].avatar }}
                             style={{ width: 32, height: 32, borderRadius: 16, marginBottom: 5, backgroundColor: '#fff' }}
@@ -218,7 +232,7 @@ export default function GroupReportPage() {
                         </ThemedView>
                     ) : (
                         <Image
-                          source={CenterLogo}
+                          source={require('@/assets/images/logo.png')}
                           style={{ width: 100, height: 100 }}
                           contentFit="contain"
                         />
@@ -226,22 +240,22 @@ export default function GroupReportPage() {
                 }
 
                 radius={widthAndHeight / 2}
-                innerRadius={widthAndHeight / 2.6}
+                innerRadius={widthAndHeight / 3}
             />
 
             <View style={{ marginTop: 24, width: '100%' }}>
-              {pieData.map((d, idx) => (
-                <View key={d.label} style={styles.legendRow}>
-                  {mode === 'categories' ? (
-                    <Ionicons name={d.icon} size={24} color={d.color} style={{ marginRight: 8 }} />
-                  ) : d.avatar ? (
-                    <Image source={{ uri: d.avatar }} style={styles.avatar} />
+              {pieData.map((item: PieDataItem, idx: number) => (
+                <View key={item.label} style={styles.legendRow}>
+                  {mode === 'categories' && 'icon' in item ? (
+                    <Ionicons name={item.icon as IoniconName} size={24} color={item.color} style={{ marginRight: 8 }} />
+                  ) : 'avatar' in item && item.avatar ? (
+                    <Image source={{ uri: item.avatar }} style={styles.avatar} />
                   ) : (
-                    <Ionicons name="person-circle" size={32} color={d.color} style={{ marginRight: 8 }} />
+                    <Ionicons name="person-circle" size={32} color={item.color} style={{ marginRight: 8 }} />
                   )}
-                  <ThemedText style={{ flex: 1, fontSize: 15 }}>{d.label}</ThemedText>
-                  <ThemedText style={{ color: d.color, fontWeight: 'bold', fontSize: 15 }}>
-                    ${d.value.toFixed(2)}
+                  <ThemedText style={{ flex: 1, fontSize: 15 }}>{item.label}</ThemedText>
+                  <ThemedText style={{ color: item.color, fontWeight: 'bold', fontSize: 15 }}>
+                    ${item.value.toFixed(2)}
                   </ThemedText>
                 </View>
               ))}

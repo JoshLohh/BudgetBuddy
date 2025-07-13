@@ -10,7 +10,7 @@ import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedButton } from '@/components/ThemedButton';
 import { Ionicons } from '@expo/vector-icons';
-import { getCategoryIconName } from '@/constants/categoryUtils';
+import { getCategoryIconName, IoniconName } from '@/constants/categoryUtils';
 import Spacer from '@/components/Spacer';
 import type { Expense } from '@/types/expense';
 import { Query } from 'appwrite';
@@ -25,26 +25,26 @@ interface ExpenseListProps {
   hasMoreExpenses: boolean;
   showAllExpenses: boolean;
   setShowAllExpenses: (show: boolean) => void;
-  getUsername: (userId: string) => string;
+  // getUsername: (userId: string) => string;
 }
 
 const EXPENSES_PREVIEW_COUNT = 5;
 
-const ExpenseList: React.FC<ExpenseListProps> = ({
+export default function ExpenseList({
   expenses = [],
   expensesLoading,
   showAllExpenses,
   setShowAllExpenses,
-  getUsername,
-}) => {
+  // getUsername,
+}: ExpenseListProps) {
   const router = useRouter();
-  const { groupId } = useLocalSearchParams();
-  const [userMap, setUserMap] = useState({}); // { userId: username }
+  const { groupId } = useLocalSearchParams<{ groupId: string }>();
+  const [userMap, setUserMap] = useState<Record<string, string>>({}); // { userId: username }
 
 
   // First sort expenses
   const sortedExpenses = [...expenses].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    (a, b) => new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime()
   );
 
   // Determine which expenses to show
@@ -62,7 +62,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
         [Query.equal('$id', userIds)]
       );
       // Map userId to username
-      const userMap = {};
+      const userMap: Record<string, string> = {};
       response.documents.forEach(doc => {
         userMap[doc.$id] = doc.username || "Unknown User";
       });
@@ -74,7 +74,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
     } catch (error) {
       console.error('Error batch fetching usernames:', error);
       // Fallback: all unknown
-      const fallback = {};
+      const fallback: Record<string, string> = {};
       userIds.forEach(id => { fallback[id] = "Unknown User"; });
       return fallback;
     }
@@ -92,7 +92,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
     }
   }, [expenses]);
 
-  const getUsernameFromMap = (userId) => userMap[userId] || "Unknown User";
+  const getUsernameFromMap = (userId: string) => userMap[userId] || "Unknown User";
 
   return (
     <View style={{ marginTop: 18 }}>
@@ -124,7 +124,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
               style={styles.expenseTouchable}
             >
               <ThemedView style={styles.expenseRow}>
-                <Ionicons name={getCategoryIconName(item.category)} size={22} color="#1976d2" />
+                <Ionicons name={getCategoryIconName(item.category || 'Others') as IoniconName} size={22} color="#1976d2" />
                 <Spacer width={15}/>
                 <View style={{ flex: 1, minWidth: 0 }}>
                 <ThemedText style={styles.expenseDescription}>
@@ -209,4 +209,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExpenseList;

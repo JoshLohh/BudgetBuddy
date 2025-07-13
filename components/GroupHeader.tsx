@@ -106,7 +106,7 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
       const updateRes = await databases.updateDocument(
         databaseId,
         groupsCollectionId,
-        group.id,
+        group.$id,
         { avatar: viewUrl }
       );
       console.log('Group document updated:', updateRes);
@@ -129,7 +129,7 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
     setSaving(true);
     setError('');
     try {
-      await databases.updateDocument(databaseId, groupsCollectionId, group.id, {
+      await databases.updateDocument(databaseId, groupsCollectionId, group.$id, {
         title,
         description,
         avatar: group.avatar, // Always include avatar to avoid overwriting
@@ -222,7 +222,7 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
             {group.members?.length ?? 0} member{(group.members?.length ?? 0) !== 1 ? 's' : ''}
           </ThemedText>
           <ThemedButton
-            onPress={() => router.push({ pathname: '/group/[groupId]/history', params: { groupId: group.id } })}
+            onPress={() => router.push({ pathname: '/group/[groupId]/history', params: { groupId: group.$id } })}
             style={{
               marginTop: 4,           
               marginBottom: 4,        
@@ -239,7 +239,7 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
           </ThemedButton>
         </View>
         <View style={styles.rightCol}>
-          <TouchableOpacity onPress={() => router.push({ pathname: '/group/[groupId]/report', params: { groupId: group.id } })}>
+          <TouchableOpacity onPress={() => router.push({ pathname: '/group/[groupId]/report', params: { groupId: group.$id } })}>
           <View style={styles.totalCard}>
             <ThemedText style={styles.totalLabel}>Total</ThemedText>
             <ThemedText style={styles.totalAmount}>${totalExpenses.toFixed(2)}</ThemedText>
