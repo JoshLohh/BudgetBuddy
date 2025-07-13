@@ -259,14 +259,22 @@ export default function Profile() {
         {/* Edit Profile */}
         {editing ? (
           <>
-            <ThemedTextInput
+            {/* <ThemedTextInput
               value={email}
               onChangeText={setEmail}
               placeholder="Email"
               style={styles.editInput}
               autoCapitalize="none"
               keyboardType="email-address"
-            />
+            /> */}
+            <ThemedText
+              // value={email}
+              // onChangeText={setEmail}
+              // placeholder="Email"
+              style={styles.editInput}
+              // autoCapitalize="none"
+              // keyboardType="email-address"
+            >{email}</ThemedText>
             <ThemedTextInput
               value={bio}
               onChangeText={setBio}
