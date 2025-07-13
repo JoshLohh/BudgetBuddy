@@ -1,14 +1,21 @@
-import { Link } from 'expo-router'
-import { Platform, StyleSheet } from 'react-native';
+import { Link, router } from 'expo-router'
+import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import Spacer from '@/components/Spacer';
 import { Image } from 'expo-image';
+import { useNavigationState } from '@react-navigation/native';
+import { useEffect } from 'react';
 
 
 export default function HomeScreen() {
+  const navigationState = useNavigationState(state => state);
+
+  useEffect(() => {
+    console.log('Index navigation state:', navigationState);
+  }, [navigationState]);
   return (
   
     <ThemedView style={styles.container}>
@@ -28,6 +35,7 @@ export default function HomeScreen() {
               <ThemedText type="link">Login</ThemedText>
             </Link>
           </ThemedView>
+          
           <ThemedView style={styles.stepContainer}>
             <Link href='/register'>
               <ThemedText type="link">Register</ThemedText>
@@ -35,9 +43,12 @@ export default function HomeScreen() {
           </ThemedView>
 
           <ThemedView style={styles.stepContainer}>
-            <Link href='/profile'>
+            {/* <Link href='/profile'>
               <ThemedText type="link">Profile</ThemedText>
-            </Link>
+            </Link> */}
+            <TouchableOpacity onPress={() => router.push(`/profile/profile`)}>
+                <ThemedText type="link">Profile</ThemedText>
+          </TouchableOpacity>
           </ThemedView>
         </ ThemedView>
     

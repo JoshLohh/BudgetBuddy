@@ -27,7 +27,12 @@ export default function RootLayout() {
       <StatsProvider>
         <GroupsProvider>
           <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <Stack>
+            <Stack
+              screenOptions={{
+                gestureEnabled: true,
+                gestureDirection: 'horizontal',
+              }}
+            >
             <Stack.Screen name="index" options={{ headerShown: false }} />
               <Stack.Screen name="(auth)" options={{ headerShown: false }} />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

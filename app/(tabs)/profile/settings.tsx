@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Modal, Alert, TouchableOpacity, TextInput } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
@@ -9,6 +9,7 @@ import { useUser } from '@/hooks/useUser';
 import Spacer from '@/components/Spacer';
 import { Account, Client } from 'react-native-appwrite';
 import { Colors } from '@/constants/Colors';
+import { useNavigationState } from '@react-navigation/native';
 
 const client = new Client()
   .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!)
@@ -27,6 +28,12 @@ export default function SettingsPage() {
     const [changePwLoading, setChangePwLoading] = useState(false);
     const [changePwError, setChangePwError] = useState('');
     const [changePwSuccess, setChangePwSuccess] = useState('');
+
+    const navigationState = useNavigationState(state => state);
+
+    useEffect(() => {
+        console.log('Settings navigation state:', navigationState);
+    }, [navigationState]);
 
     // Handle password change
     const handleChangePassword = async () => {
@@ -52,8 +59,8 @@ export default function SettingsPage() {
         <ThemedView style={{ flex: 1, padding: 20 }}>
             <Spacer />
             <View style={{ flexDirection: 'row', marginBottom: 18 }}>
-                <TouchableOpacity onPress={() => router.navigate(`/profile`)}>
-                <Ionicons name="arrow-back" size={24} color={Colors.primary} />
+                <TouchableOpacity onPress={() => router.back()}>
+2                <Ionicons name="arrow-back" size={24} color={Colors.primary} />
                 </TouchableOpacity>
                 <ThemedText type="title" style={{ marginLeft: 12 }}>Settings</ThemedText>
             </View>

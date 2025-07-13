@@ -5,6 +5,7 @@ import { useFocusEffect } from 'expo-router';
 import React from 'react';
 import { calculateBalances, calculateSettlements } from './settlementUtils';
 import type { MemberProfile, Group, Expense, Settlement } from '@/types';
+import { Alert } from 'react-native';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
@@ -286,12 +287,32 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
 
 
   // Remove member
-  const handleRemoveMember = async (userId: string) => {
+  // const handleRemoveMember = async (userId: string) => {
+  //   if (!group) return;
+  //   const updatedMembers = group.members.filter(id => id !== userId);
+  //   await databases.updateDocument(databaseId, groupsCollectionId, group.$id, { members: updatedMembers });
+  //   setGroup({ ...group, members: updatedMembers });
+  // };
+  const handleRemoveMember = (userId: string) => {
     if (!group) return;
-    const updatedMembers = group.members.filter(id => id !== userId);
-    await databases.updateDocument(databaseId, groupsCollectionId, group.$id, { members: updatedMembers });
-    setGroup({ ...group, members: updatedMembers });
+    Alert.alert(
+      'Remove Member',
+      `Are you sure you want to remove ${getUsername(userId)} from the group?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Remove',
+          style: 'destructive',
+          onPress: async () => {
+            const updatedMembers = group.members.filter(id => id !== userId);
+            await databases.updateDocument(databaseId, groupsCollectionId, group.$id, { members: updatedMembers });
+            setGroup({ ...group, members: updatedMembers });
+          },
+        },
+      ]
+    );
   };
+
 
   return {
     group,

@@ -141,7 +141,7 @@ export default function GroupReportPage() {
   return (
     <ThemedView style={{ flex: 1, padding: 20 }}>
         <Spacer height={30}/>
-      <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)} style={{ marginBottom: 12 }}>
+      <TouchableOpacity onPress={() => router.back()} style={{ marginBottom: 12 }}>
         <Ionicons name="arrow-back" size={24} color={Colors.primary} />
       </TouchableOpacity>
 

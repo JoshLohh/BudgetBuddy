@@ -22,6 +22,7 @@ import { client } from '@/lib/appwrite';
 import { Storage } from 'appwrite';
 import { Ionicons } from '@expo/vector-icons';
 import { useStats } from '@/contexts/StatsContext';
+import { useNavigationState } from '@react-navigation/native';
 
 const AVATAR_SIZE = 150;
 // const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
@@ -44,6 +45,13 @@ export default function Profile() {
   const [uploading, setUploading] = useState(false);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
   const [loadingProfile, setLoadingProfile] = useState(false);
+
+  const navigationState = useNavigationState(state => state);
+
+  useEffect(() => {
+    console.log('Profile navigation state:', navigationState);
+  }, [navigationState]);
+
 
   // Sync form fields with profile when loaded
   useEffect(() => {
@@ -181,7 +189,7 @@ export default function Profile() {
       <ThemedView style={styles.container}>
         <Spacer />
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 8 }}>
-            <TouchableOpacity onPress={() => router.push('/settings')}>
+            <TouchableOpacity onPress={() => router.push('/profile/settings')}>
               <Ionicons name="settings" size={28} color="#0a7ea4" />
             </TouchableOpacity>
           </View>

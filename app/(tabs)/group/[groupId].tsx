@@ -6,11 +6,11 @@ import { ThemedView } from '@/components/ThemedView';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Keyboard, KeyboardAvoidingView, Modal, Platform, TextInput, TouchableOpacity, TouchableWithoutFeedback, View , ScrollView} from 'react-native';
-import GroupHeader from '../../../components/GroupHeader';
+import GroupHeader from './[groupId]/GroupHeader';
 import { useGroupDetails } from '../../../hooks/useGroupDetails';
-import ExpenseList from './expenseList';
-import MembersDropdown from './membersDropdown';
-import SettlementList from './settlementList';
+import ExpenseList from './[groupId]/expenseList';
+import MembersDropdown from './[groupId]/membersDropdown';
+import SettlementList from '../../../components/settlementList';
 import { Ionicons } from '@expo/vector-icons';
 import { useUser } from '@/hooks/useUser';
 import { Group } from '@/types';
@@ -82,7 +82,7 @@ export default function GroupDetailScreen() {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 120 }}>
         <Spacer height={30} />
-        <TouchableOpacity onPress={() => router.navigate('/group/groups')}>
+        <TouchableOpacity onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color="#0a7ea4" />
         </TouchableOpacity>
         <Spacer height={10} />

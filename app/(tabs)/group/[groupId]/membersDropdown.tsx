@@ -60,7 +60,7 @@ export default function MembersDropdown({
                 <TouchableOpacity
                   onPress={() =>
                     router.push({
-                      pathname: '/user/[userId]',
+                      pathname: '/group/[groupId]/user/[userId]',
                       params: { userId: item.userId , groupId: group.$id},
                     })
                   }
@@ -70,7 +70,7 @@ export default function MembersDropdown({
                     source={
                       item.avatar && typeof item.avatar === 'string' && item.avatar !== ''
                         ? { uri: item.avatar }
-                        : require('../../../assets/images/default-avatar.png')
+                        : require('@/assets/images/default-avatar.png')
                     }
                     style={styles.avatar}
                   />

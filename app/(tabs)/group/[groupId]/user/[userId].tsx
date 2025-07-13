@@ -8,6 +8,7 @@ import { Image } from 'expo-image';
 import { databases } from '@/lib/appwrite';
 import { Query } from 'appwrite';
 import Spacer from '@/components/Spacer';
+import { User, UserProfile } from '@/types';
 
 const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
@@ -16,10 +17,10 @@ const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?
 
 
 export default function UserProfileScreen() {
-  const { userId, groupId } = useLocalSearchParams();
+  const { groupId, userId } = useLocalSearchParams<{ groupId: string; userId: string }>();
   const router = useRouter();
 
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState<User | null>(null);
   const [groupsCount, setGroupsCount] = useState(0);
   const [userExpensesCount, setUserExpensesCount] = useState(0);
   const [userTotalSpent, setUserTotalSpent] = useState(0);
@@ -34,7 +35,14 @@ export default function UserProfileScreen() {
         usersCollectionId,
         userId,
       );
-      setProfile(userDoc);
+      const user: User = {
+        $id: userDoc.$id,
+        email: userDoc.email,
+        username: userDoc.username,
+        avatar: userDoc.avatar,
+        bio: userDoc.bio,
+      };
+      setProfile(user);
 
       // Fetch group count
       const groupsRes = await databases.listDocuments(
@@ -101,8 +109,8 @@ export default function UserProfileScreen() {
   return (
     <ThemedView style={styles.container}>
       <Spacer/>
-      {/* <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}> */}
-      <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)} style={styles.backBtn}>
+      <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
+      {/* <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)} style={styles.backBtn}> */}
         <Ionicons name="arrow-back" size={24} color="#1976d2" />
       </TouchableOpacity>
       <View style={styles.topRow}>
@@ -110,7 +118,7 @@ export default function UserProfileScreen() {
           source={
             profile.avatar
               ? { uri: profile.avatar }
-              : require('../../../assets/images/default-avatar.png')
+              : require('@/assets/images/default-avatar.png')
           }
           style={styles.avatar}
         />

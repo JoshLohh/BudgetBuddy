@@ -36,14 +36,14 @@ export default function TabLayout() {
           }}
         /> */}
         <Tabs.Screen
-          name="group/groups"
+          name="group"
           options={{
             title: 'Groups',
             tabBarIcon: ({ color }) => <IconSymbol size={38} name="person.3.fill" color={color} />,
           }}
         />
         <Tabs.Screen
-          name="group/create"
+          name="create"
           options={{
             title: 'Create',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="plus.square.fill.on.square.fill" color={color} />,
@@ -81,11 +81,11 @@ export default function TabLayout() {
           name="group/settlementList"
           options={{ href: null }}
         />
-{/* 
+
         <Tabs.Screen
           name="groups"
           options={{ href: null }}
-        /> */}
+        />
 
         <Tabs.Screen
           name="home"
@@ -93,7 +93,7 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
-          name="settings"
+          name="profile/settings"
           options={{ href: null }}
         />
 
