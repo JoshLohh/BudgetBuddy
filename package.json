@@ -11,7 +11,7 @@
     "lint": "expo lint",
     "test": "jest --watchAll",
     "test:web": "jest --config=jest.web.config.js",
-    "test:native": "jest --testPathIgnorePatterns \".*\\.web\\.test\\.tsx$\" --watchAll"
+    "test:native": "jest --testPathIgnorePatterns \".*\\.web\\.test\\.tsx$\""
   },
   "jest": {
     "preset": "jest-expo",

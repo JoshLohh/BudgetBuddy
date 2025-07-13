@@ -1,9 +1,7 @@
-// useGroupDetails.test.tsx
-
 import React, { forwardRef, useImperativeHandle, createRef } from 'react';
 import { act, waitFor } from '@testing-library/react-native';
 import { Text } from 'react-native';
-import { renderRouter } from 'expo-router/testing-library';
+import { render } from '@testing-library/react-native';
 
 // Mocks must be declared BEFORE importing the hook!
 jest.mock('@/lib/appwrite', () => ({
@@ -23,7 +21,7 @@ jest.mock('../../hooks/settlementUtils', () => ({
 
 import { useGroupDetails } from '../../hooks/useGroupDetails';
 
-// Helper test component for UI-based assertions
+// UI-based test component
 function TestComponent({ groupId }: { groupId?: string }) {
   const details = useGroupDetails(groupId);
   return (
@@ -42,13 +40,13 @@ function TestComponent({ groupId }: { groupId?: string }) {
   );
 }
 
-// Ref-forwarding wrapper for hook stateful tests
-const StateComponent = forwardRef<
+// Ref-forwarding wrapper for direct hook state testing
+const StateComponent = React.forwardRef<
   ReturnType<typeof useGroupDetails>,
   { groupId?: string }
 >((props, ref) => {
   const details = useGroupDetails(props.groupId);
-  useImperativeHandle(ref, () => details, [details]);
+  React.useImperativeHandle(ref, () => details, [details]);
   return null;
 });
 
@@ -68,23 +66,21 @@ describe('useGroupDetails', () => {
       })
       .mockResolvedValueOnce({ $id: 'user1', username: 'Alice', avatar: null })
       .mockResolvedValueOnce({ $id: 'user2', username: 'Bob', avatar: null });
-
     require('@/lib/appwrite').databases.listDocuments
       .mockResolvedValueOnce({ documents: [
         { amount: 20, paidBy: 'user1', splitBetween: ['user1', 'user2'], splitType: 'equal' }
-      ] }) // expenses
+      ] })
       .mockResolvedValueOnce({ documents: [
         { from: 'user2', to: 'user1', amount: 10 }
-      ] }) // settlements
+      ] })
       .mockResolvedValueOnce({ documents: [
         { amount: 20, paidBy: 'user1', splitBetween: ['user1', 'user2'], splitType: 'equal', $id: 'exp1', description: '', groupId: 'group1', category: '', createdAt: '' }
-      ] }) // expenses (focus effect)
+      ] })
       .mockResolvedValueOnce({ documents: [
         { from: 'user2', to: 'user1', amount: 10 }
-      ] }); // settlements (focus effect)
+      ] });
 
-    const { getByTestId } = renderRouter(<TestComponent groupId="group1" />);
-
+    const { getByTestId } = render(<TestComponent groupId="group1" />);
     await waitFor(() => {
       expect(getByTestId('group-title').props.children).toBe('Test Group');
       expect(getByTestId('loading').props.children).toBe('no');
@@ -96,15 +92,15 @@ describe('useGroupDetails', () => {
     });
   });
 
-  it('handles missing groupId gracefully', () => {
-    const { getByTestId } = renderRouter(<TestComponent groupId={undefined} />);
+  it('handles missing groupId gracefully', async () => {
+    const { getByTestId } = render(<TestComponent groupId={undefined} />);
     expect(getByTestId('loading').props.children).toBe('yes');
   });
 
   it('handles backend error', async () => {
     require('@/lib/appwrite').databases.getDocument.mockRejectedValue(new Error('Not found'));
     require('@/lib/appwrite').databases.listDocuments.mockResolvedValue({ documents: [] });
-    const { getByTestId } = renderRouter(<TestComponent groupId="bad-id" />);
+    const { getByTestId } = render(<TestComponent groupId="bad-id" />);
     await waitFor(() => {
       expect(getByTestId('error').props.children).toBe('Group not found.');
     });
@@ -116,7 +112,7 @@ describe('useGroupDetails', () => {
     });
     require('@/lib/appwrite').databases.listDocuments.mockResolvedValue({ documents: [] });
     const detailsRef = createRef<ReturnType<typeof useGroupDetails>>();
-    renderRouter(<StateComponent ref={detailsRef} groupId="group1" />);
+    render(<StateComponent ref={detailsRef} groupId="group1" />);
     await waitFor(() => expect(detailsRef.current).toBeDefined());
     expect(detailsRef.current!.membersExpanded).toBe(false);
     act(() => { detailsRef.current!.setMembersExpanded(true); });
@@ -129,7 +125,7 @@ describe('useGroupDetails', () => {
     });
     require('@/lib/appwrite').databases.listDocuments.mockResolvedValue({ documents: [] });
     const detailsRef = createRef<ReturnType<typeof useGroupDetails>>();
-    renderRouter(<StateComponent ref={detailsRef} groupId="group1" />);
+    render(<StateComponent ref={detailsRef} groupId="group1" />);
     await waitFor(() => expect(detailsRef.current).toBeDefined());
     expect(detailsRef.current!.showAllExpenses).toBe(false);
     act(() => { detailsRef.current!.setShowAllExpenses(true); });
@@ -141,14 +137,14 @@ describe('useGroupDetails', () => {
       $id: 'group1', title: '', description: '', members: [], createdBy: ''
     });
     require('@/lib/appwrite').databases.listDocuments
-      .mockResolvedValueOnce({ documents: [] }) // expenses
-      .mockResolvedValueOnce({ documents: [] }) // settlements
+      .mockResolvedValueOnce({ documents: [] })
+      .mockResolvedValueOnce({ documents: [] })
       .mockResolvedValueOnce({ documents: [
         { $id: 'user3', username: 'Charlie', avatar: null },
         { $id: 'user4', username: 'David', avatar: null }
-      ] }); // user search
+      ] });
     const detailsRef = createRef<ReturnType<typeof useGroupDetails>>();
-    renderRouter(<StateComponent ref={detailsRef} groupId="group1" />);
+    render(<StateComponent ref={detailsRef} groupId="group1" />);
     await waitFor(() => expect(detailsRef.current).toBeDefined());
     act(() => { detailsRef.current!.setSearchQuery('char'); });
     await act(async () => {
@@ -167,7 +163,7 @@ describe('useGroupDetails', () => {
     require('@/lib/appwrite').databases.listDocuments.mockResolvedValue({ documents: [] });
     require('@/lib/appwrite').databases.updateDocument.mockResolvedValue({});
     const detailsRef = createRef<ReturnType<typeof useGroupDetails>>();
-    renderRouter(<StateComponent ref={detailsRef} groupId="group1" />);
+    render(<StateComponent ref={detailsRef} groupId="group1" />);
     await waitFor(() => expect(detailsRef.current && detailsRef.current.group).toBeDefined());
     await act(async () => {
       await detailsRef.current!.handleAddMember('user2');
@@ -186,7 +182,7 @@ describe('useGroupDetails', () => {
     require('@/lib/appwrite').databases.listDocuments.mockResolvedValue({ documents: [] });
     require('@/lib/appwrite').databases.updateDocument.mockResolvedValue({});
     const detailsRef = createRef<ReturnType<typeof useGroupDetails>>();
-    renderRouter(<StateComponent ref={detailsRef} groupId="group1" />);
+    render(<StateComponent ref={detailsRef} groupId="group1" />);
     await waitFor(() => expect(detailsRef.current && detailsRef.current.group).toBeDefined());
     await act(async () => {
       await detailsRef.current!.handleRemoveMember('user2');
@@ -207,7 +203,7 @@ describe('useGroupDetails', () => {
       ]
     });
     const detailsRef = createRef<ReturnType<typeof useGroupDetails>>();
-    renderRouter(<StateComponent ref={detailsRef} groupId="group1" />);
+    render(<StateComponent ref={detailsRef} groupId="group1" />);
     await waitFor(() => expect(detailsRef.current && detailsRef.current.group).toBeDefined());
     await act(async () => {
       await detailsRef.current!.settleUp('user2', 'user1', 10);
@@ -225,7 +221,7 @@ describe('useGroupDetails', () => {
       .mockResolvedValueOnce({ $id: 'user2', username: 'Bob', avatar: null });
     require('@/lib/appwrite').databases.listDocuments.mockResolvedValue({ documents: [] });
     const detailsRef = createRef<ReturnType<typeof useGroupDetails>>();
-    renderRouter(<StateComponent ref={detailsRef} groupId="group1" />);
+    render(<StateComponent ref={detailsRef} groupId="group1" />);
     await waitFor(() => expect(detailsRef.current && detailsRef.current.memberProfiles.length).toBe(2));
     expect(detailsRef.current!.getUsername('user1')).toBe('Alice');
     expect(detailsRef.current!.getUsername('user2')).toBe('Bob');
@@ -250,7 +246,7 @@ describe('useGroupDetails', () => {
         { amount: 30, paidBy: 'user2', splitBetween: ['user1', 'user2'], splitType: 'equal', $id: 'exp2', description: '', groupId: 'group1', category: '', createdAt: '' }
       ] })
       .mockResolvedValueOnce({ documents: [] });
-    const { getByTestId } = renderRouter(<TestComponent groupId="group1" />);
+    const { getByTestId } = render(<TestComponent groupId="group1" />);
     await waitFor(() => {
       expect(getByTestId('total-expenses').props.children).toBe(50);
     });
@@ -262,7 +258,7 @@ describe('useGroupDetails', () => {
     });
     require('@/lib/appwrite').databases.listDocuments.mockResolvedValue({ documents: [] });
     const detailsRef = createRef<ReturnType<typeof useGroupDetails>>();
-    renderRouter(<StateComponent ref={detailsRef} groupId="group1" />);
+    render(<StateComponent ref={detailsRef} groupId="group1" />);
     await waitFor(() => expect(detailsRef.current).toBeDefined());
     expect(detailsRef.current!.searchModalVisible).toBe(false);
     act(() => { detailsRef.current!.setSearchModalVisible(true); });
@@ -277,7 +273,7 @@ describe('useGroupDetails', () => {
     });
     require('@/lib/appwrite').databases.listDocuments.mockResolvedValue({ documents: [] });
     const detailsRef = createRef<ReturnType<typeof useGroupDetails>>();
-    renderRouter(<StateComponent ref={detailsRef} groupId="group1" />);
+    render(<StateComponent ref={detailsRef} groupId="group1" />);
     await waitFor(() => expect(detailsRef.current).toBeDefined());
     expect(detailsRef.current!.searchQuery).toBe('');
     act(() => { detailsRef.current!.setSearchQuery('bob'); });
@@ -303,7 +299,7 @@ describe('useGroupDetails', () => {
       })) })
       .mockResolvedValueOnce({ documents: [] });
     const detailsRef = createRef<ReturnType<typeof useGroupDetails>>();
-    renderRouter(<StateComponent ref={detailsRef} groupId="group1" />);
+    render(<StateComponent ref={detailsRef} groupId="group1" />);
     await waitFor(() => expect(detailsRef.current && detailsRef.current.expenses.length).toBe(12));
     expect(detailsRef.current!.hasMoreExpenses).toBe(true);
     act(() => { detailsRef.current!.setShowAllExpenses(true); });
