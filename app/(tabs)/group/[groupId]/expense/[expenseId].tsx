@@ -150,8 +150,7 @@ export default function ExpenseDetailScreen() {
         customSplit: splitType === 'equal' ? '' : JSON.stringify(customSplit),
       });
       Alert.alert('Success', 'Expense updated');
-      router.replace(`/group/${groupId}`)
-      // router.replace({ pathname: '/group/[groupId]', params: { groupId } });
+      router.back()
     } catch (e) {
       setError('Failed to update expense');
       setSaving(false);
@@ -171,8 +170,7 @@ export default function ExpenseDetailScreen() {
           try {
             await databases.deleteDocument(databaseId, expensesCollectionId, expenseId);
             Alert.alert('Deleted', 'Expense deleted');
-            router.replace(`/group/${groupId}`)
-            // router.replace({ pathname: '/group/[groupId]', params: { groupId } });
+            router.back()
           } catch (e) {
             setError('Failed to delete expense');
           } finally {
@@ -194,7 +192,7 @@ export default function ExpenseDetailScreen() {
   return (
     <ThemedView style={{ flex: 1, padding: 20 }}>
       <Spacer height={30}/>
-        <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)}>
+       <TouchableOpacity onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color={Colors.primary} />
         </TouchableOpacity>
       <ScrollView>

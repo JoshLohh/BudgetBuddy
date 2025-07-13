@@ -144,8 +144,7 @@ export default function AddExpenseScreen() {
           category,
         }
       );
-      router.navigate(`/group/${groupId}`)
-      // router.navigate({ pathname: '/group/[groupId]', params: { groupId } });
+      router.back()
     } catch (e: any) {
       setError(e.message || 'Failed to add expense');
     }
@@ -155,7 +154,7 @@ export default function AddExpenseScreen() {
   return (
     <ThemedView style={{ flex: 1, paddingHorizontal: 20, paddingTop: 24 }}>
       <Spacer height={30}/>
-      <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)}>
+      <TouchableOpacity onPress={() => router.back()}>
               <Ionicons name="arrow-back" size={24} color={Colors.primary} />
       </TouchableOpacity>
       <ThemedText type="title" style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 12 , marginTop: 10}}>
@@ -356,7 +355,8 @@ export default function AddExpenseScreen() {
         <View style={{ flexDirection:'row', marginTop: 16, justifyContent: 'flex-end'}}>
           <ThemedButton
             style={{ marginRight: 10, minWidth: 90 , backgroundColor: 'grey'}}
-            onPress={() => router.navigate(`/group/${groupId}`)}
+            onPress={() => router.back()}
+            // onPress={() => router.navigate(`/group/${groupId}`)}
           >
             <ThemedText style={{ color: '#fff' }}>Cancel</ThemedText>
           </ThemedButton>

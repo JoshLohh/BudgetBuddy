@@ -8,7 +8,7 @@ import { useUser } from "@/hooks/useUser";
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import ThemedTextInput from '@/components/ThemedTextInput';
-import { ThemedButton } from '../../../components/ThemedButton';
+import { ThemedButton } from '../../components/ThemedButton';
 import Spacer from '@/components/Spacer';
 import { ID } from 'react-native-appwrite';
 

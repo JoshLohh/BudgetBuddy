@@ -145,8 +145,8 @@ useEffect(() => {
         )}
       </View>
       <View style={{ flex: 1, minWidth: 0 }}>
-        {/* <Pressable onPress={() => router.navigate(`/group/${item.$id}`)}> */}
-        <Pressable onPress={() => router.navigate({pathname: '/group/[groupId]', params: { groupId: item.$id }})}>
+        {/* <Pressable onPress={() => router.push(`/group/${item.$id}`)}> */}
+        <Pressable onPress={() => router.push({pathname: '/group/[groupId]', params: { groupId: item.$id }})}>
           <ThemedText type="subtitle">{item.title}</ThemedText>
           <ThemedText>{item.description}</ThemedText>
         </Pressable>
@@ -266,7 +266,7 @@ useEffect(() => {
 			ListFooterComponent={
 			<ThemedView style={{ alignItems:'center'}}>
 				<ThemedButton 
-	        onPress={() => router.push('/group/create')} 
+	        onPress={() => router.navigate('/create')} 
 	        style={styles.createBtn}
 	      >
 	        <ThemedText style={{ color: '#f2f2f2' , textAlign: 'center'}}>Create Group</ThemedText>

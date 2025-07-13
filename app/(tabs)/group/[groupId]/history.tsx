@@ -134,7 +134,7 @@ export default function GroupHistoryPage() {
   return (
     <ThemedView style={{ flex: 1, padding: 16 }}>
       <Spacer height={30} />
-      <TouchableOpacity onPress={() => router.navigate(`/group/${groupId}`)}>
+      <TouchableOpacity onPress={() => router.back()}>
         <Ionicons name="arrow-back" size={24} color={Colors.primary} />
       </TouchableOpacity>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12, marginTop: 10 }}>
