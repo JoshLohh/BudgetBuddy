@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/68</span>
+                <span class='fraction'>0/76</span>
             </div>
         
             
@@ -385,7 +385,20 @@
 <a name='L320'></a><a href='#L320'>320</a>
 <a name='L321'></a><a href='#L321'>321</a>
 <a name='L322'></a><a href='#L322'>322</a>
-<a name='L323'></a><a href='#L323'>323</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L323'></a><a href='#L323'>323</a>
+<a name='L324'></a><a href='#L324'>324</a>
+<a name='L325'></a><a href='#L325'>325</a>
+<a name='L326'></a><a href='#L326'>326</a>
+<a name='L327'></a><a href='#L327'>327</a>
+<a name='L328'></a><a href='#L328'>328</a>
+<a name='L329'></a><a href='#L329'>329</a>
+<a name='L330'></a><a href='#L330'>330</a>
+<a name='L331'></a><a href='#L331'>331</a>
+<a name='L332'></a><a href='#L332'>332</a>
+<a name='L333'></a><a href='#L333'>333</a>
+<a name='L334'></a><a href='#L334'>334</a>
+<a name='L335'></a><a href='#L335'>335</a>
+<a name='L336'></a><a href='#L336'>336</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -398,6 +411,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -434,6 +448,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -717,18 +743,19 @@ import { ThemedButton } from '@/components/ThemedButton';
 import { ActivityIndicator, Alert, ScrollView, View, Image, TouchableOpacity } from 'react-native';
 import Spacer from '@/components/Spacer';
 import { Ionicons } from '@expo/vector-icons';
-import { getCategoryIconName } from '@/constants/categoryUtils';
+import { getCategoryIconName, IoniconName } from '@/constants/categoryUtils';
 import { Colors } from '@/constants/Colors';
+import type { Expense } from '@/types/expense';
 &nbsp;
 const databaseId = <span class="cstat-no" title="statement not covered" >process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';</span>
 const expensesCollectionId = <span class="cstat-no" title="statement not covered" >process.env.EXPO_PUBLIC_APPWRITE_EXPENSES_COLLECTION_ID ?? '';</span>
 const usersCollectionId = <span class="cstat-no" title="statement not covered" >process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?? '';</span>
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >ExpenseDetailScreen(</span>) {
-  const { groupId, expenseId } = <span class="cstat-no" title="statement not covered" >useLocalSearchParams();</span>
+  const { groupId, expenseId } = <span class="cstat-no" title="statement not covered" >useLocalSearchParams&lt;{ groupId: string; expenseId: string }&gt;();</span>
   const router = <span class="cstat-no" title="statement not covered" >useRouter();</span>
 &nbsp;
-  const [expense, setExpense] = <span class="cstat-no" title="statement not covered" >useState(null);</span>
+  const [expense, setExpense] = <span class="cstat-no" title="statement not covered" >useState&lt;Expense | null&gt;(null);</span>
   const [loading, setLoading] = <span class="cstat-no" title="statement not covered" >useState(true);</span>
   const [saving, setSaving] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
   const [deleting, setDeleting] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
@@ -755,7 +782,19 @@ export default function <span class="fstat-no" title="function not covered" >Exp
 <span class="cstat-no" title="statement not covered" >    databases.getDocument(databaseId, expensesCollectionId, expenseId)</span>
       .then(<span class="fstat-no" title="function not covered" >as</span>ync doc =&gt; {
 <span class="cstat-no" title="statement not covered" >        if (!isMounted) <span class="cstat-no" title="statement not covered" >return;</span></span>
-<span class="cstat-no" title="statement not covered" >        setExpense(doc);</span>
+<span class="cstat-no" title="statement not covered" >        setExpense({</span>
+          $id: doc.$id,
+          amount: doc.amount,
+          paidBy: doc.paidBy,
+          splitBetween: doc.splitBetween || [],
+          splitType: doc.splitType || 'equal',
+          customSplit: doc.customSplit, // Keep as string; parse separately for UI
+          description: doc.description,
+          groupId: doc.groupId,
+          category: doc.category || 'Others',
+          $createdAt: doc.$createdAt,
+        });
+        // Set individual form states
 <span class="cstat-no" title="statement not covered" >        setDescription(doc.description);</span>
 <span class="cstat-no" title="statement not covered" >        setAmount(String(doc.amount));</span>
 <span class="cstat-no" title="statement not covered" >        setSplitBetween(doc.splitBetween || []);</span>
@@ -846,7 +885,7 @@ export default function <span class="fstat-no" title="function not covered" >Exp
         customSplit: splitType === 'equal' ? '' : JSON.stringify(customSplit),
       });
 <span class="cstat-no" title="statement not covered" >      Alert.alert('Success', 'Expense updated');</span>
-<span class="cstat-no" title="statement not covered" >      router.replace({ pathname: '/group/[groupId]', params: { groupId } });</span>
+<span class="cstat-no" title="statement not covered" >      router.back()</span>
     } catch (e) {
 <span class="cstat-no" title="statement not covered" >      setError('Failed to update expense');</span>
 <span class="cstat-no" title="statement not covered" >      setSaving(false);</span>
@@ -866,7 +905,7 @@ export default function <span class="fstat-no" title="function not covered" >Exp
 <span class="cstat-no" title="statement not covered" >          try {</span>
 <span class="cstat-no" title="statement not covered" >            await databases.deleteDocument(databaseId, expensesCollectionId, expenseId);</span>
 <span class="cstat-no" title="statement not covered" >            Alert.alert('Deleted', 'Expense deleted');</span>
-<span class="cstat-no" title="statement not covered" >            router.replace({ pathname: '/group/[groupId]', params: { groupId } });</span>
+<span class="cstat-no" title="statement not covered" >            router.back()</span>
           } catch (e) {
 <span class="cstat-no" title="statement not covered" >            setError('Failed to delete expense');</span>
           } finally {
@@ -888,7 +927,7 @@ export default function <span class="fstat-no" title="function not covered" >Exp
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;ThemedView style={{ flex: 1, padding: 20 }}&gt;
       &lt;Spacer height={30}/&gt;
-        &lt;TouchableOpacity onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >router.navigate(`/group/${groupId}`)}</span>&gt;
+       &lt;TouchableOpacity onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >router.back()}</span>&gt;
             &lt;Ionicons name="arrow-back" size={24} color={Colors.primary} /&gt;
         &lt;/TouchableOpacity&gt;
       &lt;ScrollView&gt;
@@ -914,7 +953,7 @@ export default function <span class="fstat-no" title="function not covered" >Exp
         /&gt;
 &nbsp;
         &lt;View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}&gt;
-          &lt;Ionicons name={getCategoryIconName(expense.category)} size={22} color="#1976d2" /&gt;
+          &lt;Ionicons name={getCategoryIconName(expense?.category || 'Others') as IoniconName} size={22} color="#1976d2" /&gt;
           &lt;ThemedText style={{ marginLeft: 8, fontWeight: 'bold', fontSize: 15 }}&gt;
             {expense?.category || "Others"}
           &lt;/ThemedText&gt;
@@ -1016,7 +1055,7 @@ export default function <span class="fstat-no" title="function not covered" >Exp
         )}
 &nbsp;
         {deleting ? (
-          &lt;ThemedButton disabled type="secondary"&gt;
+          &lt;ThemedButton disabled &gt;
             &lt;ThemedText&gt;Deleting...&lt;/ThemedText&gt;
           &lt;/ThemedButton&gt;
         ) : (
@@ -1036,7 +1075,7 @@ export default function <span class="fstat-no" title="function not covered" >Exp
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-10T21:30:55.484Z
+                at 2025-07-13T14:44:06.428Z
             </div>
         <script src="../../../../../../prettify.js"></script>
         <script>

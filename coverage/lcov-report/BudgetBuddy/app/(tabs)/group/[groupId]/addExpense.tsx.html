@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/102</span>
+                <span class='fraction'>0/101</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/106</span>
+                <span class='fraction'>0/92</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/29</span>
+                <span class='fraction'>0/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/98</span>
+                <span class='fraction'>0/97</span>
             </div>
         
             
@@ -470,19 +470,7 @@
 <a name='L405'></a><a href='#L405'>405</a>
 <a name='L406'></a><a href='#L406'>406</a>
 <a name='L407'></a><a href='#L407'>407</a>
-<a name='L408'></a><a href='#L408'>408</a>
-<a name='L409'></a><a href='#L409'>409</a>
-<a name='L410'></a><a href='#L410'>410</a>
-<a name='L411'></a><a href='#L411'>411</a>
-<a name='L412'></a><a href='#L412'>412</a>
-<a name='L413'></a><a href='#L413'>413</a>
-<a name='L414'></a><a href='#L414'>414</a>
-<a name='L415'></a><a href='#L415'>415</a>
-<a name='L416'></a><a href='#L416'>416</a>
-<a name='L417'></a><a href='#L417'>417</a>
-<a name='L418'></a><a href='#L418'>418</a>
-<a name='L419'></a><a href='#L419'>419</a>
-<a name='L420'></a><a href='#L420'>420</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L408'></a><a href='#L408'>408</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -499,17 +487,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -518,13 +500,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -853,6 +828,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -901,7 +877,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect, useCallback} from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect, useCallback } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -914,8 +890,9 @@ import Spacer from '@/components/Spacer';
 import { ID } from 'appwrite';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
-import { CATEGORIES, getCategoryIconName } from '@/constants/categoryUtils';
+import { CATEGORIES , IoniconName } from '@/constants/categoryUtils';
 import { Colors } from '@/constants/Colors';
+import { TextStyle } from 'react-native';
 import type { Expense } from '@/types/expense';
 &nbsp;
 const databaseId = <span class="cstat-no" title="statement not covered" >process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';</span>
@@ -929,22 +906,8 @@ const SPLIT_TYPES = <span class="cstat-no" title="statement not covered" >[</spa
   { label: '% Percentages', value: 'percentage' },
 ];
 &nbsp;
-function <span class="fstat-no" title="function not covered" >getInitialState(</span>members) {
-<span class="cstat-no" title="statement not covered" >  return {</span>
-    description: '',
-    amount: '',
-    paidBy: members[0] || '',
-    splitBetween: members.slice() || [],
-    splitType: 'equal',
-    customSplit: {},
-    category: 'Others',
-    error: '',
-  };
-}
-&nbsp;
-&nbsp;
 export default function <span class="fstat-no" title="function not covered" >AddExpenseScreen(</span>) {
-  const { groupId } = <span class="cstat-no" title="statement not covered" >useLocalSearchParams();</span>
+  const { groupId } = <span class="cstat-no" title="statement not covered" >useLocalSearchParams&lt;{ groupId: string }&gt;();</span>
   const router = <span class="cstat-no" title="statement not covered" >useRouter();</span>
 &nbsp;
   const [description, setDescription] = <span class="cstat-no" title="statement not covered" >useState('');</span>
@@ -1060,7 +1023,7 @@ export default function <span class="fstat-no" title="function not covered" >Add
           category,
         }
       );
-<span class="cstat-no" title="statement not covered" >      router.replace({ pathname: '/group/[groupId]', params: { groupId } });</span>
+<span class="cstat-no" title="statement not covered" >      router.back()</span>
     } catch (e: any) {
 <span class="cstat-no" title="statement not covered" >      setError(e.message || 'Failed to add expense');</span>
     }
@@ -1070,7 +1033,7 @@ export default function <span class="fstat-no" title="function not covered" >Add
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;ThemedView style={{ flex: 1, paddingHorizontal: 20, paddingTop: 24 }}&gt;
       &lt;Spacer height={30}/&gt;
-      &lt;TouchableOpacity onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >router.navigate(`/group/${groupId}`)}</span>&gt;
+      &lt;TouchableOpacity onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >router.back()}</span>&gt;
               &lt;Ionicons name="arrow-back" size={24} color={Colors.primary} /&gt;
       &lt;/TouchableOpacity&gt;
       &lt;ThemedText type="title" style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 12 , marginTop: 10}}&gt;
@@ -1093,7 +1056,7 @@ export default function <span class="fstat-no" title="function not covered" >Add
           onChangeText={<span class="fstat-no" title="function not covered" >va</span>l =&gt; <span class="cstat-no" title="statement not covered" >setAmount(val.replace(/[^0-9.]/g, ''))}</span>
           keyboardType="decimal-pad"
           placeholder="$0.00"
-          leftIcon="$"
+          // leftIcon="$"
           style={{ marginBottom: 14 }}
         /&gt;
 &nbsp;
@@ -1109,9 +1072,9 @@ export default function <span class="fstat-no" title="function not covered" >Add
                 category === cat.value ? selectorButtonStyles.active : selectorButtonStyles.inactive,
                 { flexDirection: 'row', alignItems: 'center', minWidth: 120 }
               ]}
-              type={category === cat.value ? undefined : 'secondary'}
+              // type={category === cat.value ? undefined : 'secondary'}
             &gt;
-              &lt;Ionicons name={getCategoryIconName(cat.value)} size={22} color={category === cat.value ? "#fff" : '#1976d2'}/&gt;
+              &lt;Ionicons name={cat.icon as IoniconName} size={22} color={category === cat.value ? "#fff" : '#1976d2'}/&gt;
               &lt;ThemedText style={category === cat.value ? selectorButtonStyles.textActive : selectorButtonStyles.textInactive}&gt;
                 {" "}{cat.label}
               &lt;/ThemedText&gt;
@@ -1133,7 +1096,7 @@ export default function <span class="fstat-no" title="function not covered" >Add
                   isActive ? selectorButtonStyles.active : selectorButtonStyles.inactive,
                   { flexDirection: 'row', alignItems: 'center' }, // align avatar and text horizontally
                 ]}
-                type={isActive ? undefined : 'secondary'}
+                // type={isActive ? undefined : 'secondary'}
               &gt;
                 {m.avatar ? (
                   &lt;Image
@@ -1160,7 +1123,7 @@ export default function <span class="fstat-no" title="function not covered" >Add
               splitBetween.length === members.length ? selectorButtonStyles.active : selectorButtonStyles.inactive,
               { flexDirection: 'row', alignItems: 'center' },
             ]}
-            type={splitBetween.length === members.length ? undefined : 'secondary'}
+            // type={splitBetween.length === members.length ? undefined : 'secondary'}
           &gt;
             &lt;ThemedText style={splitBetween.length === members.length ? selectorButtonStyles.textActive : selectorButtonStyles.textInactive}&gt;
               Everyone
@@ -1183,7 +1146,7 @@ export default function <span class="fstat-no" title="function not covered" >Add
                   isSelected ? selectorButtonStyles.active : selectorButtonStyles.inactive,
                   { flexDirection: 'row', alignItems: 'center' },
                 ]}
-                type={isSelected ? undefined : 'secondary'}
+                // type={isSelected ? undefined : 'secondary'}
               &gt;
                 {m.avatar ? (
                   &lt;Image
@@ -1212,7 +1175,7 @@ export default function <span class="fstat-no" title="function not covered" >Add
                 selectorButtonStyles.splitTypeMinWidth,
                 splitType === opt.value ? selectorButtonStyles.active : selectorButtonStyles.inactive,
               ]}
-              type={splitType === opt.value ? undefined : 'secondary'}
+              // type={splitType === opt.value ? undefined : 'secondary'}
             &gt;
               &lt;ThemedText style={splitType === opt.value ? selectorButtonStyles.textActive : selectorButtonStyles.textInactive}&gt;
                 {opt.label}
@@ -1271,7 +1234,8 @@ export default function <span class="fstat-no" title="function not covered" >Add
         &lt;View style={{ flexDirection:'row', marginTop: 16, justifyContent: 'flex-end'}}&gt;
           &lt;ThemedButton
             style={{ marginRight: 10, minWidth: 90 , backgroundColor: 'grey'}}
-            onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >router.navigate(`/group/${groupId}`)}</span>
+            onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >router.back()}</span>
+            // onPress={() =&gt; router.navigate(`/group/${groupId}`)}
           &gt;
             &lt;ThemedText style={{ color: '#fff' }}&gt;Cancel&lt;/ThemedText&gt;
           &lt;/ThemedButton&gt;
@@ -1311,11 +1275,11 @@ const selectorButtonStyles = <span class="cstat-no" title="statement not covered
   },
   textActive: {
     color: '#fff',
-    fontWeight: 'bold',
+    fontWeight: 'bold' as TextStyle['fontWeight'],
   },
   textInactive: {
     color: '#1e88e5',
-    fontWeight: 'bold',
+    fontWeight: 'bold' as TextStyle['fontWeight'],
   },
   splitTypeMinWidth: {
     minWidth: 120,
@@ -1327,7 +1291,7 @@ const selectorButtonStyles = <span class="cstat-no" title="statement not covered
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-10T21:30:55.484Z
+                at 2025-07-13T14:44:06.428Z
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

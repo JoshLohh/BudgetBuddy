@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
@@ -124,7 +124,9 @@
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -140,38 +142,20 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -179,9 +163,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -198,7 +202,9 @@ interface RequestBody extends Models.User&lt;Models.Preferences&gt; {
 export default <span class="fstat-no" title="function not covered" >as</span>ync ({ req, res, log, error }: any) =&gt; {
   // You can use the Appwrite SDK to interact with other services
   // For this example, we're using the Users service
-<span class="cstat-no" title="statement not covered" >  console.log("✅ Appwrite Function started");</span>
+  const databaseId = <span class="cstat-no" title="statement not covered" >process.env.DATABASE_ID ?? '';</span>
+  const collectionId = <span class="cstat-no" title="statement not covered" >process.env.COLLECTION_ID ?? '';</span>
+&nbsp;
   const client = <span class="cstat-no" title="statement not covered" >new Client()</span>
     .setEndpoint(Bun.env["APPWRITE_FUNCTION_API_ENDPOINT"])
     .setProject(Bun.env["APPWRITE_FUNCTION_PROJECT_ID"])
@@ -207,12 +213,14 @@ export default <span class="fstat-no" title="function not covered" >as</span>ync
   const databases = <span class="cstat-no" title="statement not covered" >new Databases(client);</span>
 &nbsp;
   const data: RequestBody = <span class="cstat-no" title="statement not covered" >req.bodyJson;</span>
-<span class="cstat-no" title="statement not covered" >  console.log("📦 Payload received:");</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    if (!databaseId || !collectionId) {</span>
+<span class="cstat-no" title="statement not covered" >      throw new Error('Missing required environment variables: DATABASE_ID or COLLECTION_ID');</span>
+    }
     const user = <span class="cstat-no" title="statement not covered" >await databases.getDocument(</span>
-      Bun.env["DATABASE_ID"],
-      Bun.env["COLLECTION_ID"],
+      databaseId,
+      collectionId,
       data.$id,
     );
 &nbsp;
@@ -225,8 +233,8 @@ export default <span class="fstat-no" title="function not covered" >as</span>ync
   
 <span class="cstat-no" title="statement not covered" >  try {</span>
 <span class="cstat-no" title="statement not covered" >    await databases.createDocument(</span>
-      Bun.env["DATABASE_ID"],
-      Bun.env["COLLECTION_ID"],
+      databaseId,
+      collectionId,
       data.$id,
       {
         username: data.name,
@@ -238,12 +246,10 @@ export default <span class="fstat-no" title="function not covered" >as</span>ync
         Permission.delete(Role.user(data.$id))
       ]
     );
-<span class="cstat-no" title="statement not covered" >    console.log("✅ Document created:");</span>
 <span class="cstat-no" title="statement not covered" >    log("User created successfully");</span>
 <span class="cstat-no" title="statement not covered" >    return res.json({ message: "User created successfully" });</span>
   } catch (e: any) {
 <span class="cstat-no" title="statement not covered" >    error("Failed to create the user in the database: " + JSON.stringify(e));</span>
-<span class="cstat-no" title="statement not covered" >    console.error("❌ Error creating document:", error);</span>
 <span class="cstat-no" title="statement not covered" >    return res.json({ message: "Failed to create the user in the database:" + JSON.stringify(e)});</span>
   }
 };</pre></td></tr></table></pre>
@@ -253,7 +259,7 @@ export default <span class="fstat-no" title="function not covered" >as</span>ync
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-10T21:30:55.484Z
+                at 2025-07-13T14:44:06.428Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

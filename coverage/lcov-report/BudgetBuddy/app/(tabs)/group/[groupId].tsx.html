@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/22</span>
+                <span class='fraction'>0/23</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/22</span>
+                <span class='fraction'>0/23</span>
             </div>
         
             
@@ -270,7 +270,8 @@
 <a name='L205'></a><a href='#L205'>205</a>
 <a name='L206'></a><a href='#L206'>206</a>
 <a name='L207'></a><a href='#L207'>207</a>
-<a name='L208'></a><a href='#L208'>208</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -291,6 +292,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -370,8 +372,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -485,17 +487,18 @@ import { ThemedView } from '@/components/ThemedView';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Keyboard, KeyboardAvoidingView, Modal, Platform, TextInput, TouchableOpacity, TouchableWithoutFeedback, View , ScrollView} from 'react-native';
-import GroupHeader from '../../../components/GroupHeader';
+import GroupHeader from './[groupId]/GroupHeader';
 import { useGroupDetails } from '../../../hooks/useGroupDetails';
-import ExpenseList from './expenseList';
-import MembersDropdown from './membersDropdown';
-import SettlementList from './settlementList';
+import ExpenseList from './[groupId]/expenseList';
+import MembersDropdown from './[groupId]/membersDropdown';
+import SettlementList from '../../../components/settlementList';
 import { Ionicons } from '@expo/vector-icons';
 import { useUser } from '@/hooks/useUser';
 import { Group } from '@/types';
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >GroupDetailScreen(</span>) {
-  const { groupId } = <span class="cstat-no" title="statement not covered" >useLocalSearchParams();</span>
+  const { groupId } = <span class="cstat-no" title="statement not covered" >useLocalSearchParams&lt;{ groupId: string }&gt;();</span>
+<span class="cstat-no" title="statement not covered" >  console.log('groupId param:', groupId);</span>
   const { user } = <span class="cstat-no" title="statement not covered" >useUser();</span>
   const router = <span class="cstat-no" title="statement not covered" >useRouter();</span>
   const {
@@ -560,7 +563,7 @@ export default function <span class="fstat-no" title="function not covered" >Gro
     &lt;KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}&gt;
       &lt;ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 120 }}&gt;
         &lt;Spacer height={30} /&gt;
-        &lt;TouchableOpacity onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >router.navigate('/group/groups')}</span>&gt;
+        &lt;TouchableOpacity onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >router.back()}</span>&gt;
             &lt;Ionicons name="arrow-back" size={24} color="#0a7ea4" /&gt;
         &lt;/TouchableOpacity&gt;
         &lt;Spacer height={10} /&gt;
@@ -570,6 +573,7 @@ export default function <span class="fstat-no" title="function not covered" >Gro
           onGroupUpdated={setGroup}
         /&gt;
         &lt;MembersDropdown
+          currentUserId={user.$id}
           group={group}
           membersExpanded={membersExpanded}
           setMembersExpanded={setMembersExpanded}
@@ -577,12 +581,11 @@ export default function <span class="fstat-no" title="function not covered" >Gro
           handleRemoveMember={handleRemoveMember}
           setSearchModalVisible={setSearchModalVisible}
         /&gt;
-        &lt;ThemedButton onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >router.push({ pathname: '/group/[groupId]/addExpense', params: { groupId: group.id } })}</span>&gt;
+        &lt;ThemedButton onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >router.push({ pathname: '/group/[groupId]/addExpense', params: { groupId: group.$id } })}</span>&gt;
           &lt;ThemedText style={{ color: '#fff', textAlign: 'center' }}&gt;Add Expense&lt;/ThemedText&gt;
         &lt;/ThemedButton&gt;
         &lt;SettlementList
           suggestedSettlements={suggestedSettlements}
-          // settledSettlements={settledSettlements}
           getUsername={getUsername}
           settleUp={settleUp}
           currentUserId={user.$id}
@@ -595,7 +598,7 @@ export default function <span class="fstat-no" title="function not covered" >Gro
           hasMoreExpenses={hasMoreExpenses}
           showAllExpenses={showAllExpenses}
           setShowAllExpenses={setShowAllExpenses}
-          getUsername={getUsername}
+          // getUsername={getUsername}
         /&gt;
         
         &lt;Modal
@@ -691,7 +694,7 @@ export default function <span class="fstat-no" title="function not covered" >Gro
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-10T21:30:55.484Z
+                at 2025-07-13T14:44:06.428Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
