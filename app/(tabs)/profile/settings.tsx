@@ -29,12 +29,6 @@ export default function SettingsPage() {
     const [changePwError, setChangePwError] = useState('');
     const [changePwSuccess, setChangePwSuccess] = useState('');
 
-    const navigationState = useNavigationState(state => state);
-
-    useEffect(() => {
-        console.log('Settings navigation state:', navigationState);
-    }, [navigationState]);
-
     // Handle password change
     const handleChangePassword = async () => {
         setChangePwError('');

@@ -45,13 +45,7 @@ export default function Profile() {
   const [uploading, setUploading] = useState(false);
   const [cacheBuster, setCacheBuster] = useState(Date.now());
   const [loadingProfile, setLoadingProfile] = useState(false);
-
-  const navigationState = useNavigationState(state => state);
-
-  useEffect(() => {
-    console.log('Profile navigation state:', navigationState);
-  }, [navigationState]);
-
+  const [profileLoadTimedOut, setProfileLoadTimedOut] = useState(false);
 
   // Sync form fields with profile when loaded
   useEffect(() => {
@@ -69,6 +63,42 @@ export default function Profile() {
     refetchStats();
     setLoadingProfile(false);
   }, [refetchProfile, refetchStats]);
+
+  // refetch profile every 1.5 seconds if profile is not loaded.=
+  useEffect(() => {
+    if (!profile && authChecked) {
+      const interval = setInterval(() => {
+        refetchProfile();
+      }, 1500); // Poll every 1.5 seconds
+
+      // Stop polling when profile is loaded
+      if (profile) {
+        clearInterval(interval);
+      }
+      return () => clearInterval(interval);
+    }
+  }, [profile, authChecked, refetchProfile]);
+
+  // start a 30-second timer when loading profile. If the profile loads before the timeout, clear the timer. if not, show the reload button
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+
+    if (!profile && authChecked) {
+      setProfileLoadTimedOut(false); // Reset timeout state
+      timeout = setTimeout(() => {
+        setProfileLoadTimedOut(true);
+      }, 30000); // 30 seconds
+    }
+
+    if (profile) {
+      setProfileLoadTimedOut(false);
+      if (timeout) clearTimeout(timeout);
+    }
+
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [profile, authChecked]);
 
   // Avatar change handler
   const handleAvatarChange = async () => {
@@ -157,32 +187,28 @@ export default function Profile() {
     }
   };
 
-  if (!authChecked || loadingProfile) {
+  if (!authChecked || loadingProfile || !profile) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" />
         <ThemedText>Loading profile...</ThemedText>
+        <ThemedText style={{ color: 'red' , textAlign: 'center', justifyContent: 'center'}}>
+          If you just created a new account, please wait a moment for your profile to load.
+        </ThemedText>
+        {profileLoadTimedOut && (
+        <>
+          <ThemedText style={{ marginTop: 16, color: '#cb4d31' }}>
+            Still loading? Tap reload below.
+          </ThemedText>
+          <ThemedButton onPress={reloadProfile} style={{ marginTop: 12 }}>
+            Reload
+          </ThemedButton>
+        </>
+      )}
       </View>
     );
   }
 
-  if (!profile) {
-    return (
-      <ThemedView style={styles.loadingContainer}>
-        <ThemedView>
-          <ThemedText style={{ color: 'red' , textAlign: 'center', justifyContent: 'center'}}>No profile loaded. </ThemedText>
-          <ThemedText style={{ color: 'red' , textAlign: 'center', justifyContent: 'center'}}>Please try logging out and back in, or contact support. </ThemedText>
-          <ThemedText style={{ color: 'red' , textAlign: 'center', justifyContent: 'center'}}>If you just created a new account, please wait a moment for your profile to load.</ThemedText>
-          </ThemedView>
-        <ThemedButton onPress={reloadProfile} style={styles.editBtn}>
-          <ThemedText style={{ color: '#f2f2f2', textAlign:'center' }}>Reload</ThemedText>
-        </ThemedButton>
-        <ThemedButton onPress={handleLogout} style={styles.logoutBtn}>
-              <ThemedText style={{ color: '#f2f2f2', textAlign:'center' }}>Logout</ThemedText>
-        </ThemedButton>
-      </ThemedView>
-    );
-  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -322,7 +348,7 @@ export default function Profile() {
               <ThemedText style={{ color: '#f2f2f2', textAlign:'center' }}>Logout</ThemedText>
             </ThemedButton>
           </View>
-        <Spacer height={100}/>
+        <Spacer height={75}/>
       </ThemedView>
     </TouchableWithoutFeedback>
   );

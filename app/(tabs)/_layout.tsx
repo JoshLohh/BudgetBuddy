@@ -28,13 +28,6 @@ export default function TabLayout() {
             default: {},
           }),
         }}>
-        {/* <Tabs.Screen
-          name="home"
-          options={{
-            title: 'Home',
-            tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-          }}
-        /> */}
         <Tabs.Screen
           name="group"
           options={{
@@ -55,66 +48,6 @@ export default function TabLayout() {
             title: 'Profile',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
           }}
-        />
-
-        <Tabs.Screen
-          name="group/[groupId]"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="group/expenseList"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="group/[groupId]/addExpense"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="group/membersDropdown"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="group/settlementList"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="groups"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="home"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="profile/settings"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="group/[groupId]/history"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="group/[groupId]/report"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="group/[groupId]/expense/[expenseId]"
-          options={{ href: null }}
-        />
-
-        <Tabs.Screen
-          name="user/[userId]"
-          options={{ href: null }}
         />
       </Tabs>
     </UserOnly>  
