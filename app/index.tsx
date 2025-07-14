@@ -11,11 +11,7 @@ import { useEffect } from 'react';
 
 
 export default function HomeScreen() {
-  const navigationState = useNavigationState(state => state);
-
-  useEffect(() => {
-    console.log('Index navigation state:', navigationState);
-  }, [navigationState]);
+  
   return (
   
     <ThemedView style={styles.container}>
@@ -43,12 +39,12 @@ export default function HomeScreen() {
           </ThemedView>
 
           <ThemedView style={styles.stepContainer}>
-            {/* <Link href='/profile'>
+            <Link href='/profile/profile'>
               <ThemedText type="link">Profile</ThemedText>
-            </Link> */}
-            <TouchableOpacity onPress={() => router.push(`/profile/profile`)}>
+            </Link>
+            {/* <TouchableOpacity onPress={() => router.push(`/profile/profile`)}>
                 <ThemedText type="link">Profile</ThemedText>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           </ThemedView>
         </ ThemedView>
     

@@ -17,7 +17,6 @@ import { Group } from '@/types';
 
 export default function GroupDetailScreen() {
   const { groupId } = useLocalSearchParams<{ groupId: string }>();
-  console.log('groupId param:', groupId);
   const { user } = useUser();
   const router = useRouter();
   const {
