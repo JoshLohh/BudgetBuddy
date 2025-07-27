@@ -215,7 +215,7 @@ export default function Profile() {
       <ThemedView style={styles.container}>
         <Spacer />
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 8 }}>
-            <TouchableOpacity onPress={() => router.push('/settings')}>
+            <TouchableOpacity onPress={() => router.push('/profile/settings')}>
               <Ionicons name="settings" size={28} color="#0a7ea4" />
             </TouchableOpacity>
           </View>
