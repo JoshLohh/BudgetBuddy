@@ -286,7 +286,7 @@ export default function ExpenseDetailScreen() {
                     <Ionicons name="person" size={16} color="#888" />
                   </View>
                 )}
-                <ThemedText style={{ width: 80 }}>{user.username}</ThemedText>
+                <ThemedText style={{ width: 150 }}>{user.username}</ThemedText>
                 <ThemedTextInput
                   value={customSplit[user.userId] || ''}
                   onChangeText={val =>
