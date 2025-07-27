@@ -215,13 +215,13 @@ export default function Profile() {
       <ThemedView style={styles.container}>
         <Spacer />
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 8 }}>
-            <TouchableOpacity onPress={() => router.push('/profile/settings')}>
+            <TouchableOpacity onPress={() => router.push('/settings')}>
               <Ionicons name="settings" size={28} color="#0a7ea4" />
             </TouchableOpacity>
           </View>
         {/* Top: Avatar + Username */}
         <View style={styles.topRow}>
-          <TouchableOpacity onPress={handleAvatarChange} disabled={uploading}>
+          <TouchableOpacity   accessibilityLabel="Change Avatar" onPress={handleAvatarChange} disabled={uploading}>
             <Image
               source={profile.avatar || require('@/assets/images/default-avatar.png')}
               style={[styles.avatar, uploading && { opacity: 0.5 }]}

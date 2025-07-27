@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ThemedTextInput matches snapshot for dark theme 1`] = `
+<TextInput
+  placeholder="Dark mode snapshot"
+  style={
+    [
+      {
+        "backgroundColor": "#2f2b3d",
+        "borderRadius": 6,
+        "color": "#ECEDEE",
+        "padding": 20,
+      },
+      undefined,
+    ]
+  }
+/>
+`;
+
+exports[`ThemedTextInput matches snapshot for light theme 1`] = `
+<TextInput
+  placeholder="Snapshot input"
+  style={
+    [
+      {
+        "backgroundColor": "#d6d5e1",
+        "borderRadius": 6,
+        "color": "#11181C",
+        "padding": 20,
+      },
+      undefined,
+    ]
+  }
+/>
+`;

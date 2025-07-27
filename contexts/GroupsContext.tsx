@@ -70,7 +70,7 @@ export function GroupsProvider({ children }: GroupsProviderProps) {
 
     async function createGroup(data: CreateGroupInput) {
         try {
-            if (!user) throw new Error("User not authenticated");
+             if (!user) return Promise.reject(new Error("User not authenticated"));
 
             const docId = ID.unique(); // use this as documentId
 

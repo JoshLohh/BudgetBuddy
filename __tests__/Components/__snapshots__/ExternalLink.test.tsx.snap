@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExternalLink matches the snapshot output 1`] = `
+<Text
+  href="https://example.com"
+  onPress={[Function]}
+  target="_blank"
+  testID="link"
+>
+  Snapshot Test
+</Text>
+`;

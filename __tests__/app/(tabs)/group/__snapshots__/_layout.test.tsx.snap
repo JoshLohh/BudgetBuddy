@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupLayout matches snapshot when user is authenticated 1`] = `
+<Text>
+  Snapshot Content
+</Text>
+`;

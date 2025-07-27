@@ -39,7 +39,7 @@ export default function HomeScreen() {
           </ThemedView>
 
           <ThemedView style={styles.stepContainer}>
-            <Link href='/profile/profile'>
+            <Link href={'/profile/profile' as any}>
               <ThemedText type="link">Profile</ThemedText>
             </Link>
             {/* <TouchableOpacity onPress={() => router.push(`/profile/profile`)}>

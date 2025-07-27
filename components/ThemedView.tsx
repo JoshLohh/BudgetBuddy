@@ -7,19 +7,21 @@ export type ThemedViewProps = ViewProps & {
   lightColor?: string;
   darkColor?: string;
   safe?: boolean;
+  testID?: string;
 };
 
 export function ThemedView({ style, safe = false,  lightColor, darkColor, ...otherProps }: ThemedViewProps,) {
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
   if (!safe) return (
-  <View style={[{ backgroundColor }, style]} {...otherProps} />
+  <View testID="themed-view" style={[{ backgroundColor }, style]} {...otherProps} />
   )
 
   const insets = useSafeAreaInsets()
 
   return (
     <View 
+    testID="themed-view"
     style={[{
       backgroundColor,
       paddingTop: insets.top,

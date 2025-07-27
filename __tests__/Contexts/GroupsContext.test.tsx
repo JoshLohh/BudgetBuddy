@@ -1,21 +1,78 @@
 import React from 'react';
-import { render, act, waitFor } from '@testing-library/react-native';
+import { render, act, fireEvent, waitFor } from '@testing-library/react-native';
 import { GroupsProvider, GroupsContext, GroupsContextType } from '@/contexts/GroupsContext';
 import { UserContext } from '@/contexts/UserContext';
-import { Text } from 'react-native';
+import { Text, Button } from 'react-native';
 import { Group } from '@/types';
+
+// 1: Robust, full-shape provider to match your UserContext expectations
+const mockUserContextValue = (user: { $id: string; email: string } | null = { $id: 'user1', email: 'test@example.com' }) => ({
+  user,
+  profile: null,
+  login: jest.fn(),
+  register: jest.fn(),
+  logout: jest.fn(),
+  updateProfile: jest.fn(),
+  authChecked: true,
+  refetchProfile: jest.fn(),
+});
+
+type MockUserProviderProps = {
+  children: React.ReactNode;
+  user?: { $id: string; email: string } | null;
+};
+
+function MockUserProvider({
+  children,
+  user = { $id: 'user1', email: 'test@example.com' },
+}: MockUserProviderProps) {
+  // Always produce a fresh object to force context update
+  const value = React.useMemo(() => mockUserContextValue(user), [user]);
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+}
+
+function TestGroupsComponent() {
+  const context = React.useContext(GroupsContext);
+  if (!context) throw new Error('GroupsContext is not provided');
+  const { groups, fetchGroups, createGroup, deleteGroup } = context;
+
+  React.useEffect(() => {
+    fetchGroups();
+  }, []);
+
+  return (
+    <>
+      <Text testID="group-count">{groups.length}</Text>
+      <Button
+        testID="add-group"
+        title="Add Group"
+        onPress={async () => {
+          await createGroup({ title: 'New Group', description: 'desc' });
+        }}
+      />
+      <Button
+        testID="delete-group"
+        title="Delete Group"
+        onPress={async () => {
+          if (groups.length > 0) {
+            await deleteGroup(groups[0].$id);
+          }
+        }}
+      />
+    </>
+  );
+}
 
 let errorSpy: jest.SpyInstance;
 
 beforeEach(() => {
   errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.clearAllMocks();
 });
-
 afterEach(() => {
   errorSpy.mockRestore();
 });
 
-// Mock Appwrite SDK
 jest.mock('@/lib/appwrite', () => ({
   databases: {
     listDocuments: jest.fn(() =>
@@ -56,77 +113,7 @@ jest.mock('@/lib/appwrite', () => ({
   },
 }));
 
-type MockUserProviderProps = {
-  children: React.ReactNode;
-  user?: { $id: string; email: string };
-};
-
-function MockUserProvider({ children, user = { $id: 'user1', email: 'test@example.com' } }: MockUserProviderProps) {
-    const [mockUser, setMockUser] = React.useState(user);
-    const mockProfile = { userId: 'user1', username: 'Test User' };
-    return (
-      <UserContext.Provider value={{
-        user: mockUser,
-        profile: mockProfile,
-        login: jest.fn(),
-        logout: jest.fn(),
-        register: jest.fn(),
-        updateProfile: jest.fn(),
-        refetchProfile: jest.fn(),
-        authChecked: true,
-      }}>
-        {children}
-      </UserContext.Provider>
-    );
-  }
-
-
-function TestGroupsComponent() {
-  const context = React.useContext(GroupsContext);
-  if (!context) throw new Error('GroupsContext is not provided');
-  const { groups, fetchGroups, createGroup, deleteGroup } = context;
-  React.useEffect(() => {
-    fetchGroups();
-  }, []);
-  return (
-    <>
-      <Text testID="group-count">{groups.length}</Text>
-      <Text
-        testID="add-group"
-        onPress={async () => {
-          await createGroup({ title: 'New Group', description: 'desc' });
-        }}
-      >
-        Add Group
-      </Text>
-      <Text
-        testID="delete-group"
-        onPress={async () => {
-          if (groups.length > 0) {
-            await deleteGroup(groups[0].id);
-          }
-        }}
-      >
-        Delete Group
-      </Text>
-    </>
-  );
-}
-
 describe('GroupsContext', () => {
-  it('fetches groups for the user', async () => {
-    const { getByTestId } = render(
-      <MockUserProvider>
-        <GroupsProvider>
-          <TestGroupsComponent />
-        </GroupsProvider>
-      </MockUserProvider>
-    );
-    await waitFor(() => {
-      expect(getByTestId('group-count').props.children).toBe(1);
-    });
-  });
-
   it('creates a new group', async () => {
     const { getByTestId } = render(
       <MockUserProvider>
@@ -138,9 +125,11 @@ describe('GroupsContext', () => {
     await waitFor(() => {
       expect(getByTestId('group-count').props.children).toBe(1);
     });
+
     await act(async () => {
-      getByTestId('add-group').props.onPress();
+      fireEvent.press(getByTestId('add-group'));
     });
+
     await waitFor(() => {
       expect(getByTestId('group-count').props.children).toBe(2);
     });
@@ -157,9 +146,11 @@ describe('GroupsContext', () => {
     await waitFor(() => {
       expect(getByTestId('group-count').props.children).toBe(1);
     });
+
     await act(async () => {
-      getByTestId('delete-group').props.onPress();
+      fireEvent.press(getByTestId('delete-group'));
     });
+
     await waitFor(() => {
       expect(getByTestId('group-count').props.children).toBe(0);
     });
@@ -171,7 +162,10 @@ describe('GroupsContext', () => {
       <MockUserProvider>
         <GroupsProvider>
           <GroupsContext.Consumer>
-            {value => { contextValue.current = value; return null; }}
+            {value => {
+              contextValue.current = value!;
+              return null;
+            }}
           </GroupsContext.Consumer>
         </GroupsProvider>
       </MockUserProvider>
@@ -181,7 +175,7 @@ describe('GroupsContext', () => {
       group = await contextValue.current!.fetchGroupsById('group42');
     });
     expect(group).toBeDefined();
-    expect(group!.id).toBe('group42');
+    expect(group!.$id).toBe('group42');
     expect(group!.title).toBe('Fetched Group');
   });
 
@@ -191,15 +185,19 @@ describe('GroupsContext', () => {
       <MockUserProvider>
         <GroupsProvider>
           <GroupsContext.Consumer>
-            {value => { contextValue.current = value; return null; }}
+            {value => {
+              contextValue.current = value!;
+              return null;
+            }}
           </GroupsContext.Consumer>
         </GroupsProvider>
       </MockUserProvider>
     );
-    await act(async () => { 
-      await expect(contextValue.current!.fetchGroupsById('bad-id')).rejects.toThrow('Not found');
+    await act(async () => {
+      await expect(
+        contextValue.current!.fetchGroupsById('bad-id')
+      ).rejects.toThrow('Not found');
     });
-     // Assert that console.error was called with the expected arguments
     expect(errorSpy).toHaveBeenCalledWith(
       'Failed to fetch groups: by Id',
       expect.any(Error)
@@ -207,32 +205,24 @@ describe('GroupsContext', () => {
   });
 
   it('throws error if user is not authenticated in createGroup', async () => {
+    expect.assertions(1);
     const contextValue = { current: undefined as GroupsContextType | undefined };
     render(
-      <UserContext.Provider value={{
-        user: undefined,
-        profile: undefined,
-        login: jest.fn(),
-        logout: jest.fn(),
-        register: jest.fn(),
-        updateProfile: jest.fn(),
-        refetchProfile: jest.fn(),
-        authChecked: true,
-      }}>
+      <MockUserProvider user={null}>
         <GroupsProvider>
           <GroupsContext.Consumer>
-            {value => { contextValue.current = value; return null; }}
+            {value => {
+              contextValue.current = value!;
+              return null;
+            }}
           </GroupsContext.Consumer>
         </GroupsProvider>
-      </UserContext.Provider>
+      </MockUserProvider>
     );
-    await act (async () => {
-      await expect(contextValue.current!.createGroup({ title: 'x' })).rejects.toThrow('User not authenticated');
-    });
+    await expect(
+      contextValue.current!.createGroup({ title: 'x' })
+    ).rejects.toThrow('User not authenticated');
   });
-
-
-
 
   it('handles error in deleteGroup', async () => {
     const contextValue = { current: undefined as GroupsContextType | undefined };
@@ -240,57 +230,56 @@ describe('GroupsContext', () => {
       <MockUserProvider>
         <GroupsProvider>
           <GroupsContext.Consumer>
-            {value => { contextValue.current = value; return null; }}
+            {value => {
+              contextValue.current = value!;
+              return null;
+            }}
           </GroupsContext.Consumer>
         </GroupsProvider>
       </MockUserProvider>
     );
-    await act (async () => {
-      await expect(contextValue.current!.deleteGroup('bad-id')).rejects.toThrow('Delete failed');
+    await act(async () => {
+      await expect(
+        contextValue.current!.deleteGroup('bad-id')
+      ).rejects.toThrow('Delete failed');
     });
   });
 
+  // 4: TEST FOR CLEARING ON LOGOUT — using user={null}
   it('clears groups when user logs out', async () => {
-    const mockUser = { $id: 'user1', email: 'test@example.com' };
-    const mockProfile = { userId: 'user1', username: 'Test User' };
     const { rerender, getByTestId } = render(
-      <UserContext.Provider value={{
-        user: mockUser,
-        profile: mockProfile,
-        login: jest.fn(),
-        register: jest.fn(),
-        logout: jest.fn(),
-        updateProfile: jest.fn(),
-        refetchProfile: jest.fn(),
-        authChecked: true, 
-      }}>
+      <MockUserProvider>
         <GroupsProvider>
           <TestGroupsComponent />
         </GroupsProvider>
-      </UserContext.Provider>
+      </MockUserProvider>
     );
+
     await waitFor(() => {
       expect(getByTestId('group-count').props.children).toBe(1);
     });
-    // Simulate logout
+
     rerender(
-      <UserContext.Provider value={{
-        user: null,
-        profile: null,
-        login: jest.fn(),
-        register: jest.fn(),
-        logout: jest.fn(),
-        updateProfile: jest.fn(),
-        refetchProfile: jest.fn(),
-        authChecked: true, 
-      }}>
+      <MockUserProvider user={null}>
         <GroupsProvider>
           <TestGroupsComponent />
         </GroupsProvider>
-      </UserContext.Provider>
+      </MockUserProvider>
     );
+
     await waitFor(() => {
       expect(getByTestId('group-count').props.children).toBe(0);
     });
+  });
+
+  it('throws error when GroupsContext is not provided at all', () => {
+    const BrokenComponent = () => {
+      const ctx = React.useContext(GroupsContext);
+      if (!ctx) throw new Error('GroupsContext is not provided');
+      return null;
+    };
+    expect(() => {
+      render(<BrokenComponent />);
+    }).toThrow('GroupsContext is not provided');
   });
 });

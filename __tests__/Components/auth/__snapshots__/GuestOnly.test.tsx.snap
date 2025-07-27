@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GuestOnly matches snapshot when rendering guest content 1`] = `
+<Text>
+  Guest Content
+</Text>
+`;
+
+exports[`GuestOnly matches snapshot when user is authenticated (renders null) 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "#fff",
+      },
+      {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+      },
+    ]
+  }
+  testID="themed-view"
+>
+  <ActivityIndicator
+    color="#11181C"
+    size="large"
+    testID="activity-indicator"
+  />
+</View>
+`;

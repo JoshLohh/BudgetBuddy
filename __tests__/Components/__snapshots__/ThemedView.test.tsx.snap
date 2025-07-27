@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ThemedView matches snapshot for SafeAreaView (safe = true) 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "#abcdef",
+        "paddingBottom": 20,
+        "paddingTop": 10,
+      },
+      undefined,
+    ]
+  }
+  testID="snapshot-safe-view"
+/>
+`;
+
+exports[`ThemedView matches snapshot for View (safe = false) 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "#abcdef",
+      },
+      undefined,
+    ]
+  }
+  testID="snapshot-view"
+/>
+`;

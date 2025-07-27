@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserOnly matches snapshot when user is present and auth is checked 1`] = `
+<Text>
+  Protected Content
+</Text>
+`;

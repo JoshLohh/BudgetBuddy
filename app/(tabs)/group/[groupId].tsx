@@ -57,7 +57,7 @@ export default function GroupDetailScreen() {
   if (loading) {
     return (
       <ThemedView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator />
+        <ActivityIndicator testID = "loading-indicator"/>
       </ThemedView>
     );
   }
@@ -81,7 +81,7 @@ export default function GroupDetailScreen() {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 120 }}>
         <Spacer height={30} />
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity testID= "back-button" onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={24} color="#0a7ea4" />
         </TouchableOpacity>
         <Spacer height={10} />

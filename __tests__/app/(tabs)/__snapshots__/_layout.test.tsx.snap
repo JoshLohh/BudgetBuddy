@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabLayout applies dark mode correctly (snapshot) 1`] = `
+[
+  <Text
+    testID="group"
+  >
+    Groups
+  </Text>,
+  <View
+    testID="mock-icon-container"
+  >
+    <View
+      color="black"
+      name="person.3.fill"
+      size={38}
+      testID="mock-icon"
+    />
+  </View>,
+  <Text
+    testID="create"
+  >
+    Create
+  </Text>,
+  <View
+    testID="mock-icon-container"
+  >
+    <View
+      color="black"
+      name="plus.square.fill.on.square.fill"
+      size={28}
+      testID="mock-icon"
+    />
+  </View>,
+  <Text
+    testID="profile"
+  >
+    Profile
+  </Text>,
+  <View
+    testID="mock-icon-container"
+  >
+    <View
+      color="black"
+      name="person.fill"
+      size={28}
+      testID="mock-icon"
+    />
+  </View>,
+  <View
+    testID="mock-haptic-tab"
+  />,
+  <View
+    testID="mock-tab-bar-background"
+  />,
+]
+`;
+
+exports[`TabLayout applies light mode correctly (snapshot) 1`] = `
+[
+  <Text
+    testID="group"
+  >
+    Groups
+  </Text>,
+  <View
+    testID="mock-icon-container"
+  >
+    <View
+      color="black"
+      name="person.3.fill"
+      size={38}
+      testID="mock-icon"
+    />
+  </View>,
+  <Text
+    testID="create"
+  >
+    Create
+  </Text>,
+  <View
+    testID="mock-icon-container"
+  >
+    <View
+      color="black"
+      name="plus.square.fill.on.square.fill"
+      size={28}
+      testID="mock-icon"
+    />
+  </View>,
+  <Text
+    testID="profile"
+  >
+    Profile
+  </Text>,
+  <View
+    testID="mock-icon-container"
+  >
+    <View
+      color="black"
+      name="person.fill"
+      size={28}
+      testID="mock-icon"
+    />
+  </View>,
+  <View
+    testID="mock-haptic-tab"
+  />,
+  <View
+    testID="mock-tab-bar-background"
+  />,
+]
+`;

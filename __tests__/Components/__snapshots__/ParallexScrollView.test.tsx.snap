@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ParallaxScrollView applies default background color in light mode 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "#fff",
+      },
+      {
+        "backgroundColor": "transparent",
+        "flex": 1,
+      },
+    ]
+  }
+  testID="themed-view"
+>
+  <View
+    style={
+      [
+        {
+          "height": 250,
+          "overflow": "hidden",
+          "width": "100%",
+        },
+        {
+          "backgroundColor": "#fff",
+        },
+      ]
+    }
+  />
+  <View
+    bounces={true}
+    contentContainerStyle={
+      [
+        {
+          "backgroundColor": "transparent",
+          "flexGrow": 1,
+          "gap": 16,
+          "paddingHorizontal": 24,
+          "paddingTop": 16,
+        },
+        {
+          "paddingBottom": 32,
+        },
+      ]
+    }
+    showsVerticalScrollIndicator={false}
+  >
+    <Text>
+      Default Color
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`ParallaxScrollView applies header background color override 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "#151718",
+      },
+      {
+        "backgroundColor": "transparent",
+        "flex": 1,
+      },
+    ]
+  }
+  testID="themed-view"
+>
+  <View
+    style={
+      [
+        {
+          "height": 250,
+          "overflow": "hidden",
+          "width": "100%",
+        },
+        {
+          "backgroundColor": "#222",
+        },
+      ]
+    }
+  />
+  <View
+    bounces={true}
+    contentContainerStyle={
+      [
+        {
+          "backgroundColor": "transparent",
+          "flexGrow": 1,
+          "gap": 16,
+          "paddingHorizontal": 24,
+          "paddingTop": 16,
+        },
+        {
+          "paddingBottom": 32,
+        },
+      ]
+    }
+    showsVerticalScrollIndicator={false}
+  >
+    <Text>
+      Test
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`ParallaxScrollView renders correctly with no children or header (edge case) 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "#151718",
+      },
+      {
+        "backgroundColor": "transparent",
+        "flex": 1,
+      },
+    ]
+  }
+  testID="themed-view"
+>
+  <View
+    style={
+      [
+        {
+          "height": 250,
+          "overflow": "hidden",
+          "width": "100%",
+        },
+        {
+          "backgroundColor": "#222",
+        },
+      ]
+    }
+  />
+  <View
+    bounces={true}
+    contentContainerStyle={
+      [
+        {
+          "backgroundColor": "transparent",
+          "flexGrow": 1,
+          "gap": 16,
+          "paddingHorizontal": 24,
+          "paddingTop": 16,
+        },
+        {
+          "paddingBottom": 32,
+        },
+      ]
+    }
+    showsVerticalScrollIndicator={false}
+  />
+</View>
+`;

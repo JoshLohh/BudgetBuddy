@@ -9,7 +9,7 @@ import { useUser } from '@/hooks/useUser';
 import GuestOnly from '@/components/auth/GuestOnly';
 
 
-export default function AuthLayout() {
+export default function AuthLayout({ children }: { children?: React.ReactNode }) {
 
     const { user } = useUser()
 
@@ -23,7 +23,9 @@ export default function AuthLayout() {
                     screenOptions={{
                     headerShown: false,
                     animation: 'none',
-                    }}  />
+                    }}>
+                        {children}
+                    </Stack>
                 <StatusBar style="auto" />
             </ThemeProvider>
         </GuestOnly>

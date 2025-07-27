@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spacer component matches snapshot with custom width and height 1`] = `
+<View
+  style={
+    {
+      "height": 100,
+      "width": 200,
+    }
+  }
+  testID="spacer"
+/>
+`;

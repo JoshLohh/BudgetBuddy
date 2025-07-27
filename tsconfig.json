@@ -6,6 +6,8 @@
       "bun-types",
       "jest"
     ],
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "lib": [
       "ESNext",
       "DOM",

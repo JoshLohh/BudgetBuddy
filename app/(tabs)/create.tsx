@@ -42,7 +42,7 @@ const Create = () => {
             router.replace("/group/groups");
         } catch (error) {
             console.error("Create group failed:", error);
-            alert("Failed to create group. Please try again.");
+            Alert.alert("Failed to create group. Please try again.");
         } finally {
             // reset loading state
             setLoading(false);

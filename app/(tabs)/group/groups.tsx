@@ -26,12 +26,12 @@ const databaseId = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID ?? '';
 const groupsCollectionId = process.env.EXPO_PUBLIC_APPWRITE_GROUPS_COLLECTION_ID ?? '';
 const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?? '';
 
-export default function GroupsScreen() {
+export default function GroupsScreen({ initialLoading = false }: { initialLoading?: boolean }) {
   const { groups, fetchGroups } = useGroups();
   const { user } = useUser();
   const context = useContext(GroupsContext);
   const router = useRouter();
-  const[loading, setLoading] = useState(false)
+  const[loading, setLoading] = useState(initialLoading)
   const [search, setSearch] = useState('');
   const [filteredGroups, setFilteredGroups] = useState(groups);
   const [menuVisibleId, setMenuVisibleId] = useState<string | null>(null);
@@ -152,6 +152,7 @@ useEffect(() => {
         </Pressable>
       </View>
       <Pressable
+        testID="menu-button"
         onPress={() => setMenuVisibleId(item.$id)}
         style={styles.menuButton}
       >
@@ -165,10 +166,11 @@ useEffect(() => {
           visible={true}
           onRequestClose={() => setMenuVisibleId(null)}
         >
-          <Pressable style={styles.modalOverlay} onPress={() => setMenuVisibleId(null)} />
+          <Pressable testID="modalOverlay" style={styles.modalOverlay} onPress={() => setMenuVisibleId(null)} />
           <ThemedView style={styles.centeredModalContainer}>
             {/* Close Button */}
             <Pressable
+              testID="modal-close-btn"
               style={styles.closeButton}
               onPress={() => setMenuVisibleId(null)}
               hitSlop={10}
@@ -228,7 +230,7 @@ useEffect(() => {
   );
 
   if (loading) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator testID="loading-indicator" />;
   }
 
   return (
@@ -266,7 +268,7 @@ useEffect(() => {
 			ListFooterComponent={
 			<ThemedView style={{ alignItems:'center'}}>
 				<ThemedButton 
-	        onPress={() => router.navigate('/create')} 
+	        onPress={() => router.navigate('../create')} 
 	        style={styles.createBtn}
 	      >
 	        <ThemedText style={{ color: '#f2f2f2' , textAlign: 'center'}}>Create Group</ThemedText>

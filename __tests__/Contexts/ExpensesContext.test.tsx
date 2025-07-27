@@ -60,7 +60,8 @@ function TestExpensesComponent({ groupId }: { groupId: string }) {
             'user1',
             ['user1', 'user2'],
             'equal',
-            ''
+            '',
+            'Food'
           );
         }}
       >

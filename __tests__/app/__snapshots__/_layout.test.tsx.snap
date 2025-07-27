@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RootLayout component falls back to default theme if color scheme value is unexpected 1`] = `
+<View
+  testID="mock-stack"
+/>
+`;
+
+exports[`RootLayout component renders the layout tree when fonts are loaded and dark mode 1`] = `
+<View
+  testID="mock-stack"
+/>
+`;
+
+exports[`RootLayout component renders the layout tree when fonts are loaded and light mode 1`] = `
+<View
+  testID="mock-stack"
+/>
+`;

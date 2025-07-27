@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthLayout uses dark theme when color scheme is dark 1`] = `null`;
+
+exports[`AuthLayout uses default theme when color scheme is light 1`] = `null`;

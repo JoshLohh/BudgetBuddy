@@ -28,7 +28,7 @@ const Login = () => {
             if (error instanceof Error) {
                 setError(error.message)
             } else {
-                setError('An unknown error has occured')
+                setError('An unknown error has occurred')
             }
         }
     }
@@ -69,7 +69,7 @@ const Login = () => {
             <Spacer height={100} />
 
             <ThemedText type='defaultSemiBold'>
-                        Dont have an account?
+                        Don't have an account?
             </ThemedText>
 
                 <Link href='/register'>

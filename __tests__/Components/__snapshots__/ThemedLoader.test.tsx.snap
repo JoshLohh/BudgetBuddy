@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ThemedLoader matches the snapshot for dark theme 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+  testID="themed-view"
+>
+  <ActivityIndicator
+    color="#ECEDEE"
+    size="large"
+    testID="activity-indicator"
+  />
+</View>
+`;
+
+exports[`ThemedLoader matches the snapshot for light theme 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+  testID="themed-view"
+>
+  <ActivityIndicator
+    color="#11181C"
+    size="large"
+    testID="activity-indicator"
+  />
+</View>
+`;

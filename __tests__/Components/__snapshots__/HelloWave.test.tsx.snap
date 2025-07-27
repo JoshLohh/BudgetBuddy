@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HelloWave matches snapshot 1`] = `
+<View
+  style={
+    {
+      "transform": [
+        {
+          "rotate": "0deg",
+        },
+      ],
+    }
+  }
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#11181C",
+        },
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        {
+          "fontSize": 28,
+          "lineHeight": 32,
+          "marginTop": -6,
+        },
+      ]
+    }
+    testID="hello-text"
+  >
+    👋
+  </Text>
+</View>
+`;
