@@ -159,6 +159,19 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
   </tr>
 </table>
 
+<table>
+  <tr>
+    <td><img src="screenshots/Profile.jpeg" alt="Profile" width="400"/></td>
+    <td width="20"></td>
+    <td><img src="screenshots/EditProfile.PNG" alt="Edit Profile" width="400"/></td>
+  </tr>
+  <tr>
+    <td align="center">Profile Page</td>
+    <td></td>
+    <td align="center">Users can edit their Username, bio and avatar</td>
+  </tr>
+</table>
+
 ---
 
 ### 4.2 Group Creation & Management Flow
