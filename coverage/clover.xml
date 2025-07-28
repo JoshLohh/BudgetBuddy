@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1753569786521" clover="3.2.0">
-  <project timestamp="1753569786521" name="All files">
-    <metrics statements="1313" coveredstatements="690" conditionals="808" coveredconditionals="341" methods="337" coveredmethods="162" elements="2458" coveredelements="1193" complexity="0" loc="1313" ncloc="1313" packages="21" files="70" classes="70"/>
+<coverage generated="1753678211837" clover="3.2.0">
+  <project timestamp="1753678211837" name="All files">
+    <metrics statements="1296" coveredstatements="690" conditionals="808" coveredconditionals="341" methods="329" coveredmethods="162" elements="2433" coveredelements="1193" complexity="0" loc="1296" ncloc="1296" packages="20" files="69" classes="69"/>
     <package name="BudgetBuddy">
       <metrics statements="9" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="env.d.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/env.d.ts">
+      <file name="env.d.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/env.d.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
-      <file name="env.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/env.ts">
+      <file name="env.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/env.ts">
         <metrics statements="5" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="9" count="0" type="stmt"/>
         <line num="11" count="0" type="cond" truecount="0" falsecount="4"/>
@@ -15,48 +15,25 @@
         <line num="15" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
       </file>
-      <file name="eslint.config.js" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/eslint.config.js">
+      <file name="eslint.config.js" path="/Users/raynergoh/Orbital/BudgetBuddy/eslint.config.js">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="2" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
       </file>
-      <file name="jest.web.config.js" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/jest.web.config.js">
+      <file name="jest.web.config.js" path="/Users/raynergoh/Orbital/BudgetBuddy/jest.web.config.js">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
       </file>
     </package>
-    <package name="BudgetBuddy.__tests__.Hooks">
-      <metrics statements="17" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="0"/>
-      <file name="useColorScheme.web.test.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/__tests__/Hooks/useColorScheme.web.test.tsx">
-        <metrics statements="17" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="0"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="45" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-      </file>
-    </package>
     <package name="BudgetBuddy.app">
       <metrics statements="9" coveredstatements="9" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
-      <file name="+not-found.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/+not-found.tsx">
+      <file name="+not-found.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/+not-found.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="8" count="5" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
       </file>
-      <file name="_layout.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/_layout.tsx">
+      <file name="_layout.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/_layout.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="14" count="7" type="stmt"/>
         <line num="15" count="7" type="stmt"/>
@@ -64,7 +41,7 @@
         <line num="21" count="1" type="stmt"/>
         <line num="24" count="6" type="stmt"/>
       </file>
-      <file name="index.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/index.tsx">
+      <file name="index.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/index.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="15" count="6" type="stmt"/>
         <line num="54" count="1" type="stmt"/>
@@ -72,14 +49,14 @@
     </package>
     <package name="BudgetBuddy.app.(auth)">
       <metrics statements="36" coveredstatements="36" conditionals="12" coveredconditionals="12" methods="5" coveredmethods="5"/>
-      <file name="_layout.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(auth)/_layout.tsx">
+      <file name="_layout.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(auth)/_layout.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="14" count="5" type="stmt"/>
         <line num="16" count="5" type="stmt"/>
         <line num="17" count="5" type="stmt"/>
         <line num="19" count="5" type="stmt"/>
       </file>
-      <file name="login.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(auth)/login.tsx">
+      <file name="login.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(auth)/login.tsx">
         <metrics statements="14" coveredstatements="14" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
         <line num="14" count="1" type="stmt"/>
         <line num="15" count="24" type="stmt"/>
@@ -96,7 +73,7 @@
         <line num="36" count="24" type="stmt"/>
         <line num="88" count="1" type="stmt"/>
       </file>
-      <file name="register.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(auth)/register.tsx">
+      <file name="register.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(auth)/register.tsx">
         <metrics statements="18" coveredstatements="18" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2"/>
         <line num="14" count="1" type="stmt"/>
         <line num="15" count="28" type="stmt"/>
@@ -120,7 +97,7 @@
     </package>
     <package name="BudgetBuddy.app.(tabs)">
       <metrics statements="28" coveredstatements="28" conditionals="6" coveredconditionals="6" methods="6" coveredmethods="6"/>
-      <file name="_layout.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/_layout.tsx">
+      <file name="_layout.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/_layout.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
         <line num="13" count="11" type="stmt"/>
         <line num="15" count="11" type="stmt"/>
@@ -128,7 +105,7 @@
         <line num="42" count="10" type="stmt"/>
         <line num="49" count="10" type="stmt"/>
       </file>
-      <file name="create.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/create.tsx">
+      <file name="create.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/create.tsx">
         <metrics statements="23" coveredstatements="23" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
         <line num="16" count="1" type="stmt"/>
         <line num="17" count="14" type="stmt"/>
@@ -157,7 +134,7 @@
     </package>
     <package name="BudgetBuddy.app.(tabs).group">
       <metrics statements="95" coveredstatements="82" conditionals="45" coveredconditionals="32" methods="29" coveredmethods="26"/>
-      <file name="[groupId].tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/[groupId].tsx">
+      <file name="[groupId].tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/[groupId].tsx">
         <metrics statements="22" coveredstatements="21" conditionals="12" coveredconditionals="9" methods="9" coveredmethods="8"/>
         <line num="19" count="15" type="stmt"/>
         <line num="20" count="15" type="stmt"/>
@@ -182,11 +159,11 @@
         <line num="174" count="1" type="stmt"/>
         <line num="197" count="1" type="stmt"/>
       </file>
-      <file name="_layout.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/_layout.tsx">
+      <file name="_layout.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/_layout.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="7" count="4" type="stmt"/>
       </file>
-      <file name="groups.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/groups.tsx">
+      <file name="groups.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/groups.tsx">
         <metrics statements="72" coveredstatements="60" conditionals="33" coveredconditionals="23" methods="19" coveredmethods="17"/>
         <line num="25" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="26" count="1" type="cond" truecount="1" falsecount="1"/>
@@ -264,7 +241,7 @@
     </package>
     <package name="BudgetBuddy.app.(tabs).group.[groupId]">
       <metrics statements="329" coveredstatements="101" conditionals="298" coveredconditionals="75" methods="103" coveredmethods="20"/>
-      <file name="GroupHeader.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/[groupId]/GroupHeader.tsx">
+      <file name="GroupHeader.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/[groupId]/GroupHeader.tsx">
         <metrics statements="74" coveredstatements="21" conditionals="52" coveredconditionals="22" methods="8" coveredmethods="2"/>
         <line num="17" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="18" count="1" type="cond" truecount="1" falsecount="1"/>
@@ -341,7 +318,7 @@
         <line num="249" count="0" type="stmt"/>
         <line num="260" count="1" type="stmt"/>
       </file>
-      <file name="addExpense.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/[groupId]/addExpense.tsx">
+      <file name="addExpense.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/[groupId]/addExpense.tsx">
         <metrics statements="97" coveredstatements="61" conditionals="92" coveredconditionals="42" methods="28" coveredmethods="15"/>
         <line num="19" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="20" count="1" type="cond" truecount="1" falsecount="1"/>
@@ -441,7 +418,7 @@
         <line num="358" count="0" type="stmt"/>
         <line num="380" count="1" type="stmt"/>
       </file>
-      <file name="expenseList.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/[groupId]/expenseList.tsx">
+      <file name="expenseList.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/[groupId]/expenseList.tsx">
         <metrics statements="36" coveredstatements="16" conditionals="35" coveredconditionals="8" methods="16" coveredmethods="2"/>
         <line num="19" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="20" count="1" type="cond" truecount="1" falsecount="1"/>
@@ -480,7 +457,7 @@
         <line num="150" count="0" type="stmt"/>
         <line num="164" count="1" type="stmt"/>
       </file>
-      <file name="history.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/[groupId]/history.tsx">
+      <file name="history.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/[groupId]/history.tsx">
         <metrics statements="53" coveredstatements="0" conditionals="38" coveredconditionals="0" methods="22" coveredmethods="0"/>
         <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -536,7 +513,7 @@
         <line num="218" count="0" type="stmt"/>
         <line num="220" count="0" type="stmt"/>
       </file>
-      <file name="membersDropdown.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/[groupId]/membersDropdown.tsx">
+      <file name="membersDropdown.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/[groupId]/membersDropdown.tsx">
         <metrics statements="8" coveredstatements="3" conditionals="15" coveredconditionals="3" methods="7" coveredmethods="1"/>
         <line num="30" count="6" type="stmt"/>
         <line num="31" count="6" type="stmt"/>
@@ -547,7 +524,7 @@
         <line num="91" count="0" type="stmt"/>
         <line num="101" count="1" type="stmt"/>
       </file>
-      <file name="report.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/[groupId]/report.tsx">
+      <file name="report.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/[groupId]/report.tsx">
         <metrics statements="61" coveredstatements="0" conditionals="66" coveredconditionals="0" methods="22" coveredmethods="0"/>
         <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -614,7 +591,7 @@
     </package>
     <package name="BudgetBuddy.app.(tabs).group.[groupId].expense">
       <metrics statements="100" coveredstatements="0" conditionals="76" coveredconditionals="0" methods="21" coveredmethods="0"/>
-      <file name="[expenseId].tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/[groupId]/expense/[expenseId].tsx">
+      <file name="[expenseId].tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/[groupId]/expense/[expenseId].tsx">
         <metrics statements="100" coveredstatements="0" conditionals="76" coveredconditionals="0" methods="21" coveredmethods="0"/>
         <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -720,7 +697,7 @@
     </package>
     <package name="BudgetBuddy.app.(tabs).group.[groupId].user">
       <metrics statements="44" coveredstatements="0" conditionals="22" coveredconditionals="0" methods="7" coveredmethods="0"/>
-      <file name="[userId].tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/group/[groupId]/user/[userId].tsx">
+      <file name="[userId].tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/group/[groupId]/user/[userId].tsx">
         <metrics statements="44" coveredstatements="0" conditionals="22" coveredconditionals="0" methods="7" coveredmethods="0"/>
         <line num="13" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -770,11 +747,11 @@
     </package>
     <package name="BudgetBuddy.app.(tabs).profile">
       <metrics statements="131" coveredstatements="122" conditionals="80" coveredconditionals="62" methods="22" coveredmethods="18"/>
-      <file name="_layout.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/profile/_layout.tsx">
+      <file name="_layout.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/profile/_layout.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="5" count="6" type="stmt"/>
       </file>
-      <file name="profile.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/profile/profile.tsx">
+      <file name="profile.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/profile/profile.tsx">
         <metrics statements="97" coveredstatements="91" conditionals="72" coveredconditionals="56" methods="15" coveredmethods="13"/>
         <line num="27" count="1" type="stmt"/>
         <line num="31" count="1" type="cond" truecount="1" falsecount="1"/>
@@ -874,7 +851,7 @@
         <line num="335" count="4" type="stmt"/>
         <line num="357" count="1" type="stmt"/>
       </file>
-      <file name="settings.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/app/(tabs)/profile/settings.tsx">
+      <file name="settings.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/app/(tabs)/profile/settings.tsx">
         <metrics statements="33" coveredstatements="30" conditionals="8" coveredconditionals="6" methods="6" coveredmethods="4"/>
         <line num="14" count="1" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
@@ -913,13 +890,13 @@
     </package>
     <package name="BudgetBuddy.components">
       <metrics statements="83" coveredstatements="82" conditionals="75" coveredconditionals="66" methods="29" coveredmethods="28"/>
-      <file name="BackButton.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/BackButton.tsx">
+      <file name="BackButton.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/BackButton.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
         <line num="7" count="5" type="stmt"/>
         <line num="8" count="5" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
       </file>
-      <file name="Collapsible.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/Collapsible.tsx">
+      <file name="Collapsible.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/Collapsible.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="8" coveredconditionals="7" methods="3" coveredmethods="3"/>
         <line num="11" count="7" type="stmt"/>
         <line num="12" count="7" type="cond" truecount="1" falsecount="1"/>
@@ -927,21 +904,21 @@
         <line num="18" count="2" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
       </file>
-      <file name="ExternalLink.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ExternalLink.tsx">
+      <file name="ExternalLink.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ExternalLink.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="9" count="4" type="stmt"/>
         <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="17" count="1" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
       </file>
-      <file name="HapticTab.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/HapticTab.tsx">
+      <file name="HapticTab.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/HapticTab.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="7" count="5" type="stmt"/>
         <line num="11" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="12" count="2" type="stmt"/>
         <line num="14" count="3" type="stmt"/>
       </file>
-      <file name="HelloWave.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/HelloWave.tsx">
+      <file name="HelloWave.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/HelloWave.tsx">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
         <line num="14" count="3" type="stmt"/>
         <line num="16" count="3" type="stmt"/>
@@ -950,7 +927,7 @@
         <line num="27" count="3" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
       </file>
-      <file name="ParallaxScrollView.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ParallaxScrollView.tsx">
+      <file name="ParallaxScrollView.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ParallaxScrollView.tsx">
         <metrics statements="8" coveredstatements="8" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
         <line num="14" count="1" type="stmt"/>
         <line num="26" count="5" type="cond" truecount="1" falsecount="1"/>
@@ -961,13 +938,13 @@
         <line num="53" count="5" type="stmt"/>
         <line num="79" count="1" type="stmt"/>
       </file>
-      <file name="Spacer.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/Spacer.tsx">
+      <file name="Spacer.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/Spacer.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="12" count="8" type="cond" truecount="2" falsecount="0"/>
         <line num="13" count="370" type="stmt"/>
         <line num="19" count="8" type="stmt"/>
       </file>
-      <file name="ThemedButton.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ThemedButton.tsx">
+      <file name="ThemedButton.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ThemedButton.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="10" coveredconditionals="9" methods="2" coveredmethods="2"/>
         <line num="22" count="485" type="stmt"/>
         <line num="25" count="485" type="cond" truecount="6" falsecount="0"/>
@@ -975,41 +952,41 @@
         <line num="31" count="485" type="stmt"/>
         <line num="44" count="9" type="stmt"/>
       </file>
-      <file name="ThemedCard.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ThemedCard.tsx">
+      <file name="ThemedCard.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ThemedCard.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="45" type="stmt"/>
         <line num="7" count="45" type="cond" truecount="3" falsecount="1"/>
         <line num="9" count="45" type="stmt"/>
       </file>
-      <file name="ThemedLoader.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ThemedLoader.tsx">
+      <file name="ThemedLoader.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ThemedLoader.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="5" count="3" type="stmt"/>
         <line num="6" count="11" type="stmt"/>
         <line num="7" count="11" type="cond" truecount="3" falsecount="1"/>
         <line num="9" count="11" type="stmt"/>
       </file>
-      <file name="ThemedText.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ThemedText.tsx">
+      <file name="ThemedText.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ThemedText.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="13" coveredconditionals="12" methods="1" coveredmethods="1"/>
         <line num="18" count="1298" type="stmt"/>
         <line num="20" count="1298" type="stmt"/>
         <line num="37" count="11" type="stmt"/>
       </file>
-      <file name="ThemedTextInput.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ThemedTextInput.tsx">
+      <file name="ThemedTextInput.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ThemedTextInput.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="5" count="7" type="stmt"/>
         <line num="6" count="145" type="stmt"/>
         <line num="7" count="145" type="cond" truecount="3" falsecount="1"/>
         <line num="9" count="145" type="stmt"/>
       </file>
-      <file name="ThemedView.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ThemedView.tsx">
+      <file name="ThemedView.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ThemedView.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="14" count="235" type="stmt"/>
         <line num="16" count="235" type="cond" truecount="2" falsecount="0"/>
         <line num="20" count="2" type="stmt"/>
         <line num="22" count="2" type="stmt"/>
       </file>
-      <file name="settlementList.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/settlementList.tsx">
+      <file name="settlementList.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/settlementList.tsx">
         <metrics statements="26" coveredstatements="25" conditionals="14" coveredconditionals="12" methods="7" coveredmethods="7"/>
         <line num="23" count="16" type="stmt"/>
         <line num="24" count="17" type="cond" truecount="2" falsecount="0"/>
@@ -1041,7 +1018,7 @@
     </package>
     <package name="BudgetBuddy.components.auth">
       <metrics statements="18" coveredstatements="18" conditionals="16" coveredconditionals="16" methods="4" coveredmethods="4"/>
-      <file name="GuestOnly.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/auth/GuestOnly.tsx">
+      <file name="GuestOnly.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/auth/GuestOnly.tsx">
         <metrics statements="9" coveredstatements="9" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
         <line num="10" count="1" type="stmt"/>
         <line num="11" count="5" type="stmt"/>
@@ -1053,7 +1030,7 @@
         <line num="21" count="3" type="stmt"/>
         <line num="26" count="2" type="stmt"/>
       </file>
-      <file name="UserOnly.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/auth/UserOnly.tsx">
+      <file name="UserOnly.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/auth/UserOnly.tsx">
         <metrics statements="9" coveredstatements="9" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
         <line num="10" count="2" type="stmt"/>
         <line num="11" count="9" type="stmt"/>
@@ -1068,34 +1045,34 @@
     </package>
     <package name="BudgetBuddy.components.ui">
       <metrics statements="6" coveredstatements="6" conditionals="3" coveredconditionals="3" methods="5" coveredmethods="5"/>
-      <file name="IconSymbol.ios.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ui/IconSymbol.ios.tsx">
+      <file name="IconSymbol.ios.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ui/IconSymbol.ios.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="17" count="27" type="stmt"/>
       </file>
-      <file name="IconSymbol.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ui/IconSymbol.tsx">
+      <file name="IconSymbol.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ui/IconSymbol.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="19" count="1" type="stmt"/>
-        <line num="48" count="7" type="stmt"/>
+        <line num="49" count="7" type="stmt"/>
       </file>
-      <file name="TabBarBackground.ios.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ui/TabBarBackground.ios.tsx">
+      <file name="TabBarBackground.ios.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ui/TabBarBackground.ios.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="6" count="2" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
       </file>
-      <file name="TabBarBackground.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/components/ui/TabBarBackground.tsx">
+      <file name="TabBarBackground.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/components/ui/TabBarBackground.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="5" count="1" type="stmt"/>
       </file>
     </package>
     <package name="BudgetBuddy.constants">
       <metrics statements="7" coveredstatements="5" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
-      <file name="Colors.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/constants/Colors.ts">
+      <file name="Colors.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/constants/Colors.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="6" count="20" type="stmt"/>
         <line num="7" count="20" type="stmt"/>
         <line num="9" count="20" type="stmt"/>
       </file>
-      <file name="categoryUtils.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/constants/categoryUtils.ts">
+      <file name="categoryUtils.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/constants/categoryUtils.ts">
         <metrics statements="4" coveredstatements="2" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="3" count="2" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
@@ -1105,7 +1082,7 @@
     </package>
     <package name="BudgetBuddy.contexts">
       <metrics statements="149" coveredstatements="136" conditionals="56" coveredconditionals="37" methods="31" coveredmethods="31"/>
-      <file name="ExpensesContext.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/contexts/ExpensesContext.tsx">
+      <file name="ExpensesContext.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/contexts/ExpensesContext.tsx">
         <metrics statements="26" coveredstatements="24" conditionals="10" coveredconditionals="5" methods="6" coveredmethods="6"/>
         <line num="22" count="1" type="stmt"/>
         <line num="24" count="1" type="stmt"/>
@@ -1134,7 +1111,7 @@
         <line num="122" count="7" type="cond" truecount="1" falsecount="1"/>
         <line num="123" count="7" type="stmt"/>
       </file>
-      <file name="GroupsContext.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/contexts/GroupsContext.tsx">
+      <file name="GroupsContext.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/contexts/GroupsContext.tsx">
         <metrics statements="33" coveredstatements="30" conditionals="10" coveredconditionals="7" methods="10" coveredmethods="10"/>
         <line num="7" count="5" type="cond" truecount="1" falsecount="1"/>
         <line num="8" count="5" type="cond" truecount="1" falsecount="1"/>
@@ -1170,7 +1147,7 @@
         <line num="129" count="2" type="stmt"/>
         <line num="134" count="18" type="stmt"/>
       </file>
-      <file name="StatsContext.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/contexts/StatsContext.tsx">
+      <file name="StatsContext.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/contexts/StatsContext.tsx">
         <metrics statements="44" coveredstatements="44" conditionals="14" coveredconditionals="11" methods="6" coveredmethods="6"/>
         <line num="14" count="2" type="stmt"/>
         <line num="16" count="2" type="stmt"/>
@@ -1217,7 +1194,7 @@
         <line num="97" count="21" type="cond" truecount="2" falsecount="0"/>
         <line num="98" count="19" type="stmt"/>
       </file>
-      <file name="UserContext.tsx" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/contexts/UserContext.tsx">
+      <file name="UserContext.tsx" path="/Users/raynergoh/Orbital/BudgetBuddy/contexts/UserContext.tsx">
         <metrics statements="46" coveredstatements="38" conditionals="22" coveredconditionals="14" methods="9" coveredmethods="9"/>
         <line num="15" count="17" type="cond" truecount="1" falsecount="1"/>
         <line num="16" count="17" type="cond" truecount="1" falsecount="1"/>
@@ -1269,13 +1246,13 @@
     </package>
     <package name="BudgetBuddy.functions.create-user">
       <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="env.d.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/functions/create-user/env.d.ts">
+      <file name="env.d.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/functions/create-user/env.d.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
     <package name="BudgetBuddy.functions.create-user.src">
       <metrics statements="19" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="main.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/functions/create-user/src/main.ts">
+      <file name="main.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/functions/create-user/src/main.ts">
         <metrics statements="19" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -1300,7 +1277,7 @@
     </package>
     <package name="BudgetBuddy.hooks">
       <metrics statements="185" coveredstatements="61" conditionals="83" coveredconditionals="28" methods="58" coveredmethods="16"/>
-      <file name="settlementUtils.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/hooks/settlementUtils.ts">
+      <file name="settlementUtils.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/hooks/settlementUtils.ts">
         <metrics statements="44" coveredstatements="43" conditionals="19" coveredconditionals="15" methods="14" coveredmethods="13"/>
         <line num="12" count="5" type="stmt"/>
         <line num="13" count="5" type="stmt"/>
@@ -1347,10 +1324,10 @@
         <line num="101" count="6" type="cond" truecount="2" falsecount="0"/>
         <line num="104" count="5" type="stmt"/>
       </file>
-      <file name="useColorScheme.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/hooks/useColorScheme.ts">
+      <file name="useColorScheme.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/hooks/useColorScheme.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
-      <file name="useColorScheme.web.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/hooks/useColorScheme.web.ts">
+      <file name="useColorScheme.web.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/hooks/useColorScheme.web.ts">
         <metrics statements="7" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
@@ -1360,7 +1337,7 @@
         <line num="17" count="0" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
       </file>
-      <file name="useGroupDetails.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/hooks/useGroupDetails.ts">
+      <file name="useGroupDetails.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/hooks/useGroupDetails.ts">
         <metrics statements="121" coveredstatements="5" conditionals="54" coveredconditionals="5" methods="39" coveredmethods="0"/>
         <line num="10" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="11" count="1" type="cond" truecount="1" falsecount="1"/>
@@ -1484,14 +1461,14 @@
         <line num="309" count="0" type="stmt"/>
         <line num="317" count="0" type="stmt"/>
       </file>
-      <file name="useGroups.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/hooks/useGroups.ts">
+      <file name="useGroups.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/hooks/useGroups.ts">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="5" count="10" type="stmt"/>
         <line num="8" count="10" type="cond" truecount="2" falsecount="0"/>
         <line num="9" count="8" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
       </file>
-      <file name="useThemeColor.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/hooks/useThemeColor.ts">
+      <file name="useThemeColor.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/hooks/useThemeColor.ts">
         <metrics statements="5" coveredstatements="5" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="13" count="1527" type="cond" truecount="2" falsecount="0"/>
         <line num="14" count="1527" type="stmt"/>
@@ -1499,7 +1476,7 @@
         <line num="17" count="2" type="stmt"/>
         <line num="19" count="1525" type="stmt"/>
       </file>
-      <file name="useUser.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/hooks/useUser.ts">
+      <file name="useUser.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/hooks/useUser.ts">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="5" count="43" type="stmt"/>
         <line num="8" count="42" type="cond" truecount="2" falsecount="0"/>
@@ -1509,7 +1486,7 @@
     </package>
     <package name="BudgetBuddy.lib">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="appwrite.js" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/lib/appwrite.js">
+      <file name="appwrite.js" path="/Users/raynergoh/Orbital/BudgetBuddy/lib/appwrite.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="18" type="stmt"/>
         <line num="9" count="18" type="stmt"/>
@@ -1519,7 +1496,7 @@
     </package>
     <package name="BudgetBuddy.scripts">
       <metrics statements="44" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="3" coveredmethods="0"/>
-      <file name="reset-project.js" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/scripts/reset-project.js">
+      <file name="reset-project.js" path="/Users/raynergoh/Orbital/BudgetBuddy/scripts/reset-project.js">
         <metrics statements="44" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="9" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
@@ -1569,22 +1546,22 @@
     </package>
     <package name="BudgetBuddy.types">
       <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="expense.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/types/expense.ts">
+      <file name="expense.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/types/expense.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
-      <file name="group.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/types/group.ts">
+      <file name="group.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/types/group.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
-      <file name="index.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/types/index.ts">
+      <file name="index.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/types/index.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
-      <file name="pie.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/types/pie.ts">
+      <file name="pie.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/types/pie.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
-      <file name="settlement.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/types/settlement.ts">
+      <file name="settlement.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/types/settlement.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
-      <file name="user.ts" path="/Users/joshloh/Visual Studio Code/BudgetBuddy/types/user.ts">
+      <file name="user.ts" path="/Users/raynergoh/Orbital/BudgetBuddy/types/user.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       </file>
     </package>
