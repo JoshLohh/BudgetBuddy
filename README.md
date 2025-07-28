@@ -416,133 +416,52 @@ This project uses automated tests to ensure code quality and reliability. Automa
 The testing is done for most of the critical components in our project. We will showcase them below.
 
 #### 7.2.1 Types of Automated Tests
-- Unit Tests
-    Unit tests verify the smallest pieces of logic, such as individual functions, components, or modules, in isolation. They check that each function behaves as expected under various conditions.
+##### Unit Tests
+- Unit tests verify the smallest pieces of logic, such as individual functions, components, or modules, in isolation. They check that each function behaves as expected under various conditions.
 
-- Integration Tests
-    Integration tests verify the interaction between multiple components or modules. They ensure that different parts of the system work together correctly, such as whether pressing a button brings you to the right page in the router.
-- Snapshot tests
-    Snapshot testing is used to capture and verify the rendered output of UI components or other serialized data structures to detect unexpected changes. When a snapshot test runs for the first time, it saves a “snapshot” (a serialized representation) of the     component's output. On subsequent runs, Jest compares the current output against the saved snapshot. If they differ, the test fails, alerting us to unintended changes.
-    This helps ensure that the UI or output remains consistent unless intentionally updated. 
-    Example use cases:
-    Testing React Native components' rendered trees.
-    Validating that changes in UI structure are intentional.
-    Quickly catching regressions in output without writing extensive manual asserts.
+##### Integration Tests
+- Integration tests verify the interaction between multiple components or modules. They ensure that different parts of the system work together correctly, such as whether pressing a button brings you to the right page in the router.
+##### Snapshot tests
+- Snapshot testing is used to capture and verify the rendered output of UI components or other serialized data structures to detect unexpected changes. When a snapshot test runs for the first time, it saves a “snapshot” (a serialized representation) of the     component's output. On subsequent runs, Jest compares the current output against the saved snapshot. If they differ, the test fails, alerting us to unintended changes.
+- This helps ensure that the UI or output remains consistent unless intentionally updated. 
+- Example use cases:
+  1. Testing React Native components' rendered trees.
+  2. Validating that changes in UI structure are intentional.
+  3. Quickly catching regressions in output without writing extensive manual asserts.
 
+#### 7.2.2 Unit, snapshot and integration tests
+
+##### 7.2.2.1 Contexts
+##### 7.2.2.2 Hooks
+##### 7.2.2.3 Components
+##### 7.2.2.4 Apps Folder
 
 
 ---
-
 ## 8. How to Run the App Locally
 
-This section provides a comprehensive guide to setting up, running, and testing the BudgetBuddy app on your local machine, including backend configuration and mobile device/emulator usage.
+### Try It with Expo Go
+Anyone can experience this app on their mobile device using the Expo Go app—no extra setup required!
 
-### 8.1 Prerequisites
+### 8.1. Install Expo Go
+- **Android:** Download from Google Play Store.
+- **iOS:** Download from App Store.
 
-Before starting, ensure you have the following installed:
-- Node.js (v18 or later recommended): [Download Node.js](https://nodejs.org/)
-- npm (comes with Node.js) or Yarn
-- Git: [Download Git](https://git-scm.com/)
-- Expo CLI:
-  ```sh
-  npm install -g expo-cli
-  ```
-- Expo Go app on your iOS or Android device (from App Store or Google Play)
-- Appwrite Account (cloud or self-hosted): [Appwrite Cloud](https://cloud.appwrite.io/) or [Self-hosted](https://appwrite.io/)
-- (Optional for native builds)
-- Android Studio (for Android emulation/builds)
-- Xcode (for iOS emulation/builds, macOS only)
-- Java 17 (for Android builds)
-- CocoaPods (for iOS builds)
+### 8.2. Open Expo Go
+- Launch the Expo Go app on your mobile device.
 
-### 8.2 Cloning the Repository
+### 8.3. Scan the QR Code
+- Scan the QR code provided by the development server or README.
 
-Clone the project from GitHub and navigate into the directory:
-```sh
-git clone https://github.com/JoshLohh/BudgetBuddy.git
-cd BudgetBuddy
-```
+![QR code preview](screenshots/PreviewQRcode.png)
 
-### 8.3 Installing Dependencies
+### 8.4. Enjoy the App!
+- The app will load instantly inside Expo Go.
+- Explore all features as a typical user.
 
-Install all required packages:
-```sh
-npm install
-or
-yarn install
-```
-
-### 8.4 Running the App in Development Mode
-
-**Using Expo Go (Recommended for Fast Iteration):**
-```sh
-npx expo start
-```
-Scan the QR code displayed in your terminal or browser using the Expo Go app on your phone.
-
-**Using an Emulator/Simulator:**
-
-- **Android:**
-  - Start an Android emulator via Android Studio.
-  - Run:
-    ```
-    npx expo run:android
-    ```
-- **iOS (macOS only):**
-  - Start an iOS simulator via Xcode.
-  - Run:
-    ```
-    npx expo run:ios
-    ```
-
-### 8.5 Building a Local Debug or Release APK/IPA
-
-**Using EAS Build (Recommended for production builds):**
-```sh
-npm install -g eas-cli
-eas login
-eas build:configure
-```
-For Android:
-```sh
-eas build --platform android --profile development --local
-```
-
-For iOS (macOS only):
-```sh
-eas build --platform ios --profile development --local
-```
-
-### 8.8 Troubleshooting
-
-- **Metro Bundler not starting:**  
-  Try `npx expo start -c` to clear cache.
-- **Environment variables not loading:**  
-  Double-check your `.env` file is at the project root and restart Expo.
-- **Appwrite connection errors:**  
-  Ensure your endpoint and IDs are correct, and your device can access the backend URL.
-- **Android/iOS build failures:**  
-  Make sure Java 17 (Android) and CocoaPods/Xcode (iOS) are installed.
-  Check for missing environment variables or permissions.
-
-### 8.9 Running Tests
-
-- **Unit tests:**
-```
-npm test
-```
-- **Manual testing:**  
-Use Expo Go or emulator to test all user flows (registration, group creation, expense adding, settling debts, etc.)
-Try on both iOS and Android for best coverage.
-
-### 8.10 Additional Tips
-
-- **Keep your dependencies updated:**  
-Run `npm outdated` regularly.
-- **Use feature branches for development:**  
-Helps with version control and code reviews.
-- **Refer to the Expo Documentation** for troubleshooting and advanced usage.
-- **For Appwrite backend issues, consult the Appwrite Docs.**
+### 8.5. Sign Up & Use Features
+- Register a new account, or sign in if you already have one.
+- Create groups, add expenses, manage member splits, and edit your profile via intuitive tab navigation.
 
 ---
 
@@ -553,6 +472,20 @@ Helps with version control and code reviews.
 - **Mobile UI:** Making all screens responsive and scrollable, especially with tab bar overlays.
 - **State management:** Keeping data in sync after navigation or updates.
 - **Testing on multiple devices:** Ensuring consistent experience across iOS and Android.
+- **Jest unit,snapshot and integration testing learning curve:** learning syntax and what/how to test.
+
+---
+
+## 10. Bugs Squashed
+
+Some of the bugs that were fixed during development:
+- Incorrect splitting of group expenses.
+- Crashes or errors when adding/removing users from a group.
+- UI glitches, such as buttons not clickable or text overflowing.
+- Syncing issues (e.g., expense list not refreshing properly).
+- Data validation problems (e.g., preventing empty expense titles).
+- Realizing some router links were incorrect in test code (e.g., issues with `onPress()` and navigation), and fixing them.
+- Adjusting mocks or test data in test suites to prevent false negatives and unreliable results.
 
 ---
 
