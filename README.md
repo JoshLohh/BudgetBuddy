@@ -98,9 +98,9 @@ To build a cross-platform mobile app that enables users to track, manage, and sp
 
 <table>
   <tr>
-    <td><img src="screenshots/Splash.PNG" alt="Splash" width="400"/></td>
+    <td><img src="screenshots/Splash.PNG" alt="Splash" width="350"/></td>
     <td width="20"></td>
-    <td><img src="screenshots/Splash_dark.PNG" alt="Splash dark" width="400"/></td>
+    <td><img src="screenshots/Splash_dark.PNG" alt="Splash dark" width="350"/></td>
   </tr>
   <tr>
     <td align="center">Splash Light Mode</td>
@@ -202,7 +202,7 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
   <tr>
     <td><img src="screenshots/MyGroups.PNG" alt="My Groups" width="300"/></td>
         <td width="20"></td>
-    <td><img src="screenshots/Groupinfo.PNG" alt="Group Info" width="300"/></td>
+    <td><img src="screenshots/GroupInfo.PNG" alt="Group Info" width="300"/></td>
         <td width="20"></td>
     <td><img src="screenshots/Create.PNG" alt="Create Group" width="300"/></td>
   </tr>
@@ -217,14 +217,31 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 
 <table>
   <tr>
-    <td><img src="screenshots/Group.PNG" alt="Group" width="400"/></td>
+    <td><img src="screenshots/Group.PNG" alt="Group" width="350"/></td>
         <td width="20"></td>
-    <td><img src="screenshots/Group_dark.jpeg" alt="Group dark" width="400"/></td>
+    <td><img src="screenshots/Group_dark.jpeg" alt="Group dark" width="350"/></td>
   </tr>
   <tr>
     <td align="center">Group details</td>
         <td></td>
     <td align="center">Group details in dark mode</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="screenshots/Members.PNG" alt="Members" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/AddMember.PNG" alt="Add Member" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/EditGroup.PNG" alt="Edit Group" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center">Members Dropdown</td>
+        <td></td>
+    <td align="center">Users can search to add members</td>
+        <td></td>
+    <td align="center">Users can edit group details</td>
   </tr>
 </table>
 
