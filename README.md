@@ -176,7 +176,7 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
         <td></td>
     <td align="center">Settings Page</td>
         <td></td>
-    <td align="center">Users can change their password through the settings page</td>
+    <td align="center">Users can change their password</td>
   </tr>
 </table>
 
@@ -195,6 +195,38 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 3. User searches for friends by username and sends invites.
 4. Invited users receive notifications and accept or decline. *(may not have yet)*
 5. Group is created; user can view and manage members/settings.
+6. Users can edit the Group Avatar, Group title, and description.
+7. Users can search for a group in the search bar.
+
+<table>
+  <tr>
+    <td><img src="screenshots/MyGroups.PNG" alt="My Groups" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Groupinfo.PNG" alt="Group Info" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Create.PNG" alt="Create Group" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center">Users can see the groups they are in</td>
+        <td></td>
+    <td align="center">Users can see the Group Info</td>
+        <td></td>
+    <td align="center">Create Group page</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="screenshots/Group.PNG" alt="Group" width="400"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Group_dark.jpeg" alt="Group dark" width="400"/></td>
+  </tr>
+  <tr>
+    <td align="center">Group details</td>
+        <td></td>
+    <td align="center">Group details in dark mode</td>
+  </tr>
+</table>
 
 ---
 
