@@ -97,7 +97,7 @@ To build a cross-platform mobile app that enables users to track, manage, and sp
 - **Error Handling:** User-friendly messages for all error states.
 
 <p align="center">
-  <img src="screenshots/Splash.PNG" alt="Splash" width="400" style="margin-right: 16px;"/>
+  <img src="screenshots/Splash.PNG" alt="Splash" width="400" style="margin-right: 16;"/>
   <img src="screenshots/Splash_dark.PNG" alt="Splash dark" width="400"/>
 </p>
 ---
