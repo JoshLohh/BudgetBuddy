@@ -455,7 +455,7 @@ Anyone can experience this app on their mobile device using the Expo Go app—no
 - Launch the Expo Go app on your mobile device.
 
 ### 8.3. Scan the QR Code
-- Scan the QR code provided by the development server or README.
+- Scan the QR code provided below.
 
 <img src="screenshots/PreviewQRcode.png" alt="QR code preview" width="300"/>
 
