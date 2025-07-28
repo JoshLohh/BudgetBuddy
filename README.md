@@ -215,7 +215,7 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
   </tr>
 </table>
 
-<table>
+<table align="center">
   <tr>
     <td><img src="screenshots/Group.PNG" alt="Group" width="350"/></td>
         <td width="20"></td>
