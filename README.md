@@ -102,7 +102,13 @@ To build a cross-platform mobile app that enables users to track, manage, and sp
     <td width="20"></td>
     <td><img src="screenshots/Splash_dark.PNG" alt="Splash dark" width="400"/></td>
   </tr>
+  <tr>
+    <td align="center">Splash Light Mode</td>
+    <td></td>
+    <td align="center">Splash Dark Mode</td>
+  </tr>
 </table>
+
 
 
 ---
