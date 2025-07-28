@@ -1,5 +1,7 @@
 # Orbital 
 
+<img align="center" src="assets/images/logo.png" alt="Logo" width="300"/>
+
 ## Team Name: BudgetBuddy  
 **TeamID:** 7553
 
