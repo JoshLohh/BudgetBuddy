@@ -453,7 +453,7 @@ Anyone can experience this app on their mobile device using the Expo Go app—no
 ### 8.3. Scan the QR Code
 - Scan the QR code provided by the development server or README.
 
-![QR code preview](screenshots/PreviewQRcode.png)
+<img src="screenshots/PreviewQRcode.png" alt="QR code preview" width="300"/>
 
 ### 8.4. Enjoy the App!
 - The app will load instantly inside Expo Go.
@@ -489,7 +489,7 @@ Some of the bugs that were fixed during development:
 
 ---
 
-## 10. Conclusion
+## 11. Conclusion
 
 BudgetBuddy is a robust, user-friendly solution for group expense management. With a modular, mobile-first architecture and a focus on fairness, transparency, and ease of use, it empowers users to handle shared finances confidently.  
 
