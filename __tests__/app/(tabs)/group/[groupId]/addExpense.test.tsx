@@ -1,18 +1,13 @@
-/**
-* Test suite for AddExpenseScreen component.
-* Covers form input validation, data fetching, submission logic,
-* UI state updates, and navigation behavior.
-*/
+// addExpense.test.tsx
 
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react-native';
-import AddExpenseScreen from '@/app/(tabs)/group/[groupId]/addExpense'; // Adjust relative path as needed
-
+import { render, fireEvent, waitFor, act, screen } from '@testing-library/react-native';
+import AddExpenseScreen from '@/app/(tabs)/group/[groupId]/addExpense';
 import { databases } from '@/lib/appwrite';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { NavigationContainer } from '@react-navigation/native'; // Add this import
+import { NavigationContext } from '@react-navigation/native';
 
-// Mock Appwrite databases
+// Mock the Appwrite databases module
 jest.mock('@/lib/appwrite', () => ({
   databases: {
     getDocument: jest.fn(),
@@ -20,159 +15,245 @@ jest.mock('@/lib/appwrite', () => ({
   },
 }));
 
-// Mock Expo Router hooks
+// Mock expo-router hooks
 jest.mock('expo-router', () => ({
   useRouter: jest.fn(),
   useLocalSearchParams: jest.fn(),
 }));
 
-// Helper render method with navigation
-const renderWithNavigation = (ui: React.ReactElement) => {
-  return render(
-    <NavigationContainer>
-      {ui}
-    </NavigationContainer>
-  );
+// Mock useFocusEffect as useEffect for simpler testing
+jest.mock('@react-navigation/native', () => {
+  const actual = jest.requireActual('@react-navigation/native');
+  const React = require('react');
+  return {
+    ...actual,
+    useFocusEffect: jest.fn((callback) => React.useEffect(callback, [])),
+  };
+});
+
+const navigationMock = {
+  addListener: jest.fn((event, listener) => {
+    if (event === 'focus') {
+      listener();
+    }
+    return jest.fn();
+  }),
+  removeListener: jest.fn(),
+  isFocused: () => true,
+  goBack: jest.fn(),
+  navigate: jest.fn(),
+  // Add other navigation functions as needed
 };
 
 describe('AddExpenseScreen', () => {
-  const mockRouter = { back: jest.fn() };
+  const mockRouterBack = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (useRouter as jest.Mock).mockReturnValue(mockRouter);
+
+    // Mock the router and local search params before each test
+    (useRouter as jest.Mock).mockReturnValue({ back: mockRouterBack });
     (useLocalSearchParams as jest.Mock).mockReturnValue({ groupId: 'group1' });
   });
 
+  // Helper to render with NavigationContext provider
+  function renderWithNavigationContext() {
+    return render(
+      <NavigationContext.Provider value={navigationMock as any}>
+        <AddExpenseScreen />
+      </NavigationContext.Provider>
+    );
+  }
+
   it('fetches group members and profiles on focus and initializes state', async () => {
     (databases.getDocument as jest.Mock)
-      // first call: group document with members
-      .mockResolvedValueOnce({ members: ['user1', 'user2'] })
-      // second call: user1 profile
-      .mockResolvedValueOnce({ username: 'Alice', avatar: null })
-      // third call: user2 profile
-      .mockResolvedValueOnce({ username: 'Bob', avatar: null });
+      .mockResolvedValueOnce({ members: ['user1', 'user2'] }) // group members
+      .mockResolvedValueOnce({ username: 'Alice', avatar: null }) // user1 profile
+      .mockResolvedValueOnce({ username: 'Bob', avatar: null }); // user2 profile
 
-    const { getByText, getAllByText } = renderWithNavigation(<AddExpenseScreen />);
+    renderWithNavigationContext();
 
     await waitFor(() => {
       expect(databases.getDocument).toHaveBeenCalledTimes(3);
-      expect(getAllByText('Alice').length).toBeGreaterThan(0);
-      expect(getAllByText('Bob').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('Alice').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('Bob').length).toBeGreaterThan(0);
     });
   });
 
-  it('validates required fields and shows error message', async () => {
-    (databases.getDocument as jest.Mock).mockResolvedValueOnce({ members: ['user1'] });
-    (databases.getDocument as jest.Mock).mockResolvedValueOnce({ username: 'Alice', avatar: null });
-
-    const { getByText, getByPlaceholderText, getByTestId } = renderWithNavigation(<AddExpenseScreen />);
-
-    const saveButton = getByText('Save Expense');
-
-    fireEvent.press(saveButton);
-
-    await waitFor(() => {
-      expect(getByText('Please enter a description.')).toBeTruthy();
+  it('validates required fields and shows error messages', async () => {
+    (databases.getDocument as jest.Mock)
+      .mockResolvedValueOnce({ members: ['user1'] })
+      .mockResolvedValueOnce({ username: 'Alice', avatar: null });
+  
+    renderWithNavigationContext();
+  
+    // Wait user profile render
+    await screen.findAllByText('Alice');
+  
+    const saveButton = screen.getByText('Save Expense');
+  
+    // First press Save without description or amount
+    await act(async () => {
+      fireEvent.press(saveButton);
     });
-
-    // Fill description and test amount validation
-    fireEvent.changeText(getByPlaceholderText('$0.00'), ''); // empty amount
-    fireEvent.changeText(getByPlaceholderText("e.g. Lunch at cafe"), 'Dinner');
-
-    fireEvent.press(saveButton);
-
     await waitFor(() => {
-      expect(getByText('Please enter a valid amount.')).toBeTruthy();
+      expect(screen.getByText('Please enter a description.')).toBeTruthy();
+    });
+  
+    // Enter description only
+    await act(async () => {
+      fireEvent.changeText(screen.getByPlaceholderText('e.g. Lunch at cafe'), 'Lunch');
+    });
+  
+    // Press Save again without amount
+    await act(async () => {
+      fireEvent.press(saveButton);
+    });
+    await waitFor(() => {
+      expect(screen.getByText('Please enter a valid amount.')).toBeTruthy();
     });
   });
 
-  it('submits expense successfully and navigates back', async () => {
+  it('submits successfully and navigates back', async () => {
     (databases.getDocument as jest.Mock)
       .mockResolvedValueOnce({ members: ['user1'] })
       .mockResolvedValueOnce({ username: 'Alice', avatar: null });
   
     (databases.createDocument as jest.Mock).mockResolvedValue({});
   
-    const { getByText, getByPlaceholderText, getAllByText } = renderWithNavigation(<AddExpenseScreen />);
+    renderWithNavigationContext();
   
-    fireEvent.changeText(getByPlaceholderText("e.g. Lunch at cafe"), 'Lunch');
-    fireEvent.changeText(getByPlaceholderText('$0.00'), '20');
+    await screen.findAllByText('Alice');
   
-    await waitFor(() => expect(getAllByText('Alice').length).toBeGreaterThan(0));
-  
-    const paidByButton = getAllByText('Alice')[0];
-    fireEvent.press(paidByButton);
-    await waitFor(() => {
-      // wait for state update triggered by pressed paidByButton
+    await act(async () => {
+      fireEvent.changeText(screen.getByPlaceholderText('e.g. Lunch at cafe'), 'Lunch');
+      fireEvent.changeText(screen.getByPlaceholderText('$0.00'), '20');
     });
   
-    const splitBetweenEveryone = getByText('Everyone');
-    fireEvent.press(splitBetweenEveryone);
-    await waitFor(() => {
-      // wait for state update triggered by pressed splitBetweenEveryone button
+    const paidByButton = screen.getAllByText('Alice')[0];
+    await act(async () => {
+      fireEvent.press(paidByButton);
     });
   
-    fireEvent.press(getByText('Save Expense'));
+    const splitEveryoneButton = screen.getByText('Everyone');
+    await act(async () => {
+      fireEvent.press(splitEveryoneButton);
+    });
+  
+    const saveButton = screen.getByText('Save Expense');
+    await act(async () => {
+      fireEvent.press(saveButton);
+    });
   
     await waitFor(() => {
       expect(databases.createDocument).toHaveBeenCalledWith(
-        expect.any(String),
-        expect.any(String),
-        expect.any(String),
-        'group1',
-        'Lunch',
-        20,
-        'user1',
-        ['user1'],
-        'equal',
-        '',
-        'Others'
+        expect.any(String),  // databaseId
+        expect.any(String),  // collectionId
+        expect.any(String),  // documentId generated, unique id
+        expect.objectContaining({
+          groupId: 'group1',
+          description: 'Lunch',
+          amount: 20,
+          paidBy: 'user1',
+          splitBetween: ['user1'],
+          splitType: 'equal',
+          customSplit: '',
+          category: 'Others',
+        }),
       );
-      expect(mockRouter.back).toHaveBeenCalled();
+      expect(mockRouterBack).toHaveBeenCalled();
     });
   });
   
-  
-  
-  
-  
-  
-  
 
-  it('shows error if exact split amounts do not sum to total', async () => {
-    // Setup with splitType = 'exact' and invalid customSplit
+  it('shows error if exact split amounts do not sum correctly', async () => {
     (databases.getDocument as jest.Mock)
       .mockResolvedValueOnce({ members: ['user1', 'user2'] })
       .mockResolvedValueOnce({ username: 'Alice', avatar: null })
       .mockResolvedValueOnce({ username: 'Bob', avatar: null });
 
-    const { getByText, getByPlaceholderText, getByTestId } = renderWithNavigation(<AddExpenseScreen />);
+    renderWithNavigationContext();
 
-    fireEvent.changeText(getByPlaceholderText("e.g. Lunch at cafe"), 'Dinner');
-    fireEvent.changeText(getByPlaceholderText('$0.00'), '30');
-    // Set split type to exact
-    fireEvent.press(getByText('Exact Amounts'));
-    // Set custom split amounts incorrectly (e.g., sum != 30)
-    const inputs = getByPlaceholderText('Amount');
-    // Note: if you have multiple inputs, use getAllByPlaceholderText('Amount')
-    // and loop over them for multiple users, e.g.:
-    // const [user1Input, user2Input] = getAllByPlaceholderText('Amount');
-    // fireEvent.changeText(user1Input, '10');
-    // fireEvent.changeText(user2Input, '15');
-    fireEvent.changeText(inputs, '10');  // for user1
-    fireEvent.changeText(inputs, '15');  // for user2
-
-    fireEvent.press(getByText('Save Expense'));
-
-    await waitFor(() => {
-      expect(getByText('Exact amounts must sum to the total amount.')).toBeTruthy();
+    await act(async () => {
+      fireEvent.changeText(await screen.findByPlaceholderText('e.g. Lunch at cafe'), 'Dinner');
+      fireEvent.changeText(screen.getByPlaceholderText('$0.00'), '30');
+      fireEvent.press(screen.getByText('Exact Amounts'));
     });
+
+    const amountInputs = screen.getAllByPlaceholderText('Amount');
+
+    await act(async () => {
+      fireEvent.changeText(amountInputs[0], '10');
+      fireEvent.changeText(amountInputs[1], '15');
+    });
+
+    const saveButton = screen.getByText('Save Expense');
+    await act(async () => {
+      fireEvent.press(saveButton);
+    });
+
+    await waitFor(() =>
+      expect(screen.getByText('Exact amounts must sum to the total amount.')).toBeTruthy()
+    );
   });
 
-  // Additional tests can cover:
-  // - Percentage split validation (sum to 100)
-  // - Cancel button navigates back
-  // - UI snapshot tests for rendering states
-  // - Handling of loading and error states
+  //testing lines 121-128
+  it('shows error if percentage split amounts do not sum to 100%', async () => {
+    (databases.getDocument as jest.Mock)
+      .mockResolvedValueOnce({ members: ['user1', 'user2'] })
+      .mockResolvedValueOnce({ username: 'Alice', avatar: null })
+      .mockResolvedValueOnce({ username: 'Bob', avatar: null });
+  
+    renderWithNavigationContext();
+  
+    await screen.findAllByText('Alice');
+    await screen.findAllByText('Bob');
+  
+    await act(async () => {
+      fireEvent.changeText(screen.getByPlaceholderText('e.g. Lunch at cafe'), 'Dinner');
+      fireEvent.changeText(screen.getByPlaceholderText('$0.00'), '100');
+    });
+  
+    const percentSplitButton = screen.getByText('% Percentages');
+    await act(async () => fireEvent.press(percentSplitButton));
+  
+    // Use getAllByText because "Alice" appears multiple places
+    const paidByButtons = screen.getAllByText('Alice');
+    await act(async () => fireEvent.press(paidByButtons[0])); // Press first 'Alice' (Paid By section)
+  
+    const splitEveryoneButton = screen.getByText('Everyone');
+    await act(async () => fireEvent.press(splitEveryoneButton));
+  
+    const percentageInputs = screen.getAllByPlaceholderText('Percent');
+    await act(async () => {
+      fireEvent.changeText(percentageInputs[0], '40');
+      fireEvent.changeText(percentageInputs[1], '50');
+    });
+  
+    const saveButton = screen.getByText('Save Expense');
+    await act(async () => fireEvent.press(saveButton));
+  
+    await waitFor(() =>
+      expect(screen.getByText('Percentages must sum to 100%.')).toBeTruthy()
+    );
+  
+    expect(databases.createDocument).not.toHaveBeenCalled();
+  });
+  
+  //Snapshot
+  it('renders correctly and matches snapshot', async () => {
+    (databases.getDocument as jest.Mock)
+      .mockResolvedValueOnce({ members: ['user1', 'user2'] }) // group members
+      .mockResolvedValueOnce({ username: 'Alice', avatar: null }) // user1 profile
+      .mockResolvedValueOnce({ username: 'Bob', avatar: null }); // user2 profile
+  
+    const tree = renderWithNavigationContext();
+  
+    // Wait to ensure async hooks finish (optional)
+    await screen.findByText('Add Expense');
+  
+    expect(tree.toJSON()).toMatchSnapshot();
+  });
+  
+
 });

@@ -141,7 +141,7 @@ export default function GroupReportPage() {
   return (
     <ThemedView style={{ flex: 1, padding: 20 }}>
         <Spacer height={30}/>
-      <TouchableOpacity onPress={() => router.back()} style={{ marginBottom: 12 }}>
+      <TouchableOpacity testID="Back button" onPress={() => router.back()} style={{ marginBottom: 12 }}>
         <Ionicons name="arrow-back" size={24} color={Colors.primary} />
       </TouchableOpacity>
 
@@ -149,6 +149,7 @@ export default function GroupReportPage() {
 
         <View style={styles.toggleRow}>
           <TouchableOpacity
+            testID="toggle-btn-categories"
             style={[
               styles.toggleBtn,
               mode === 'categories' && styles.toggleBtnActive,
@@ -164,6 +165,7 @@ export default function GroupReportPage() {
             </ThemedText>
           </TouchableOpacity>
           <TouchableOpacity
+            testID="toggle-btn-members"
             style={[
               styles.toggleBtn,
               mode === 'members' && styles.toggleBtnActive,
@@ -245,7 +247,7 @@ export default function GroupReportPage() {
 
             <View style={{ marginTop: 24, width: '100%' }}>
               {pieData.map((item: PieDataItem, idx: number) => (
-                <View key={item.label} style={styles.legendRow}>
+                <View testID={`legend-entry-${item.label}`} key={item.label} style={styles.legendRow}>
                   {mode === 'categories' && 'icon' in item ? (
                     <Ionicons name={item.icon as IoniconName} size={24} color={item.color} style={{ marginRight: 8 }} />
                   ) : 'avatar' in item && item.avatar ? (

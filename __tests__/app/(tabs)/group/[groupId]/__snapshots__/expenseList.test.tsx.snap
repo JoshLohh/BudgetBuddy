@@ -1,0 +1,2584 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExpenseList Component matches snapshot when no expenses are present 1`] = `
+<View
+  style={
+    {
+      "marginTop": 18,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginBottom": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#11181C",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "marginBottom": 4,
+          },
+        ]
+      }
+    >
+      Expenses
+    </Text>
+  </View>
+  <Text
+    style={
+      [
+        {
+          "color": "#11181C",
+        },
+        {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        {
+          "color": "#aaa",
+          "fontStyle": "italic",
+          "marginLeft": 4,
+        },
+      ]
+    }
+  >
+    No expenses yet.
+  </Text>
+</View>
+`;
+
+exports[`ExpenseList Component matches snapshot while loading expenses 1`] = `
+<View
+  style={
+    {
+      "marginTop": 18,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginBottom": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#11181C",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "marginBottom": 4,
+          },
+        ]
+      }
+    >
+      Expenses
+    </Text>
+  </View>
+  <ActivityIndicator
+    testID="expenses-loading"
+  />
+</View>
+`;
+
+exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
+<View
+  style={
+    {
+      "marginTop": 18,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginBottom": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#11181C",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "marginBottom": 4,
+          },
+        ]
+      }
+    >
+      Expenses
+    </Text>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "marginTop": 8,
+          "opacity": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "color": "#1e88e5",
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        See Less
+      </Text>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Movie
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            12.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Hotel
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            100.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Restaurant
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            30.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Groceries
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            40.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Taxi
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            15.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Lunch
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            20.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
+<View
+  style={
+    {
+      "marginTop": 18,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginBottom": 4,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#11181C",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "marginBottom": 4,
+          },
+        ]
+      }
+    >
+      Expenses
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Movie
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            12.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Hotel
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            100.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Restaurant
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            30.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Groceries
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            40.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "marginBottom": 8,
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "#f7f7f7",
+            "borderRadius": 8,
+            "flexDirection": "row",
+            "padding": 12,
+          },
+        ]
+      }
+      testID="themed-view"
+    >
+      <Text
+        allowFontScaling={false}
+        selectable={false}
+        style={
+          [
+            {
+              "color": "#1976d2",
+              "fontSize": 22,
+            },
+            undefined,
+            {
+              "fontFamily": "ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            {},
+          ]
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          {
+            "height": 40,
+            "width": 15,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "black",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 4,
+              },
+            ]
+          }
+        >
+          Taxi
+        </Text>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#888",
+                  "fontSize": 13,
+                },
+              ]
+            }
+          >
+            Paid by:
+             
+            <Text
+              style={
+                [
+                  {
+                    "color": "#11181C",
+                  },
+                  {
+                    "fontSize": 16,
+                    "lineHeight": 24,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  {
+                    "color": "#444",
+                    "fontWeight": "bold",
+                  },
+                ]
+              }
+            >
+              Unknown User
+            </Text>
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1e88e5",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            $
+            15.00
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "borderRadius": 6,
+          "marginVertical": 10,
+          "padding": 18,
+        },
+        {
+          "backgroundColor": "#0a7ea4",
+        },
+        false,
+        {
+          "backgroundColor": "grey",
+          "marginTop": 8,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#11181C",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          {
+            "color": "#fff",
+            "textAlign": "center",
+          },
+        ]
+      }
+    >
+      See More
+    </Text>
+  </View>
+</View>
+`;

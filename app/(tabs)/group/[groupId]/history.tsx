@@ -134,7 +134,7 @@ export default function GroupHistoryPage() {
   return (
     <ThemedView style={{ flex: 1, padding: 16 }}>
       <Spacer height={30} />
-      <TouchableOpacity onPress={() => router.back()}>
+      <TouchableOpacity testID = "back-button" accessibilityRole="button" accessibilityLabel="Back" onPress={() => router.back()}>
         <Ionicons name="arrow-back" size={24} color={Colors.primary} />
       </TouchableOpacity>
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12, marginTop: 10 }}>
@@ -169,6 +169,7 @@ export default function GroupHistoryPage() {
               return (
               <View
                 key={item.$id}
+                testID={`activity-${item.$id}`}
                 style={{
                   backgroundColor: '#f7f7f7',
                   borderRadius: 10,
@@ -220,6 +221,7 @@ export default function GroupHistoryPage() {
               return (
               <View
                 key={item.$id}
+                testID={`activity-${item.$id}`}
                 style={{
                   backgroundColor: '#eafbe7',
                   borderRadius: 10,

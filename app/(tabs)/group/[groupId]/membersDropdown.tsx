@@ -58,13 +58,15 @@ export default function MembersDropdown({
               return (
               <View key={item.userId} style={styles.memberRow}>
                 <TouchableOpacity
+                  key={item.userId}
                   onPress={() =>
                     router.push({
-                      pathname: '/group/[groupId]/user/[userId]',
+                      pathname: '/user/[userId]',
                       params: { userId: item.userId , groupId: group.$id},
                     })
                   }
                   style={styles.avatarTouchable}
+                  testID={`member-${item.userId}`}
                 >
                   <Image
                     source={
@@ -78,6 +80,7 @@ export default function MembersDropdown({
                 <ThemedText style={{ marginLeft: 12, flex: 1 }}>{item.username}</ThemedText>
                 {item.userId !== currentUserId && (
                   <TouchableOpacity
+                    testID={`remove-btn-${item.userId}`}
                     onPress={() => handleRemoveMember(item.userId)}
                     style={styles.removeBtn}
                   >

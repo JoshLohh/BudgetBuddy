@@ -1,0 +1,790 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupHeader matches snapshot in edit mode 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "#fff",
+      },
+      {
+        "backgroundColor": "#fff",
+        "borderRadius": 12,
+        "marginBottom": 10,
+        "padding": 10,
+      },
+    ]
+  }
+  testID="themed-view"
+>
+  <View
+    style={
+      {
+        "alignItems": "flex-start",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flex": 1,
+          "marginRight": 12,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontWeight": "bold",
+              "marginBottom": 4,
+              "marginLeft": 4,
+            },
+          ]
+        }
+      >
+        Title
+      </Text>
+      <TextInput
+        onChangeText={[Function]}
+        style={
+          [
+            {
+              "backgroundColor": "#d6d5e1",
+              "borderRadius": 6,
+              "color": "#11181C",
+              "padding": 20,
+            },
+            {
+              "marginBottom": 8,
+            },
+          ]
+        }
+        value="Trip to Tokyo"
+      />
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontWeight": "bold",
+              "marginBottom": 4,
+              "marginLeft": 4,
+            },
+          ]
+        }
+      >
+        Description
+      </Text>
+      <TextInput
+        onChangeText={[Function]}
+        style={
+          [
+            {
+              "backgroundColor": "#d6d5e1",
+              "borderRadius": 6,
+              "color": "#11181C",
+              "padding": 20,
+            },
+            {
+              "marginBottom": 8,
+            },
+          ]
+        }
+        value="Spring vacation"
+      />
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "flex-end",
+          "minWidth": 110,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "alignSelf": "flex-end",
+            "backgroundColor": "#b3e0ff",
+            "borderRadius": 10,
+            "elevation": 2,
+            "marginBottom": 10,
+            "minWidth": 110,
+            "paddingHorizontal": 18,
+            "paddingVertical": 8,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "#1976d2",
+                "fontSize": 13,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          Total
+        </Text>
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "#1976d2",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "marginTop": 2,
+              },
+            ]
+          }
+        >
+          $
+          99.00
+        </Text>
+      </View>
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "borderRadius": 6,
+              "marginVertical": 10,
+              "padding": 18,
+            },
+            {
+              "backgroundColor": "#0a7ea4",
+            },
+            false,
+            {
+              "alignItems": "center",
+              "alignSelf": "flex-end",
+              "backgroundColor": "#0a7ea4",
+              "borderRadius": 8,
+              "justifyContent": "center",
+              "paddingHorizontal": 0,
+              "paddingVertical": 10,
+              "width": 110,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "#fff",
+              },
+            ]
+          }
+        >
+          Save
+        </Text>
+      </View>
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "borderRadius": 6,
+              "marginVertical": 10,
+              "padding": 18,
+            },
+            {
+              "backgroundColor": "#0a7ea4",
+            },
+            false,
+            [
+              {
+                "alignItems": "center",
+                "alignSelf": "flex-end",
+                "backgroundColor": "#0a7ea4",
+                "borderRadius": 8,
+                "justifyContent": "center",
+                "paddingHorizontal": 0,
+                "paddingVertical": 10,
+                "width": 110,
+              },
+              {
+                "backgroundColor": "#e0e0e0",
+                "marginTop": 8,
+              },
+            ],
+          ]
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "#333",
+              },
+            ]
+          }
+        >
+          Cancel
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`GroupHeader matches snapshot in view mode 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "#fff",
+      },
+      {
+        "backgroundColor": "#fff",
+        "borderRadius": 12,
+        "marginBottom": 10,
+        "padding": 10,
+      },
+    ]
+  }
+  testID="themed-view"
+>
+  <View
+    style={
+      {
+        "alignItems": "flex-start",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flex": 1,
+          "marginRight": 12,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "marginBottom": 12,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "marginBottom": 12,
+              "opacity": 1,
+            }
+          }
+          testID="avatar-edit"
+        />
+        <View
+          style={
+            {
+              "flex": 1,
+              "justifyContent": "center",
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                undefined,
+                {
+                  "fontSize": 28,
+                  "fontWeight": "bold",
+                  "lineHeight": 32,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "black",
+                  "fontSize": 28,
+                  "fontWeight": "700",
+                },
+              ]
+            }
+          >
+            Trip to Tokyo
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#555",
+                  "fontSize": 15,
+                  "marginBottom": 4,
+                },
+              ]
+            }
+          >
+            Spring vacation
+          </Text>
+        </View>
+      </View>
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "color": "#888",
+              "fontSize": 14,
+              "marginBottom": 8,
+            },
+          ]
+        }
+      >
+        3
+         member
+        s
+      </Text>
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "borderRadius": 6,
+              "marginVertical": 10,
+              "padding": 18,
+            },
+            {
+              "backgroundColor": "#0a7ea4",
+            },
+            false,
+            {
+              "alignItems": "center",
+              "alignSelf": "flex-start",
+              "height": 32,
+              "justifyContent": "center",
+              "marginBottom": 4,
+              "marginTop": 4,
+              "minWidth": 200,
+              "paddingHorizontal": 14,
+              "paddingVertical": 0,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#11181C",
+              },
+              {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              {
+                "color": "#fff",
+                "fontSize": 12,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          View Activity Log
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "flex-end",
+          "minWidth": 110,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "opacity": 1,
+          }
+        }
+        testID="report-button"
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "alignSelf": "flex-end",
+              "backgroundColor": "#b3e0ff",
+              "borderRadius": 10,
+              "elevation": 2,
+              "marginBottom": 10,
+              "minWidth": 110,
+              "paddingHorizontal": 18,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1976d2",
+                  "fontSize": 13,
+                  "fontWeight": "bold",
+                },
+              ]
+            }
+          >
+            Total
+          </Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#11181C",
+                },
+                {
+                  "fontSize": 16,
+                  "lineHeight": 24,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  "color": "#1976d2",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "marginTop": 2,
+                },
+              ]
+            }
+          >
+            $
+            42.50
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "borderRadius": 6,
+              "marginVertical": 10,
+              "padding": 18,
+            },
+            {
+              "backgroundColor": "#0a7ea4",
+            },
+            false,
+            {
+              "alignItems": "center",
+              "alignSelf": "flex-end",
+              "backgroundColor": "#0a7ea4",
+              "borderRadius": 8,
+              "justifyContent": "center",
+              "paddingHorizontal": 0,
+              "paddingVertical": 10,
+              "width": 110,
+            },
+          ]
+        }
+        testID="edit-button"
+      />
+    </View>
+  </View>
+</View>
+`;

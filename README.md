@@ -21,18 +21,18 @@
     - [Group Creation and Management](#group-creation-and-management-milestone-2)
     - [Expense Tracking and Split Calculation](#expense-tracking-and-split-calculation-milestone-2)
     - [Debt Settling and Balance Calculation](#debt-settling-and-balance-calculation-milestone-2)
-    - [Real-Time Updates](#real-time-updates-milestone-3-planned)
-    - [Balance Overview and Reports](#balance-overview-and-reports-milestone-3-planned)
-    - [Notifications](#notifications-milestone-3-planned)
+    - [Real-Time Updates](#real-time-updates-milestone-3)
+    - [Balance Overview and Reports](#balance-overview-and-reports-milestone-3)
     - [Other Notable Features](#other-notable-features)
 3. [Timeline and Development Plan](#timeline-and-development-plan)
 4. [User Flow Diagrams](#user-flow-diagrams)
 5. [Tech Stack](#tech-stack)
 6. [Software Engineering Practices](#software-engineering-practices)
-7. [User Testing](#user-testing)
+7. [Quality and Assurance](#quality-and-assurance)
 8. [How to Run the App Locally](#how-to-run-the-app-locally)
 9. [Challenges Faced](#challenges-faced)
-10. [Conclusion](#conclusion)
+10. [Bugs Squashed](#bugs-squashed)
+11. [Conclusion](#conclusion)
 
 ---
 
@@ -79,24 +79,19 @@ To build a cross-platform mobile app that enables users to track, manage, and sp
 - **Implementation Philosophy:** Persistent settlements in Appwrite, with fade/checkmark for settled debts. Greedy algorithm ensures minimal transactions.
 - **Implementation Challenges:** Ensuring settlements remain accurate after new expenses, and avoiding race conditions in updates.
 
-### Real-Time Updates (Milestone 3, planned)
+### Real-Time Updates (Milestone 3)
 - **Description:** All group members see updates instantly when expenses or settlements are made.
 - **Implementation Philosophy:** Will use Appwrite Realtime API or similar.
 - **Implementation Challenges:** Handling concurrent updates and UI state management.
 
-### Balance Overview and Reports (Milestone 3, planned)
+### Balance Overview and Reports (Milestone 3)
 - **Description:** Dashboard with breakdown of debts, credits, and group spending reports.
 - **Implementation Philosophy:** Aggregation queries and charts.
 - **Implementation Challenges:** Efficient aggregation and responsive charts.
 
-### Notifications (Milestone 3, planned)
-- **Description:** Push or in-app notifications for new expenses, settlements, or group changes.
-- **Implementation Philosophy:** Expo Notifications and Appwrite Realtime.
-- **Implementation Challenges:** Ensuring timely and non-intrusive notifications.
-
 ### Other Notable Features
 - **Light/Dark Mode:** All screens and components support both modes seamlessly.
-- **Profile Editing:** Users can edit usernames, emails, and bios.
+- **Profile Editing:** Users can edit usernames, avatars, and bios.
 - **Statistics Panel:** Profile page shows live stats on groups joined, expenses made, and total spent.
 - **Responsive UI:** All lists and modals are scrollable and mobile-friendly.
 - **Error Handling:** User-friendly messages for all error states.

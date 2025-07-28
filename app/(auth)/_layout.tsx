@@ -13,7 +13,7 @@ export default function AuthLayout({ children }: { children?: React.ReactNode })
 
     const { user } = useUser()
 
-    console.log(user)
+    //console.log(user)
     const colorScheme = useColorScheme();
     
     return (

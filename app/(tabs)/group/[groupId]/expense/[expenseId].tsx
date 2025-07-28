@@ -87,6 +87,7 @@ export default function ExpenseDetailScreen() {
           )
         );
         setUserProfiles(profiles);
+        //console.log('userProfiles:', profiles); 
         setLoading(false);
       })
       .catch(() => {
@@ -184,7 +185,7 @@ export default function ExpenseDetailScreen() {
   if (loading) {
     return (
       <ThemedView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator />
+        <ActivityIndicator testID="loading-indicator" />
       </ThemedView>
     );
   }
@@ -234,6 +235,7 @@ export default function ExpenseDetailScreen() {
         <View style={{ flexWrap: 'wrap', flexDirection: 'row', marginBottom: 14 }}>
           {userProfiles.map(user => (
             <View
+              testID={`user-profile-${user.userId}`}
               key={user.userId}
               style={{
                 flexDirection: 'row',
@@ -258,7 +260,7 @@ export default function ExpenseDetailScreen() {
                   <Ionicons name="person" size={16} color="#888" />
                 </View>
               )}
-              <ThemedText style={{ color: '#fff' }}>{user.username}</ThemedText>
+              <ThemedText testID={`user-username-${user.userId}`} style={{ color: '#fff' }}>{user.username}</ThemedText>
             </View>
           ))}
         </View>
@@ -288,6 +290,7 @@ export default function ExpenseDetailScreen() {
                 )}
                 <ThemedText style={{ width: 150 }}>{user.username}</ThemedText>
                 <ThemedTextInput
+                  testID={`custom-split-input-${user.userId}`}
                   value={customSplit[user.userId] || ''}
                   onChangeText={val =>
                     setCustomSplit(prev => ({ ...prev, [user.userId]: val.replace(/[^0-9.]/g, '') }))
