@@ -24,6 +24,7 @@ const MAPPING = {
   'plus.square.fill.on.square.fill': 'square',
   'person.3.fill': 'groups',
   'person.fill': 'add',
+  'person.3.sequence.fill': 'groups',
 
 } as const;
 
