@@ -148,14 +148,18 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 
 <table>
   <tr>
-    <td><img src="screenshots/Register.PNG" alt="Register" width="400"/></td>
-    <td width="20"></td>
-    <td><img src="screenshots/Login.PNG" alt="Login" width="400"/></td>
+    <td><img src="screenshots/Register.PNG" alt="Register" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Login.PNG" alt="Login" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Profile.jpeg" alt="Profile" width="400"/></td>
   </tr>
   <tr>
     <td align="center">Register Page</td>
-    <td></td>
+        <td></td>
     <td align="center">Login Page</td>
+        <td></td>
+    <td align="center">Profile Page</td>
   </tr>
 </table>
 
