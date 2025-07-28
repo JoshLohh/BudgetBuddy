@@ -136,18 +136,6 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 
 **Flow:**  
 `[App Launch] → [Splash Screen] → [Welcome Screen] → [Sign Up / Log In] → [User Setup (Profile, Avatar)] → [Dashboard / Home]`
-`[App Launch]
-      ↓
-[Splash Screen]
-      ↓
-[Welcome Screen]
-      ↓
-[Sign Up / Log In]
-      ↓
-[User Setup (Profile, Avatar)] → [Settings] → [Change Password]
-      ↓
-[Dashboard / Home]
-`
 
 **Narrative Steps:**
 1. User opens BudgetBuddy for the first time.
@@ -157,6 +145,19 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 5. Users are prompted to set up their profile (bio), and their avatar.
 6. User is directed to the Dashboard/Home.
 7. Users are able to access the settings page through the profile page.
+
+<table>
+  <tr>
+    <td><img src="screenshots/Register.PNG" alt="Register" width="400"/></td>
+    <td width="20"></td>
+    <td><img src="screenshots/Login.PNG" alt="Login" width="400"/></td>
+  </tr>
+  <tr>
+    <td align="center">Register Page</td>
+    <td></td>
+    <td align="center">Login Page</td>
+  </tr>
+</table>
 
 ---
 
