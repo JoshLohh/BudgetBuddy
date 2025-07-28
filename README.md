@@ -96,6 +96,19 @@ To build a cross-platform mobile app that enables users to track, manage, and sp
 - **Responsive UI:** All lists and modals are scrollable and mobile-friendly.
 - **Error Handling:** User-friendly messages for all error states.
 
+<table>
+  <tr>
+    <td><img src="screenshots/Splash.PNG" alt="Splash" width="350"/></td>
+    <td width="20"></td>
+    <td><img src="screenshots/Splash_dark.PNG" alt="Splash dark" width="350"/></td>
+  </tr>
+  <tr>
+    <td align="center">Splash Light Mode</td>
+    <td></td>
+    <td align="center">Splash Dark Mode</td>
+  </tr>
+</table>
+
 ---
 
 ## 3. Timeline and Development Plan
@@ -129,8 +142,43 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 2. Splash screen is displayed, followed by a welcome message.
 3. User chooses to sign up or log in.
 4. On sign up, the user enters email, password, and chooses a username.
-5. Users are prompted to set up their profile (bio).
+5. Users are prompted to set up their profile (bio), and their avatar.
 6. User is directed to the Dashboard/Home.
+7. Users are able to access the settings page through the profile page.
+
+<table>
+  <tr>
+    <td><img src="screenshots/Register.PNG" alt="Register" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Login.PNG" alt="Login" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Profile.jpeg" alt="Profile" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center">Register Page</td>
+        <td></td>
+    <td align="center">Login Page</td>
+        <td></td>
+    <td align="center">Profile Page</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="screenshots/EditProfile.PNG" alt="Edit Profile" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Settings.PNG" alt="Settings" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/ChangePassword.PNG" alt="Change Password" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center">Users can edit their Username, bio and avatar</td>
+        <td></td>
+    <td align="center">Settings Page</td>
+        <td></td>
+    <td align="center">Users can change their password</td>
+  </tr>
+</table>
 
 ---
 
@@ -147,6 +195,55 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 3. User searches for friends by username and sends invites.
 4. Invited users receive notifications and accept or decline. *(may not have yet)*
 5. Group is created; user can view and manage members/settings.
+6. Users can edit the Group Avatar, Group title, and description.
+7. Users can search for a group in the search bar.
+
+<table>
+  <tr>
+    <td><img src="screenshots/MyGroups.PNG" alt="My Groups" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/GroupInfo.PNG" alt="Group Info" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Create.PNG" alt="Create Group" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center">Users can see the groups they are in</td>
+        <td></td>
+    <td align="center">Users can see the Group Info</td>
+        <td></td>
+    <td align="center">Create Group page</td>
+  </tr>
+</table>
+
+<table align="center">
+  <tr>
+    <td><img src="screenshots/Group.PNG" alt="Group" width="350"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Group_dark.jpeg" alt="Group dark" width="350"/></td>
+  </tr>
+  <tr>
+    <td align="center">Group details</td>
+        <td></td>
+    <td align="center">Group details in dark mode</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="screenshots/Members.PNG" alt="Members" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/AddMember.PNG" alt="Add Member" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/EditGroup.PNG" alt="Edit Group" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center">Members Dropdown</td>
+        <td></td>
+    <td align="center">Users can search to add members</td>
+        <td></td>
+    <td align="center">Users can edit group details</td>
+  </tr>
+</table>
 
 ---
 
