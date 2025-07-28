@@ -152,7 +152,7 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
         <td width="20"></td>
     <td><img src="screenshots/Login.PNG" alt="Login" width="300"/></td>
         <td width="20"></td>
-    <td><img src="screenshots/Profile.jpeg" alt="Profile" width="400"/></td>
+    <td><img src="screenshots/Profile.jpeg" alt="Profile" width="300"/></td>
   </tr>
   <tr>
     <td align="center">Register Page</td>
@@ -165,14 +165,18 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 
 <table>
   <tr>
-    <td><img src="screenshots/Profile.jpeg" alt="Profile" width="400"/></td>
-    <td width="20"></td>
-    <td><img src="screenshots/EditProfile.PNG" alt="Edit Profile" width="400"/></td>
+    <td><img src="screenshots/EditProfile.PNG" alt="Edit Profile" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Settings.PNG" alt="Settings" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/ChangePassword.PNG" alt="Change Password" width="300"/></td>
   </tr>
   <tr>
-    <td align="center">Profile Page</td>
-    <td></td>
     <td align="center">Users can edit their Username, bio and avatar</td>
+        <td></td>
+    <td align="center">Settings Page</td>
+        <td></td>
+    <td align="center">Users can change their password through the settings page</td>
   </tr>
 </table>
 
