@@ -99,9 +99,11 @@ To build a cross-platform mobile app that enables users to track, manage, and sp
 <table>
   <tr>
     <td><img src="screenshots/Splash.PNG" alt="Splash" width="400"/></td>
+    <td width="20"></td>
     <td><img src="screenshots/Splash_dark.PNG" alt="Splash dark" width="400"/></td>
   </tr>
 </table>
+
 
 ---
 
