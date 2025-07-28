@@ -1,0 +1,378 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserProfileScreen matches snapshot during loading 1`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <ActivityIndicator
+    testID="loading-indicator"
+  />
+</View>
+`;
+
+exports[`UserProfileScreen matches snapshot with empty stats 1`] = `
+<View
+  style={
+    [
+      {
+        "backgroundColor": "#fff",
+      },
+      {
+        "flex": 1,
+        "justifyContent": "flex-start",
+        "paddingBottom": 16,
+        "paddingHorizontal": 20,
+        "paddingTop": 36,
+      },
+    ]
+  }
+  testID="themed-view"
+>
+  <View
+    style={
+      {
+        "height": 40,
+        "width": "100%",
+      }
+    }
+  />
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "left": 10,
+        "opacity": 1,
+        "padding": 8,
+        "position": "absolute",
+        "top": 60,
+        "zIndex": 10,
+      }
+    }
+    testID="back-button"
+  >
+    <Text
+      allowFontScaling={false}
+      selectable={false}
+      style={
+        [
+          {
+            "color": "#1976d2",
+            "fontSize": 24,
+          },
+          undefined,
+          {
+            "fontFamily": "ionicons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          {},
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "marginBottom": 18,
+        "marginTop": 24,
+      }
+    }
+  >
+    <ViewManagerAdapter_ExpoImage
+      borderColor={4294967295}
+      borderRadius={50}
+      borderWidth={2}
+      containerViewRef={"[React.ref]"}
+      contentFit="cover"
+      contentPosition={
+        {
+          "left": "50%",
+          "top": "50%",
+        }
+      }
+      height={100}
+      marginRight={18}
+      nativeViewRef={"[React.ref]"}
+      onError={[Function]}
+      onLoad={[Function]}
+      onLoadStart={[Function]}
+      onProgress={[Function]}
+      placeholder={[]}
+      source={
+        [
+          {
+            "uri": "avatar.png",
+          },
+        ]
+      }
+      style={
+        {
+          "borderColor": "#fff",
+          "borderRadius": 50,
+          "borderWidth": 2,
+          "height": 100,
+          "marginRight": 18,
+          "width": 100,
+        }
+      }
+      transition={null}
+      width={100}
+    />
+    <View
+      style={
+        {
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            undefined,
+            {
+              "fontSize": 28,
+              "fontWeight": "bold",
+              "lineHeight": 32,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontSize": 24,
+              "fontWeight": "bold",
+              "marginBottom": 0,
+            },
+          ]
+        }
+      >
+        Test User
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "borderRadius": 12,
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginBottom": 24,
+        "padding": 18,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontSize": 17,
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        0
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontSize": 12,
+              "marginTop": 2,
+            },
+          ]
+        }
+      >
+        Groups
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontSize": 17,
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        $
+        0.00
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontSize": 12,
+              "marginTop": 2,
+            },
+          ]
+        }
+      >
+        Total Spent
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontSize": 17,
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        0
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#11181C",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            {
+              "fontSize": 12,
+              "marginTop": 2,
+            },
+          ]
+        }
+      >
+        Expenses
+      </Text>
+    </View>
+  </View>
+</View>
+`;

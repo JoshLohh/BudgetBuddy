@@ -33,7 +33,7 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
   const [avatar, setAvatar] = useState(group?.avatar || '');
   const [uploading, setUploading] = useState(false);
 
-  console.log('Fetched group:', group);
+  //console.log('Fetched group:', group);
 
   useEffect(() => {
     setTitle(group?.title || '');
@@ -78,7 +78,7 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
         } as any
       );
       const endpoint = `${process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${avatarbucketId}/files`;
-      console.log('Uploading avatar to:', endpoint);
+      //console.log('Uploading avatar to:', endpoint);
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -100,7 +100,7 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
         return;
       }
       const viewUrl = `${process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${avatarbucketId}/files/${fileRes.$id}/view?project=${process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID}&t=${Date.now()}`;
-      console.log('Avatar uploaded, viewUrl:', viewUrl);
+      //console.log('Avatar uploaded, viewUrl:', viewUrl);
 
       // Update the group in Appwrite
       const updateRes = await databases.updateDocument(
@@ -109,11 +109,11 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
         group.$id,
         { avatar: viewUrl }
       );
-      console.log('Group document updated:', updateRes);
+      //console.log('Group document updated:', updateRes);
 
       setAvatar(viewUrl);
       if (onGroupUpdated) {
-        console.log('Calling onGroupUpdated with avatar:', viewUrl);
+        //console.log('Calling onGroupUpdated with avatar:', viewUrl);
         onGroupUpdated({ ...group, avatar: viewUrl });
       }
     } catch (e) {
@@ -204,7 +204,7 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
       <View style={styles.topRow}>
         <View style={styles.leftCol}>
           <View style={styles.headerRow}>
-            <TouchableOpacity onPress={handleAvatarChange} style={styles.avatarEditContainer}>
+            <TouchableOpacity testID="avatar-edit" onPress={handleAvatarChange} style={styles.avatarEditContainer}>
               {avatar ? (
                 <Image source={ avatar } style={styles.groupAvatarLarge} />
               ) : (
@@ -239,13 +239,14 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
           </ThemedButton>
         </View>
         <View style={styles.rightCol}>
-          <TouchableOpacity onPress={() => router.push({ pathname: '/group/[groupId]/report', params: { groupId: group.$id } })}>
+          <TouchableOpacity testID= "report-button" onPress={() => router.push({ pathname: '/group/[groupId]/report', params: { groupId: group.$id } })}>
           <View style={styles.totalCard}>
             <ThemedText style={styles.totalLabel}>Total</ThemedText>
             <ThemedText style={styles.totalAmount}>${totalExpenses.toFixed(2)}</ThemedText>
           </View>
           </TouchableOpacity>
           <ThemedButton
+            testID="edit-button"
             onPress={() => setEditing(true)}
             style={styles.editBtn}
           >

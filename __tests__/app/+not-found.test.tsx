@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 import NotFoundScreen from '../../app/+not-found.tsx';
-console.log('NotFoundScreen:', NotFoundScreen);
+//console.log('NotFoundScreen:', NotFoundScreen);
 
 jest.mock('@/components/ThemedText', () => {
   const React = require('react');

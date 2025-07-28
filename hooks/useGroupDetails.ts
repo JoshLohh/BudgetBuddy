@@ -293,8 +293,17 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
   //   await databases.updateDocument(databaseId, groupsCollectionId, group.$id, { members: updatedMembers });
   //   setGroup({ ...group, members: updatedMembers });
   // };
-  const handleRemoveMember = (userId: string) => {
+  const handleRemoveMember = async (userId: string, skipAlert= false) => {
     if (!group) return;
+    if (skipAlert) {
+      // Remove directly without alert (for tests or internal logic)
+      const updatedMembers = group.members.filter(id => id !== userId);
+      await databases.updateDocument(databaseId, groupsCollectionId, group.$id, {
+        members: updatedMembers,
+      });
+      setGroup({ ...group, members: updatedMembers });
+      return;
+    }
     Alert.alert(
       'Remove Member',
       `Are you sure you want to remove ${getUsername(userId)} from the group?`,

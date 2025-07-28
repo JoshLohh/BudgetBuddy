@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -130,11 +130,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -152,21 +150,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -184,10 +184,10 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 &nbsp;
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function <span class="fstat-no" title="function not covered" >TabLayout(</span>) {
+  const colorScheme = <span class="cstat-no" title="statement not covered" >useColorScheme();</span>
 &nbsp;
-  return (
+<span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;UserOnly&gt;  
       &lt;Tabs
         screenOptions={{
@@ -207,21 +207,21 @@ export default function TabLayout() {
           name="group"
           options={{
             title: 'Groups',
-            tabBarIcon: ({ color }) =&gt; &lt;IconSymbol size={38} name="person.3.fill" color={color} /&gt;,
+            tabBarIcon: <span class="fstat-no" title="function not covered" >({</span> color }) =&gt; <span class="cstat-no" title="statement not covered" >&lt;IconSymbol size={38} name="person.3.fill" color={color} /&gt;,</span>
           }}
         /&gt;
         &lt;Tabs.Screen
           name="create"
           options={{
             title: 'Create',
-            tabBarIcon: ({ color }) =&gt; &lt;IconSymbol size={28} name="plus.square.fill.on.square.fill" color={color} /&gt;,
+            tabBarIcon: <span class="fstat-no" title="function not covered" >({</span> color }) =&gt; <span class="cstat-no" title="statement not covered" >&lt;IconSymbol size={28} name="plus.square.fill.on.square.fill" color={color} /&gt;,</span>
           }}
         /&gt;        
         &lt;Tabs.Screen
           name="profile"
           options={{
             title: 'Profile',
-            tabBarIcon: ({ color }) =&gt; &lt;IconSymbol size={28} name="person.fill" color={color} /&gt;,
+            tabBarIcon: <span class="fstat-no" title="function not covered" >({</span> color }) =&gt; <span class="cstat-no" title="statement not covered" >&lt;IconSymbol size={28} name="person.fill" color={color} /&gt;,</span>
           }}
         /&gt;
       &lt;/Tabs&gt;
@@ -235,7 +235,7 @@ export default function TabLayout() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-26T22:43:06.479Z
+                at 2025-07-28T04:50:26.944Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

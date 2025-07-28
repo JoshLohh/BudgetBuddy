@@ -22,7 +22,7 @@ const usersCollectionId = process.env.EXPO_PUBLIC_APPWRITE_USERS_COLLECTION_ID ?
 interface ExpenseListProps {
   expenses: Expense[];
   expensesLoading: boolean;
-  hasMoreExpenses: boolean;
+  //hasMoreExpenses: boolean;
   showAllExpenses: boolean;
   setShowAllExpenses: (show: boolean) => void;
   // getUsername: (userId: string) => string;
@@ -105,7 +105,7 @@ export default function ExpenseList({
         ) : null}
       </View>
       {expensesLoading ? (
-        <ActivityIndicator />
+        <ActivityIndicator testID = "expenses-loading" />
       ) : expensesToShow.length === 0 ? (
         <ThemedText style={{ color: '#aaa', fontStyle: 'italic', marginLeft: 4 }}>
           No expenses yet.
