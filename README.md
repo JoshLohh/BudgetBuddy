@@ -109,8 +109,6 @@ To build a cross-platform mobile app that enables users to track, manage, and sp
   </tr>
 </table>
 
-
-
 ---
 
 ## 3. Timeline and Development Plan
@@ -138,14 +136,27 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 
 **Flow:**  
 `[App Launch] → [Splash Screen] → [Welcome Screen] → [Sign Up / Log In] → [User Setup (Profile, Avatar)] → [Dashboard / Home]`
+`[App Launch]
+      ↓
+[Splash Screen]
+      ↓
+[Welcome Screen]
+      ↓
+[Sign Up / Log In]
+      ↓
+[User Setup (Profile, Avatar)] → [Settings] → [Change Password]
+      ↓
+[Dashboard / Home]
+`
 
 **Narrative Steps:**
 1. User opens BudgetBuddy for the first time.
 2. Splash screen is displayed, followed by a welcome message.
 3. User chooses to sign up or log in.
 4. On sign up, the user enters email, password, and chooses a username.
-5. Users are prompted to set up their profile (bio).
+5. Users are prompted to set up their profile (bio), and their avatar.
 6. User is directed to the Dashboard/Home.
+7. Users are able to access the settings page through the profile page.
 
 ---
 
