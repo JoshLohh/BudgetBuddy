@@ -96,10 +96,13 @@ To build a cross-platform mobile app that enables users to track, manage, and sp
 - **Responsive UI:** All lists and modals are scrollable and mobile-friendly.
 - **Error Handling:** User-friendly messages for all error states.
 
-<p align="center">
-  <img src="screenshots/Splash.PNG" alt="Splash" width="400" style="margin-right: 16;"/>
-  <img src="screenshots/Splash_dark.PNG" alt="Splash dark" width="400"/>
-</p>
+<table>
+  <tr>
+    <td><img src="screenshots/Splash.PNG" alt="Splash" width="400"/></td>
+    <td><img src="screenshots/Splash_dark.PNG" alt="Splash dark" width="400"/></td>
+  </tr>
+</table>
+
 ---
 
 ## 3. Timeline and Development Plan
