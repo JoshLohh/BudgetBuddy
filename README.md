@@ -96,7 +96,7 @@ To build a cross-platform mobile app that enables users to track, manage, and sp
 - **Responsive UI:** All lists and modals are scrollable and mobile-friendly.
 - **Error Handling:** User-friendly messages for all error states.
 
-<table>
+<table align="center">
   <tr>
     <td><img src="screenshots/Splash.PNG" alt="Splash" width="350"/></td>
     <td width="20"></td>
@@ -261,6 +261,40 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 4. User confirms and saves.
 5. Expense appears in the group’s expense list, balances update for all members.
 
+<table>
+  <tr>
+    <td><img src="screenshots/AddExpense.PNG" alt="Add Expense" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/SplitBetween.PNG" alt="Split Between" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/SplitExact.PNG" alt="Split Exact" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center">Add Expense Page</td>
+        <td></td>
+    <td align="center">Users can choose who to split between</td>
+        <td></td>
+    <td align="center">Users can custom split in exact amounts</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="screenshots/SplitPercentage.PNG" alt="Split Percentage" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/SeeMore.PNG" alt="See More" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/SeeLess.PNG" alt="See Less" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center">Users can custom split by percentage</td>
+        <td></td>
+    <td align="center">Users can click See More to see the full Expense List</td>
+        <td></td>
+    <td align="center">Users can click See Less to hide the full Expense List</td>
+  </tr>
+</table>
+
 ---
 
 ### 4.4 Expense Tracking & Split Calculation Flow
@@ -270,11 +304,45 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 **Flow:**  
 `[Group Page] → [Expense List] → [Select Expense] → [Expense Details: Who Paid, Who Owes, Amounts]`
 
+`[Group Page] → [View Activity Log]`
+
+`[Group Page] → [Toggle between Categories Report and Members Report]`
+
 **Narrative Steps:**
 1. User views the group’s expense list.
 2. User selects an expense to view details.
 3. App displays who paid, who owes, and each member’s share.
 4. User can see their own balance and group totals.
+
+<table align="center">
+  <tr>
+    <td><img src="screenshots/EditExpense.PNG" alt="Edit Expense" width="350"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/EditCustomSplit.jpeg" alt="Edit Custom Split" width="350"/></td>
+  </tr>
+  <tr>
+    <td align="center">Users can edit Expenses</td>
+        <td></td>
+    <td align="center">Users can edit Custom Splits</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="screenshots/ActivityLog.PNG" alt="Activity Log" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/CategoriesReport.PNG" alt="Categories Report" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/MembersReport.PNG" alt="Members Report" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center">Users can see previous expenses and settlements</td>
+        <td></td>
+    <td align="center">Users can see breakdown of total spending by category</td>
+        <td></td>
+    <td align="center">Users can see breakdown of total spending by member</td>
+  </tr>
+</table>
 
 ---
 
@@ -283,7 +351,7 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 **Purpose:** Guide users through settling up debts within a group.
 
 **Flow:**  
-`[Group Page] → [Settlements Section] → [View Who Owes Whom] → [Settle Up Button] → [Confirm Settlement] → [Balances Updated]`
+`[Group Page] → [Settlements Section] → [View How much the user owes or is owed (users can only see settlements that involve themselves)] → [Settle Up Button] → [Confirm Settlement] → [Balances Updated, settlement is logged in the Activity Log]`
 
 **Narrative Steps:**
 1. User goes to the group’s “Settlements” section.
@@ -291,6 +359,23 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 3. User taps “Settle Up” on a debt.
 4. User confirms the payment.
 5. The settlement is marked as completed, balances update for all.
+
+<table>
+  <tr>
+    <td><img src="screenshots/Group.PNG" alt="Settlements" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/Settlements.PNG" alt="Settlements" width="300"/></td>
+        <td width="20"></td>
+    <td><img src="screenshots/ConfirmSettleUp.PNG" alt="Confirm Settle Up" width="300"/></td>
+  </tr>
+  <tr>
+    <td align="center">Users can see if they owe others money</td>
+        <td></td>
+    <td align="center">Users can see if they are owed money</td>
+        <td></td>
+    <td align="center">Confirmation of settle up</td>
+  </tr>
+</table>
 
 ---
 
@@ -300,8 +385,8 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 - **Backend:** Appwrite (Database, Authentication, Realtime)
 - **UI:** Custom Themed Components (`ThemedView`, `ThemedText`, etc.) for light/dark mode
 - **State Management:** React Hooks, Context API
-- **Testing:** Jest (unit tests), Expo Go for device testing
-- **Other:** Expo Image, Appwrite SDK, Expo Notifications (planned)
+- **Testing:** Jest (unit, snapshot tests), Expo Go for device testing
+- **Other:** Expo Image, Appwrite SDK
 
 ---
 
@@ -310,18 +395,41 @@ BudgetBuddy is designed to be intuitive and user-centric, supporting multiple us
 - **Version Control:** Git, GitHub (feature branches, PR reviews)
 - **Security:** Appwrite Auth, hashed passwords, secure session tokens
 - **Testing:** Unit tests for core logic (expense splitting, settlements)
-- **Continuous Integration:** GitHub Actions for CI/CD (planned)
+- **Continuous Integration:** GitHub Actions for CI/CD 
 - **Modular Design:** Feature-based folder structure, reusable components
 - **Documentation:** Inline code comments, this README
 - **User-Centered Design:** Iterative UI/UX based on feedback
 
 ---
 
-## 7. User Testing
+## 7. Quality and Assurance
+
+### 7.1 User Testing
 
 - **Scenario-based:** Users tested all core flows (registration, group creation, adding expenses, settling debts).
 - **Feedback:** Gathered via in-app feedback and interviews.
 - **Iterative Improvements:** UI and logic refined based on real user pain points (e.g., clearer settlement feedback, improved error messages).
+
+### 7.2 Automated Testing (Unit testing, Snapshot testing and  Integration Testing)
+
+This project uses automated tests to ensure code quality and reliability. Automated tests are written and maintained to catch regressions, validate new features, and facilitate refactoring.
+The testing is done for most of the critical components in our project. We will showcase them below.
+
+#### 7.2.1 Types of Automated Tests
+- Unit Tests
+    Unit tests verify the smallest pieces of logic, such as individual functions, components, or modules, in isolation. They check that each function behaves as expected under various conditions.
+
+- Integration Tests
+    Integration tests verify the interaction between multiple components or modules. They ensure that different parts of the system work together correctly, such as whether pressing a button brings you to the right page in the router.
+- Snapshot tests
+    Snapshot testing is used to capture and verify the rendered output of UI components or other serialized data structures to detect unexpected changes. When a snapshot test runs for the first time, it saves a “snapshot” (a serialized representation) of the     component's output. On subsequent runs, Jest compares the current output against the saved snapshot. If they differ, the test fails, alerting us to unintended changes.
+    This helps ensure that the UI or output remains consistent unless intentionally updated. 
+    Example use cases:
+    Testing React Native components' rendered trees.
+    Validating that changes in UI structure are intentional.
+    Quickly catching regressions in output without writing extensive manual asserts.
+
+
 
 ---
 
