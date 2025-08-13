@@ -32,6 +32,7 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
 
   // Fetch group info
   useEffect(() => {
+    console.log('Fetch group: start loading');
     if (!groupId) return;
     setLoading(true);
     setError('');
@@ -39,6 +40,7 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
     databases
       .getDocument(databaseId, groupsCollectionId, id)
       .then(doc => {
+        //console.log('Fetch group: success', doc);
         setGroup({
           $id: doc.$id,
           title: doc.title,
@@ -50,6 +52,7 @@ export function useGroupDetails(groupId: string | string[] | undefined) {
         setLoading(false);
       })
       .catch(() => {
+        console.log('Fetch group: failed');
         setError('Group not found.');
         setLoading(false);
       });
