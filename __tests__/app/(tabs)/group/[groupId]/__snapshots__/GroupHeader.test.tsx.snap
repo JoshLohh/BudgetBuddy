@@ -8,7 +8,6 @@ exports[`GroupHeader matches snapshot in edit mode 1`] = `
         "backgroundColor": "#fff",
       },
       {
-        "backgroundColor": "#fff",
         "borderRadius": 12,
         "marginBottom": 10,
         "padding": 10,
@@ -372,7 +371,6 @@ exports[`GroupHeader matches snapshot in view mode 1`] = `
         "backgroundColor": "#fff",
       },
       {
-        "backgroundColor": "#fff",
         "borderRadius": 12,
         "marginBottom": 10,
         "padding": 10,
@@ -470,7 +468,6 @@ exports[`GroupHeader matches snapshot in view mode 1`] = `
                 undefined,
                 undefined,
                 {
-                  "color": "black",
                   "fontSize": 28,
                   "fontWeight": "700",
                 },

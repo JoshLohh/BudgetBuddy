@@ -436,9 +436,28 @@ The testing is done for most of the critical components in our project. We will 
 #### 7.2.2 Unit, snapshot and integration tests
 
 ##### 7.2.2.1 Contexts
+<img src="screenshots/ContextsTest.png" alt="Contexts Test" width="400"/>
+
 ##### 7.2.2.2 Hooks
+
+<img src="screenshots/HooksTest1.png" alt="Hooks Test" width="400"/>
+<img src="screenshots/HooksTest2.png" alt="Hooks Test" width="400"/>
+
 ##### 7.2.2.3 Components
+
+<img src="screenshots/ComponentsTest1.png" alt="Components Test" width="400"/>
+<img src="screenshots/ComponentsTest2.png" alt="Components Test" width="400"/>
+<img src="screenshots/ComponentsTest3.png" alt="Components Test" width="400"/>
+<img src="screenshots/ComponentsTest4.png" alt="Components Test" width="400"/>
+
 ##### 7.2.2.4 Apps Folder
+
+<img src="screenshots/AppTest1.png" alt="App Test" width="400"/>
+<img src="screenshots/AppTest2.png" alt="App Test" width="400"/>
+<img src="screenshots/AppTest3.png" alt="App Test" width="400"/>
+<img src="screenshots/AppTest4.png" alt="App Test" width="400"/>
+<img src="screenshots/AppTest5.png" alt="App Test" width="400"/>
+<img src="screenshots/AppTest6.png" alt="App Test" width="400"/>
 
 
 ---
