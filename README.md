@@ -436,7 +436,7 @@ The testing is done for most of the critical components in our project. We will 
 #### 7.2.2 Unit, snapshot and integration tests
 
 ##### 7.2.2.1 Contexts
-<img src="screenshots/ContextsTest.png" alt="Contexts Test" width="400"/>
+<img src="screenshots/ContextsTests.png" alt="Contexts Test" width="400"/>
 
 ##### 7.2.2.2 Hooks
 
