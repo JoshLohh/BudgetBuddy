@@ -312,7 +312,7 @@ export default function AddExpenseScreen() {
               const user = memberProfiles.find(m => m.userId === userId);
               return (
                 <View key={userId} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
-                  <ThemedText style={{ width: 90, fontSize: 15 }}>
+                  <ThemedText style={{ width: 150 }}>
                     {user?.username || userId}
                   </ThemedText>
                   <ThemedTextInput

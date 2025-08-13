@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   expenseRow: {
-    backgroundColor: '#f7f7f7',
+    // backgroundColor: '#f7f7f7',
     borderRadius: 8,
     padding: 12,
     flexDirection: 'row',
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 4,
-    color: 'black',
+    // color: 'black',
   },
   expenseInfoRow: {
     flexDirection: 'row',
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   expensePaidByName: {
     fontWeight: 'bold',
-    color: '#444',
+    color: '#888',
   },
   expenseAmount: {
     fontSize: 16,

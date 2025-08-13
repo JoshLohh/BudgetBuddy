@@ -260,7 +260,7 @@ export default function GroupHeader({ group, totalExpenses, onGroupUpdated }: Gr
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff', 
+    // backgroundColor: '#fff', 
     padding: 10,
     marginBottom: 10,
     borderRadius: 12,
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   groupTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: 'black'
+    // color: 'black'
   },
   groupDescription: {
     fontSize: 15,
