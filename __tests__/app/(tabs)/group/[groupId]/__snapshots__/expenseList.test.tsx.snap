@@ -269,7 +269,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -331,7 +330,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -390,7 +388,7 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
@@ -472,7 +470,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -534,7 +531,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -593,7 +589,7 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
@@ -675,7 +671,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -737,7 +732,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -796,7 +790,7 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
@@ -878,7 +872,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -940,7 +933,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -999,7 +991,7 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
@@ -1081,7 +1073,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -1143,7 +1134,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -1202,7 +1192,7 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
@@ -1284,7 +1274,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -1346,7 +1335,6 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -1405,7 +1393,7 @@ exports[`ExpenseList Component matches snapshot with full expenses list 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
@@ -1534,7 +1522,6 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -1596,7 +1583,6 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -1655,7 +1641,7 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
@@ -1737,7 +1723,6 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -1799,7 +1784,6 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -1858,7 +1842,7 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
@@ -1940,7 +1924,6 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -2002,7 +1985,6 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -2061,7 +2043,7 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
@@ -2143,7 +2125,6 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -2205,7 +2186,6 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -2264,7 +2244,7 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
@@ -2346,7 +2326,6 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
           },
           {
             "alignItems": "center",
-            "backgroundColor": "#f7f7f7",
             "borderRadius": 8,
             "flexDirection": "row",
             "padding": 12,
@@ -2408,7 +2387,6 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
               undefined,
               undefined,
               {
-                "color": "black",
                 "fontSize": 16,
                 "fontWeight": "600",
                 "marginBottom": 4,
@@ -2467,7 +2445,7 @@ exports[`ExpenseList Component matches snapshot with preview expenses 1`] = `
                   undefined,
                   undefined,
                   {
-                    "color": "#444",
+                    "color": "#888",
                     "fontWeight": "bold",
                   },
                 ]
