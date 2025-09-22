@@ -54,7 +54,7 @@ export default function SettingsPage() {
             <Spacer />
             <View style={{ flexDirection: 'row', marginBottom: 18 }}>
                 <TouchableOpacity onPress={() => router.back()}>
-2                <Ionicons name="arrow-back" size={24} color={Colors.primary} />
+                <Ionicons name="arrow-back" size={24} color={Colors.primary} />
                 </TouchableOpacity>
                 <ThemedText type="title" style={{ marginLeft: 12 }}>Settings</ThemedText>
             </View>

@@ -8,7 +8,7 @@ import { ThemedButton } from '../../components/ThemedButton';
 import Spacer from '@/components/Spacer';
 import ThemedTextInput from '@/components/ThemedTextInput';
 import { useUser } from '@/hooks/useUser';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Colors } from '@/constants/Colors';
 
 
 const Register = () => {        
@@ -28,7 +28,7 @@ const Register = () => {
         const profile = await refetchProfile();
         if (profile) {
             // Navigate only after profile is loaded
-            router.replace('/profile');
+            router.replace('/profile/profile');
         } else {
             setError('Profile not loaded. Please try again.');
         }

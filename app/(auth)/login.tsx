@@ -9,7 +9,7 @@ import { ThemedButton } from '../../components/ThemedButton';
 import Spacer from '@/components/Spacer';
 import ThemedTextInput from '@/components/ThemedTextInput';
 import { useUser } from '@/hooks/useUser';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Colors } from '@/constants/Colors';
 
 const Login = () => {
     const [email, setEmail] = useState('')
