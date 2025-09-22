@@ -16,13 +16,17 @@
     "production": {
       "autoIncrement": true,
       "channel": "production",
-      "distribution": "store",
-      "ios": {
-        "buildType": "app-store"
-      },
-      "android": {
-        "buildType": "apk"
-      }
+      "distribution": "store"
+    },
+    "production-ios": {
+      "autoIncrement": true,
+      "channel": "production",
+      "distribution": "store"
+    },
+    "production-android": {
+      "autoIncrement": true,
+      "channel": "production",
+      "distribution": "store"
     }
   },
   "submit": {
